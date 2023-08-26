@@ -1,0 +1,68 @@
+body {
+  padding: clamp(40px, 8vh, 90px) 24px;
+  color: var(--ink);
+  background: var(--bg);
+  font-family: var(--sans);
+  line-height: 1.7;
+}
+
+main {
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+a {
+  color: var(--gold);
+}
+
+a:hover {
+  color: var(--gold-bright);
+}
+
+h1 {
+  margin: 0 0 30px;
+  color: var(--gold);
+  font-family: var(--serif);
+  font-size: clamp(30px, 4vw, 42px);
+  font-weight: 500;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 34px;
+  color: var(--gold-soft);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+dl {
+  margin: 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+dt {
+  margin-top: 22px;
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+dd {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.note {
+  margin: 34px 0 0;
+  padding-top: 22px;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+}

@@ -1,0 +1,156 @@
+export const en = {
+  document: {
+    title: 'Independence — A strategy game of the Turkish War of Independence',
+    description:
+      'Command the Turkish resistance in a grand strategy campaign where real events, real borders and seven rival factions decide the War of Independence.',
+  },
+  hero: {
+    dateline: '19 May 1919 · Samsun',
+    title: 'Independence',
+    tagline: 'A nation under occupation. Independence to be won.',
+    cta: 'Go to the game',
+    meta: 'A strategy game of the Turkish War of Independence',
+    alt: 'The SS Bandırma steaming across a dark sea, dawn breaking on the horizon',
+  },
+  stops: [
+    { id: 'top', label: 'The voyage' },
+    { id: 'story', label: 'The situation' },
+    { id: 'moments', label: 'The war' },
+    { id: 'board', label: 'The board' },
+    { id: 'cards', label: 'The cards' },
+    { id: 'factions', label: 'The opposition' },
+    { id: 'soundtrack', label: 'The score' },
+  ],
+  story: {
+    kicker: 'Chapter I · The situation',
+    title: ['The fleets are in every harbor.', 'The armies are dissolved.'],
+    copy: 'The Great War is over, and every nation at the table is pursuing its own aims. Fleets anchor in the harbors, armies hold the rail lines, and borders are being redrawn in distant capitals. This is the map of May 1919, and it is where the game begins. You take the worst position on the board, Pasha, and everything after that is yours to decide.',
+  },
+  bosphorus: {
+    label: 'The occupied Bosphorus, November 1918',
+    alt: 'Allied battleships anchored on the Bosphorus before the İstanbul skyline',
+    dateline: 'November 1918 · The Bosphorus',
+    heading: 'Warships ride at anchor before the capital.',
+    copy: 'The fleet that won the world war fills the strait, and every harbor answers to it. On paper, everything is settled.',
+  },
+  duty: {
+    kicker: 'Chapter II · The duty',
+    title: ['You will not stop', 'to weigh the odds.'],
+    copy: 'You are an Ottoman pasha, sent to Samsun with an inspector’s orders: supervise the disarmament, keep the peace. You have other ideas. On 16 May 1919 a small steamship, the SS Bandırma, leaves İstanbul under the eyes of the fleet, and the road inland begins.',
+  },
+  deck: {
+    label: 'Your view from the deck of the Bandırma',
+    alt: 'The rain-slicked deck of an old steamer on a heavy sea at dusk, seen from where you stand',
+    dateline: '17 May 1919 · Aboard the SS Bandırma',
+    heading: 'Ahead lies Samsun, and a war nobody has declared yet.',
+    copy: 'Three days of open water with no escort. At the far end wait resistance forces not yet united, and a people who have not yet been asked what they want. When you step ashore, there will be no army under your command—only a possibility.',
+  },
+  route: {
+    label: 'The route from İstanbul to the opening of the Assembly',
+    stops: [
+      { date: '16 May 1919', place: 'İstanbul', note: 'Departure' },
+      { date: '19 May 1919', place: 'Samsun', note: 'Landing' },
+      { date: '22 June 1919', place: 'Amasya', note: 'The circular' },
+      { date: '23 July 1919', place: 'Erzurum', note: 'Regional congress' },
+      { date: '4 September 1919', place: 'Sivas', note: 'National congress' },
+      { date: '23 April 1920', place: 'Ankara', note: 'The Assembly opens' },
+    ],
+  },
+  moments: {
+    kicker: 'Chapter III · The war',
+    title: ['The country is worn and destitute.', 'It will fight anyway.'],
+    copy: 'What it has left, it hands to you. A congress needs its city. An army needs civilian supply. A defensive line needs time, and an offensive needs a force capable of surviving it.',
+  },
+  hands: {
+    label: 'Through the commander’s eyes: a hand on the map, hands on the ship’s rail, compass and field glasses',
+    alt: 'Three views through the commander’s eyes: a gloved hand on a map, hands gripping a ship’s rail over the sea, a compass and field glasses held open',
+  },
+  board: {
+    kicker: 'The board · May 1919',
+    title: ['You start where the movement started.'],
+    copy: 'Sixteen provinces, most of them inland. Six other factions on the map, each with its own war aims — Greece in İzmir, Britain on the Straits, France in Cilicia, Italy in the southwest, Armenia in the east, Bulgaria across the Thracian border. Your aim is not the map: it is the Misak-ı Millî, the thirty provinces the last Ottoman parliament voted for.',
+    chip: '⚑ Actual gameplay',
+    caption: 'May 1919 · Round 1 — the historical starting position',
+    alt: 'The Independence campaign board at the historical May 1919 starting position',
+    objectiveLabel: 'Misak-ı Millî',
+    objectiveValue: '16 / 30',
+    objectiveBar: '16 of 30 National Pact provinces held',
+    objectiveCopy: 'National Pact provinces held at the start. Victory is holding all thirty, and stopping there.',
+  },
+  cards: {
+    kicker: 'Actual gameplay · The event deck',
+    title: ['Turning points arrive as cards.'],
+    copy: 'Twenty-eight dated events run from the congresses of 1919 to the treaties of the mid-twenties. Each arrives on the turn its real date falls in, and each changes something material. A few stop and ask you a question instead.',
+    note: 'Four of twenty-eight. The rest you will meet in the campaign — some of them only if your war earns them.',
+    exhibits: [
+      {
+        alt: 'In-game event card: the Erzurum Congress, July 1919',
+        dateline: 'July 1919 · The east organizes',
+        title: 'The Erzurum Congress',
+        copy: 'Raises militia in every eastern province, if Erzurum still stands.',
+      },
+      {
+        alt: 'In-game event card: the Grand National Assembly opens in Ankara',
+        dateline: 'April 1920 · A government sits',
+        title: 'The Assembly opens',
+        copy: 'Everything it does presupposes a seat it still holds.',
+      },
+      {
+        alt: 'In-game event card: the Treaty of Sèvres, August 1920',
+        dateline: 'August 1920 · The dictated peace',
+        title: 'Sèvres',
+        copy: 'Guts recruitment for two rounds, then hardens a resistance into a nation in arms.',
+      },
+      {
+        alt: 'In-game event card in Turkish: the Battle of İnönü, January 1921',
+        dateline: 'January 1921 · Ve Türkçe',
+        title: 'İnönü holds the line',
+        copy: 'Every card, log line and map label ships in English and Türkçe, switchable mid-game.',
+      },
+    ],
+  },
+  factions: {
+    kicker: 'The opposition',
+    title: ['Each opponent is an AI trained on its nation’s historical behavior.'],
+    items: [
+      { key: 'Greece', name: 'Greece', copy: 'Four days before you reach Samsun, its army comes ashore at İzmir.' },
+      { key: 'Britain', name: 'Britain', copy: 'The empire has won the war; now it must police the peace.' },
+      { key: 'France', name: 'France', copy: 'Victory in Europe has given way to an uneasy occupation.' },
+      { key: 'Italy', name: 'Italy', copy: 'Rome expected more from the peace than it is prepared to defend.' },
+      { key: 'Armenia', name: 'Armenia', copy: 'A republic barely a year old, with every border still unsettled.' },
+      { key: 'Bulgaria', name: 'Bulgaria', copy: 'Defeat has brought a smaller country and an army bound by treaty.' },
+    ],
+  },
+  score: {
+    kicker: 'Original game score',
+    title: ['The campaign, in thirteen tracks.'],
+    copy: 'Listen to the complete soundtrack in sequence, choose an individual chapter, or download any track directly.',
+  },
+  charge: {
+    label: 'From the Address to Youth',
+    lines: ['The strength you will need', 'is in the noble blood within your veins.'],
+    sub: 'Mustafa Kemal Atatürk · Address to Youth, 1927',
+  },
+  final: {
+    label: 'Begin the game',
+    alt: 'A map of Anatolia spread across a campaign table',
+  },
+  footer: {
+    team: 'Team',
+    imprint: 'Imprint',
+    openSource: 'Open source on GitHub',
+    brand: 'Independence',
+    years: '1919 · 1923',
+    tagline: 'A historical strategy game of the Turkish War of Independence.',
+    links: [
+      { href: '#story', label: 'Story' },
+      { href: '#board', label: 'Board' },
+      { href: '#cards', label: 'Cards' },
+      { href: '#factions', label: 'Factions' },
+      { href: '#soundtrack', label: 'Score' },
+    ],
+  },
+  nav: { label: 'Page sections' },
+}
+
+export type LandingCopy = typeof en

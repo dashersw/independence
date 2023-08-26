@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex" />
+    <title>404 — Kurtuluş</title>
+    <link rel="icon" href="icon-192.png" type="image/png" />
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/theme.css" />
+    <style>
+      body {
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        padding: 40px 24px;
+        color: var(--ink);
+        background: var(--bg);
+        font-family: var(--sans);
+        text-align: center;
+      }
+      main {
+        max-width: 520px;
+      }
+      .code {
+        margin: 0;
+        color: var(--gold);
+        font-family: var(--serif);
+        font-size: clamp(64px, 14vw, 120px);
+        font-weight: 500;
+        line-height: 1;
+        letter-spacing: 0.06em;
+      }
+      .mark {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        margin: 18px 0 22px;
+        color: var(--gold-soft);
+      }
+      .mark span {
+        width: clamp(50px, 12vw, 110px);
+        height: 1px;
+        background: linear-gradient(90deg, transparent, currentColor);
+      }
+      .mark span:last-child {
+        transform: scaleX(-1);
+      }
+      .mark i {
+        font-size: 12px;
+        font-style: normal;
+      }
+      h1 {
+        margin: 0 0 14px;
+        color: var(--ink);
+        font-family: var(--serif);
+        font-size: clamp(24px, 3.4vw, 34px);
+        font-weight: 500;
+        line-height: 1.2;
+      }
+      p {
+        margin: 0 0 32px;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.7;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        justify-content: center;
+      }
+      .actions a {
+        display: inline-flex;
+        text-decoration: none;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 22px;
+        color: var(--gold);
+        border: 1px solid var(--line-strong);
+        border-radius: 3px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1.6px;
+        text-transform: uppercase;
+        transition:
+          color 0.15s ease,
+          border-color 0.15s ease;
+      }
+      .actions a:hover {
+        color: var(--gold-bright);
+        border-color: var(--gold-bright);
+      }
+      .actions .primary {
+        color: #241c0d;
+        background: linear-gradient(180deg, #f0d795, #dfbd66);
+        border-color: rgba(255, 246, 217, 0.55);
+      }
+      .actions .primary:hover {
+        color: #241c0d;
+        filter: brightness(1.07);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="code">404</p>
+      <div class="mark" aria-hidden="true"><span></span><i>★</i><span></span></div>
+      <h1 id="title">There is no such place on the map.</h1>
+      <p id="body">The address you followed does not exist. The campaign, however, is still where you left it.</p>
+      <div class="actions">
+        <a class="primary" id="home" href="/">Home</a>
+        <a id="play" href="/game">Go to the game</a>
+      </div>
+    </main>
+    <script>
+      // Mirrors the language pick in index.html so a mistyped address answers in
+      // the visitor's language rather than always in English.
+      ;(function () {
+        var saved = null
+        try {
+          saved = localStorage.getItem('independence.lang')
+        } catch (e) {}
+        var lang = saved === 'en' || saved === 'tr' ? saved : /^tr\b/i.test(navigator.language || '') ? 'tr' : 'en'
+        document.documentElement.lang = lang
+        if (lang !== 'tr') return
+        document.title = '404 — Kurtuluş'
+        document.getElementById('title').textContent = 'Haritada böyle bir yer yok.'
+        document.getElementById('body').textContent =
+          'Girdiğiniz adres mevcut değil. Mücadele ise bıraktığınız yerde duruyor.'
+        document.getElementById('home').textContent = 'Ana sayfa'
+        document.getElementById('play').textContent = 'Oyuna git'
+      })()
+    </script>
+  </body>
+</html>

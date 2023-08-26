@@ -1,0 +1,32 @@
+{
+  "name": "Independence \u2014 The Turkish War of Independence",
+  "short_name": "Kurtulu\u015f 1919",
+  "description": "A historical strategy game about the Turkish War of Independence, 1919\u20131925.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "any",
+  "background_color": "#2e2419",
+  "theme_color": "#2e2419",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+import type { SoundtrackCopy } from './en'
+
+export const tr: SoundtrackCopy = {
+  brand: ['Kurtuluş', 'Oyunun müziği'],
+  nowPlaying: 'Çalıyor',
+  download: 'Bu parçayı indirin',
+  listLabel: 'Oyunun müzikleri',
+  playerLabel: 'Müzik çalar',
+  seekLabel: 'Parça konumu',
+  previous: 'Önceki parça',
+  next: 'Sonraki parça',
+  coverAlt: (title: string) => `${title} parçasının kapağı`,
+  downloadTrack: (title: string) => `${title} parçasını indirin`,
+  play: (title: string) => `${title} parçasını çalın`,
+  pause: (title: string) => `${title} parçasını duraklatın`,
+  chapters: [
+    'Savaş başlıyor',
+    'İşgal',
+    'Hareket toparlanıyor',
+    'Yeni başkent',
+    'Anadolu’nun askerleri',
+    'İlk zafer',
+    'Savunma hattı',
+    'Büyük Taarruz',
+    'Şehitler',
+    'Son takip',
+    'Sulh',
+    'Yeni bir başlangıç',
+    'İstiklal kazanıldı',
+  ],
+}
