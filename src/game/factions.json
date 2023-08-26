@@ -1,0 +1,231 @@
+{
+  "factions": [
+    {
+      "name": "Turkey",
+      "color": "red",
+      "territories": [
+        {
+          "slug": "edirne",
+          "troops": 5
+        },
+        {
+          "slug": "balikesir",
+          "troops": 8
+        },
+        {
+          "slug": "usak",
+          "troops": 6
+        },
+        {
+          "slug": "eskisehir",
+          "troops": 6
+        },
+        {
+          "slug": "kutahya",
+          "troops": 8
+        },
+        {
+          "slug": "ankara",
+          "troops": 10
+        },
+        {
+          "slug": "konya",
+          "troops": 4
+        },
+        {
+          "slug": "sivas",
+          "troops": 4
+        },
+        {
+          "slug": "kastamonu",
+          "troops": 4
+        },
+        {
+          "slug": "samsun",
+          "troops": 4
+        },
+        {
+          "slug": "trabzon",
+          "troops": 5
+        },
+        {
+          "slug": "sakarya",
+          "troops": 4
+        },
+        {
+          "slug": "erzurum",
+          "troops": 5
+        },
+        {
+          "slug": "van",
+          "troops": 5
+        },
+        {
+          "slug": "elazig",
+          "troops": 4
+        },
+        {
+          "slug": "diyarbakir",
+          "troops": 4
+        }
+      ]
+    },
+    {
+      "name": "Greece",
+      "color": "blue",
+      "territories": [
+        {
+          "slug": "salonica",
+          "troops": 12
+        },
+        {
+          "slug": "kozani",
+          "troops": 9
+        },
+        {
+          "slug": "western-thrace",
+          "troops": 7
+        },
+        {
+          "slug": "lesbos",
+          "troops": 4
+        },
+        {
+          "slug": "rhodes",
+          "troops": 4
+        },
+        {
+          "slug": "izmir",
+          "troops": 10
+        },
+        {
+          "slug": "aydin",
+          "troops": 8
+        }
+      ]
+    },
+    {
+      "name": "Bulgaria",
+      "color": "green",
+      "territories": [
+        {
+          "slug": "sofia",
+          "troops": 7
+        },
+        {
+          "slug": "plovdiv",
+          "troops": 4
+        },
+        {
+          "slug": "varna",
+          "troops": 6
+        },
+        {
+          "slug": "burgas",
+          "troops": 3
+        }
+      ]
+    },
+    {
+      "name": "Armenia",
+      "color": "goldenrod",
+      "territories": [
+        {
+          "slug": "kars",
+          "troops": 5
+        },
+        {
+          "slug": "igdir",
+          "troops": 3
+        },
+        {
+          "slug": "gyumri",
+          "troops": 3
+        },
+        {
+          "slug": "yerevan",
+          "troops": 3
+        },
+        {
+          "slug": "vanadzor",
+          "troops": 3
+        },
+        {
+          "slug": "sevan",
+          "troops": 3
+        }
+      ]
+    },
+    {
+      "name": "Italy",
+      "color": "purple",
+      "territories": [
+        {
+          "slug": "antalya",
+          "troops": 7
+        },
+        {
+          "slug": "isparta",
+          "troops": 5
+        }
+      ]
+    },
+    {
+      "name": "Britain",
+      "color": "pink",
+      "territories": [
+        {
+          "slug": "istanbul",
+          "troops": 10
+        },
+        {
+          "slug": "izmit",
+          "troops": 8
+        },
+        {
+          "slug": "gelibolu",
+          "troops": 6
+        },
+        {
+          "slug": "canakkale",
+          "troops": 6
+        },
+        {
+          "slug": "mosul",
+          "troops": 5
+        },
+        {
+          "slug": "baghdad",
+          "troops": 5
+        }
+      ]
+    },
+    {
+      "name": "France",
+      "color": "orange",
+      "territories": [
+        {
+          "slug": "adana",
+          "troops": 6
+        },
+        {
+          "slug": "maras",
+          "troops": 7
+        },
+        {
+          "slug": "hatay",
+          "troops": 5
+        },
+        {
+          "slug": "aleppo",
+          "troops": 6
+        }
+      ]
+    },
+    {
+      "name": "Iraq",
+      "color": "olive",
+      "territories": []
+    }
+  ]
+}

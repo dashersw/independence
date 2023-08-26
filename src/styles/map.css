@@ -1,0 +1,67 @@
+/* Victoria-3-style painted map treatment. Overrides base map styles from
+   game.css via more specific selectors — game.css itself is untouched. */
+
+/* map text (labels, troop counts) is not selectable — double-clicking a
+   territory otherwise highlights the nearest army count */
+.map {
+  user-select: none;
+  -webkit-user-select: none;
+  /* all touch gestures (pan/pinch) are handled by the map itself */
+  touch-action: none;
+}
+
+/* Flag artwork softening lives in the #flag-tone SVG filter (MapView) so the
+   bake renders identically in Safari — no CSS filter here anymore. */
+
+/* The interactive territory layer sits transparently ABOVE the painted art:
+   it carries hit-testing and the state feedback, and nothing else. It used to
+   draw a faint cream line on every region edge, which crossed straight over the
+   painted faction borders — the frontier belongs to the faction band. */
+.map .territory path {
+  stroke: rgba(249, 243, 228, 0.5);
+  stroke-width: 1.1;
+}
+
+.map .territory:hover path,
+.map .territory.hover path {
+  fill: rgba(255, 252, 240, 0.16);
+  filter: none;
+}
+
+.map .territory.selected path {
+  fill: rgba(255, 223, 126, 0.16);
+  stroke: #ffdf7e;
+  stroke-width: 5;
+  filter: none;
+}
+
+.map .territory.target path {
+  fill: rgba(255, 65, 53, 0.14);
+  stroke: #ff4136;
+  stroke-width: 4.2;
+}
+
+/* Decorative cartographic labels: seas in a deep water tone, neighbors in a
+   muted ink over the parchment background lands. */
+.map .sea-label {
+  font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  font-style: italic;
+  fill: #4f6b80;
+  letter-spacing: 0.38em;
+  opacity: 0.8;
+}
+
+.map .country-label {
+  font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  fill: #8a7a5f;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* Warmer parchment landmass under the territories. */
+.map .bg-land {
+  fill: #e7dcc1;
+  stroke: #bcae8e;
+  stroke-width: 0.7;
+}
