@@ -1,0 +1,29 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "independence",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["start"],
+      "port": 1234
+    },
+    {
+      "name": "independence-alt",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["parcel", "src/index.html", "--port", "1245", "--cache-dir", ".parcel-cache-alt"],
+      "port": 1245
+    },
+    {
+      "name": "sound-admin",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["start", "--prefix", "sound-admin"],
+      "port": 4500
+    },
+    {
+      "name": "independence-alt2",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["parcel", "src/index.html", "--port", "1246", "--cache-dir", ".parcel-cache-alt2"],
+      "port": 1246
+    }
+  ]
+}

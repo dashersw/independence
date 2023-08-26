@@ -1,0 +1,31 @@
+{
+  "name": "independence",
+  "version": "1.0.0",
+  "description": "Independence \u2014 The Turkish War of Independence, a Risk-style strategy game",
+  "scripts": {
+    "generate-map-data": "node scripts/generate-map-data.mjs",
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html --dist-dir dist",
+    "test": "tsx --test test/*.test.ts",
+    "train-ai": "tsx scripts/train-ai.ts",
+    "eval-ai": "tsx scripts/eval-ai.ts",
+    "test:watch": "tsx --test --watch test/*.test.ts",
+    "sweep": "tsx scripts/balance-sweep.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/packager-raw-url": "^2.9.3",
+    "@parcel/transformer-webmanifest": "^2.9.3",
+    "process": "^0.11.10",
+    "tsx": "^4.23.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "clipper-lib": "^6.4.2",
+    "parcel": "^2.9.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

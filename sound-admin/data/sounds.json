@@ -1,0 +1,450 @@
+{
+  "sounds": [
+    {
+      "id": "battle-exchange",
+      "title": "Battle exchange",
+      "category": "combat",
+      "priority": "must",
+      "trigger": "attackRound() — each dice exchange, human and AI battles alike",
+      "kind": "sfx",
+      "prompt": "Three sharp bolt-action rifle shots in quick succession with a dry battlefield echo",
+      "params": {
+        "duration_seconds": 3,
+        "prompt_influence": 0.1
+      },
+      "chosen": {
+        "file": "2026-07-22T11-20-03-143Z-07095018.mp3",
+        "ts": "2026-07-22T11:21:47.284Z"
+      }
+    },
+    {
+      "id": "battle-blitz",
+      "title": "Battle blitz",
+      "category": "combat",
+      "priority": "must",
+      "trigger": "attack() — blitz rolls the battle to the end",
+      "kind": "sfx",
+      "prompt": "Sustained overlapping bolt-action rifle volleys, then a heavy machine gun burst",
+      "params": {
+        "duration_seconds": 2.5,
+        "prompt_influence": 0.7
+      },
+      "chosen": {
+        "file": "2026-07-22T11-25-17-012Z-225b9f09.mp3",
+        "ts": "2026-07-22T11:25:37.342Z"
+      }
+    },
+    {
+      "id": "conquest",
+      "title": "Territory conquered",
+      "category": "combat",
+      "priority": "must",
+      "trigger": "BattleResult.conquered — territory taken",
+      "kind": "sfx",
+      "prompt": "A short triumphant brass fanfare stab with a quick snare drum flourish, battle won, victorious",
+      "params": {
+        "duration_seconds": 2,
+        "prompt_influence": 0.7
+      },
+      "chosen": {
+        "file": "2026-07-22T11-54-22-013Z-b91c1b9d.mp3",
+        "ts": "2026-07-22T11:54:30.676Z"
+      }
+    },
+    {
+      "id": "pull-back",
+      "title": "Pull back",
+      "category": "combat",
+      "priority": "should",
+      "trigger": "pullBack() — attacker breaks off the battle",
+      "kind": "sfx",
+      "prompt": "A solo bugle plays a short descending retreat call, then boots hurry away on dirt",
+      "params": {
+        "duration_seconds": 2.5,
+        "prompt_influence": 1
+      },
+      "chosen": {
+        "file": "2026-07-22T11-50-51-457Z-854a290d.mp3",
+        "ts": "2026-07-22T11:51:15.322Z"
+      }
+    },
+    {
+      "id": "elimination",
+      "title": "Faction eliminated",
+      "category": "combat",
+      "priority": "should",
+      "trigger": "BattleResult.eliminatedFaction — a power leaves the war",
+      "kind": "sfx",
+      "prompt": "A single deep bass drum hit, then a low male choir hum fading to silence",
+      "params": {
+        "duration_seconds": 5,
+        "prompt_influence": 0.7
+      },
+      "chosen": {
+        "file": "2026-07-22T11-49-25-840Z-9d842297.mp3",
+        "ts": "2026-07-22T11:49:46.589Z"
+      }
+    },
+    {
+      "id": "reinforce-place",
+      "title": "Reinforcement placed",
+      "category": "turn",
+      "priority": "must",
+      "trigger": "placeReinforcement() — every troop placed, including auto-place steps",
+      "kind": "sfx",
+      "prompt": "One pair of boots snapping to attention on packed earth, single crisp one-shot",
+      "params": {
+        "duration_seconds": 0.5
+      },
+      "chosen": {
+        "file": "2026-07-22T10-46-58-614Z-5b76002d.mp3",
+        "ts": "2026-07-22T10:48:05.787Z"
+      }
+    },
+    {
+      "id": "card-draw",
+      "title": "Card drawn",
+      "category": "turn",
+      "priority": "must",
+      "trigger": "drawCard() — end of a conquering turn",
+      "kind": "sfx",
+      "prompt": "A single playing card slides off a deck and snaps onto a wooden table",
+      "params": {
+        "duration_seconds": 0.5
+      },
+      "chosen": {
+        "file": "2026-07-22T10-46-46-647Z-063748db.mp3",
+        "ts": "2026-07-22T10:48:10.270Z"
+      }
+    },
+    {
+      "id": "card-trade",
+      "title": "Card set traded",
+      "category": "turn",
+      "priority": "should",
+      "trigger": "tradeCards() — a set traded for reinforcements",
+      "kind": "sfx",
+      "prompt": "A rubber stamp strikes paper twice, then a small brass coin rings on a wooden desk",
+      "params": {
+        "duration_seconds": 3,
+        "prompt_influence": 0.7
+      },
+      "chosen": {
+        "file": "2026-07-22T11-10-58-231Z-ab988de1.mp3",
+        "ts": "2026-07-22T11:11:53.556Z"
+      }
+    },
+    {
+      "id": "fortify",
+      "title": "Fortify march",
+      "category": "turn",
+      "priority": "should",
+      "trigger": "fortify() — overland troop movement",
+      "kind": "sfx",
+      "prompt": "A column of soldiers marching in step on a dirt road, rhythmic boots",
+      "params": {
+        "duration_seconds": 1.5
+      },
+      "chosen": {
+        "file": "2026-07-22T11-49-01-795Z-e2783e67.mp3",
+        "ts": "2026-07-22T11:49:13.786Z"
+      }
+    },
+    {
+      "id": "embark",
+      "title": "Convoy embarks",
+      "category": "turn",
+      "priority": "should",
+      "trigger": "embark() — troops set sail on the Salonica–İzmir lane",
+      "kind": "sfx",
+      "prompt": "A very distant steam ship horn blast in a harbor over seagulls and lapping water",
+      "params": {
+        "duration_seconds": 2,
+        "prompt_influence": 0.7
+      },
+      "chosen": {
+        "file": "2026-07-22T11-53-35-302Z-e9dfd64a.mp3",
+        "ts": "2026-07-22T11:53:45.848Z"
+      }
+    },
+    {
+      "id": "convoy-lands",
+      "title": "Convoy lands",
+      "category": "turn",
+      "priority": "nice",
+      "trigger": "landConvoys() — troops come ashore",
+      "kind": "sfx",
+      "prompt": "A wooden boat scrapes onto a shingle beach, then boots splash through shallow water",
+      "params": {
+        "duration_seconds": 2,
+        "prompt_influence": 0.7
+      }
+    },
+    {
+      "id": "your-turn",
+      "title": "Your turn",
+      "category": "turn",
+      "priority": "must",
+      "trigger": "startTurn() — the human seat comes up",
+      "kind": "sfx",
+      "prompt": "A small desk bell dings",
+      "params": {
+        "duration_seconds": 1,
+        "prompt_influence": 0.7
+      },
+      "chosen": {
+        "file": "2026-07-22T11-55-39-002Z-c377fa43.mp3",
+        "ts": "2026-07-22T11:55:46.496Z"
+      }
+    },
+    {
+      "id": "phase-change",
+      "title": "Phase change",
+      "category": "turn",
+      "priority": "should",
+      "trigger": "endPhase() — reinforce → attack → fortify",
+      "kind": "sfx",
+      "prompt": "A single soft muted snare drum tap, short and dry",
+      "params": {
+        "duration_seconds": 0.5
+      }
+    },
+    {
+      "id": "card-celebratory",
+      "title": "Card stinger — celebratory",
+      "category": "cards",
+      "priority": "must",
+      "trigger": "EventCard opens with mood=celebratory (congresses, TBMM, Mudanya, Sultanate…)",
+      "kind": "sfx",
+      "prompt": "A large festival bass drum pounding a fast celebratory rhythm over a crowd erupting in cheers",
+      "params": {
+        "duration_seconds": 2.5,
+        "prompt_influence": 0.7
+      }
+    },
+    {
+      "id": "card-triumphant",
+      "title": "Card stinger — triumphant",
+      "category": "cards",
+      "priority": "must",
+      "trigger": "EventCard opens with mood=triumphant (İnönü, Sakarya, Great Offensive)",
+      "kind": "sfx",
+      "prompt": "A distant artillery salvo, then a triumphant brass fanfare with snare drums",
+      "params": {
+        "duration_seconds": 3,
+        "prompt_influence": 0.7
+      }
+    },
+    {
+      "id": "card-dramatic",
+      "title": "Card stinger — dramatic",
+      "category": "cards",
+      "priority": "must",
+      "trigger": "EventCard opens with mood=dramatic (İstanbul occupied, Sèvres, revolts, Greek offensive)",
+      "kind": "sfx",
+      "prompt": "Two low ominous drum hits over a rising tense string tremolo",
+      "params": {
+        "duration_seconds": 2.5,
+        "prompt_influence": 0.7
+      }
+    },
+    {
+      "id": "card-somber",
+      "title": "Card stinger — somber",
+      "category": "cards",
+      "priority": "must",
+      "trigger": "EventCard opens with mood=somber (Mübadele, Greek collapse, Mosul)",
+      "kind": "sfx",
+      "prompt": "A solo ney flute plays a slow mournful phrase over a low drone",
+      "params": {
+        "duration_seconds": 3,
+        "prompt_influence": 0.7
+      }
+    },
+    {
+      "id": "card-diplomatic",
+      "title": "Card stinger — diplomatic",
+      "category": "cards",
+      "priority": "must",
+      "trigger": "EventCard opens with mood=diplomatic (treaties, Soviet aid, political shifts)",
+      "kind": "sfx",
+      "prompt": "A telegraph key clatters a message, then a wax seal stamps onto paper",
+      "params": {
+        "duration_seconds": 2,
+        "prompt_influence": 0.7
+      }
+    },
+    {
+      "id": "decision-card",
+      "title": "Decision card",
+      "category": "cards",
+      "priority": "should",
+      "trigger": "pendingDecision — Tekâlif-i Milliye, Lausanne terms",
+      "kind": "sfx",
+      "prompt": "An urgent telegraph clatter with morse code",
+      "params": {
+        "duration_seconds": 1,
+        "prompt_influence": 0.7
+      },
+      "chosen": {
+        "file": "2026-07-22T11-33-38-605Z-452b40f8.mp3",
+        "ts": "2026-07-22T11:33:51.231Z"
+      }
+    },
+    {
+      "id": "landings",
+      "title": "Allied landings",
+      "category": "cards",
+      "priority": "should",
+      "trigger": "runLandings() — Allied troops put ashore after terms are refused",
+      "kind": "sfx",
+      "prompt": "Naval gun salvos from warships offshore, then an alarm bell rings",
+      "params": {
+        "duration_seconds": 2.5,
+        "prompt_influence": 0.7
+      },
+      "chosen": {
+        "file": "2026-07-22T11-31-23-698Z-5f55d978.mp3",
+        "ts": "2026-07-22T11:31:49.214Z"
+      }
+    },
+    {
+      "id": "select",
+      "title": "Territory select",
+      "category": "ui",
+      "priority": "must",
+      "trigger": "onTerritoryClick on an own territory",
+      "kind": "sfx",
+      "prompt": "A soft wooden tap on a paper map, tiny and subtle",
+      "params": {
+        "duration_seconds": 0.5
+      },
+      "chosen": {
+        "file": "2026-07-22T11-47-52-687Z-c136505d.mp3",
+        "ts": "2026-07-22T11:49:49.608Z"
+      }
+    },
+    {
+      "id": "ui-click",
+      "title": "UI click",
+      "category": "ui",
+      "priority": "must",
+      "trigger": "Buttons — HUD, dialogs, settings",
+      "kind": "sfx",
+      "prompt": "A quiet tight mechanical click of a small brass button, single",
+      "params": {
+        "duration_seconds": 0.5
+      }
+    },
+    {
+      "id": "game-start",
+      "title": "Game start",
+      "category": "ui",
+      "priority": "should",
+      "trigger": "IntroScreen → onBegin",
+      "kind": "sfx",
+      "prompt": "A deep field drum roll builds, then a shrill reedy folk pipe call rises over it",
+      "params": {
+        "duration_seconds": 3,
+        "prompt_influence": 0.7
+      }
+    },
+    {
+      "id": "menu-ambient",
+      "title": "Menu ambient loop",
+      "category": "ambient",
+      "priority": "nice",
+      "trigger": "IntroScreen background loop",
+      "kind": "sfx",
+      "prompt": "Wind blowing over an open steppe with a faint distant drum every few seconds, calm ambience",
+      "params": {
+        "duration_seconds": 20,
+        "loop": true
+      }
+    },
+    {
+      "id": "ending-total",
+      "title": "Ending — Mutlak Zafer (total conquest)",
+      "category": "endings",
+      "priority": "must",
+      "trigger": "overlay.total — nothing on the map is not yours",
+      "kind": "music",
+      "prompt": "Massive victory fanfare for a historical war strategy game: full military band with davul and zurna over triumphant brass, massed drums, maximal and overwhelming, ends on a huge resolved major chord. 100 BPM, in D major, instrumental only",
+      "params": {
+        "music_length_ms": 6000
+      }
+    },
+    {
+      "id": "ending-beyond",
+      "title": "Ending — beyond the Pact",
+      "category": "endings",
+      "priority": "must",
+      "trigger": "overlay.beyond — victory plus annexations carried to Lausanne",
+      "kind": "music",
+      "prompt": "Grand imperial victory fanfare: triumphant brass with davul drums, weighty and powerful with a stern edge, projecting dominance, resolved ending. 100 BPM, in D major, instrumental only",
+      "params": {
+        "music_length_ms": 6000
+      }
+    },
+    {
+      "id": "ending-victory",
+      "title": "Ending — Misak-ı Millî achieved",
+      "category": "endings",
+      "priority": "must",
+      "trigger": "overlay.victory — the intended win",
+      "kind": "music",
+      "prompt": "Proud victory jingle for a war of independence won: warm brass swell into davul and zurna celebration, heartfelt and noble, resolved major cadence. 100 BPM, in D major, instrumental only",
+      "params": {
+        "music_length_ms": 6000
+      }
+    },
+    {
+      "id": "ending-lausanne-near",
+      "title": "Ending — Lausanne, honorable",
+      "category": "endings",
+      "priority": "must",
+      "trigger": "overlay.lausanne.near — settled at the table, 27+/30 held",
+      "kind": "music",
+      "prompt": "Dignified diplomatic resolution jingle: hymn-like brass phrase, calm snare, ends on a stable major cadence with one bittersweet note. 90 BPM, in D major, instrumental only",
+      "params": {
+        "music_length_ms": 6000
+      }
+    },
+    {
+      "id": "ending-lausanne-partial",
+      "title": "Ending — Lausanne, compromised",
+      "category": "endings",
+      "priority": "must",
+      "trigger": "overlay.lausanne.partial — settled with half the homeland",
+      "kind": "music",
+      "prompt": "Ambivalent ending jingle: solo ney flute lead over sparse frame drums, unresolved suspended cadence, neither victory nor defeat. 80 BPM, in D minor, instrumental only",
+      "params": {
+        "music_length_ms": 6000
+      }
+    },
+    {
+      "id": "ending-lausanne-poor",
+      "title": "Ending — Lausanne, dictated",
+      "category": "endings",
+      "priority": "must",
+      "trigger": "overlay.lausanne.poor — settled having recovered little",
+      "kind": "music",
+      "prompt": "Hollow defeat jingle: low drone, slow funeral bass drum, thin distant ney flute fading, unresolved minor ending. 70 BPM, in D minor, instrumental only",
+      "params": {
+        "music_length_ms": 6000
+      }
+    },
+    {
+      "id": "ending-defeat",
+      "title": "Ending — defeat",
+      "category": "endings",
+      "priority": "must",
+      "trigger": "overlay.defeat — Turkey eliminated from the map",
+      "kind": "music",
+      "prompt": "Somber lament for a lost war: solo ney flute over low strings, slow funeral drum, grief-stricken, fading to silence. 70 BPM, in D minor, instrumental only",
+      "params": {
+        "music_length_ms": 6000
+      }
+    }
+  ]
+}

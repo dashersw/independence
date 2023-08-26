@@ -1,0 +1,466 @@
+{
+  "territories": [
+    {
+      "name": "Edirne",
+      "slug": "edirne",
+      "adjacentTerritories": [
+        "burgas",
+        "western-thrace",
+        "istanbul",
+        "gelibolu"
+      ]
+    },
+    {
+      "name": "Balıkesir",
+      "slug": "balikesir",
+      "adjacentTerritories": [
+        "lesbos",
+        "usak",
+        "izmir",
+        "canakkale",
+        "eskisehir"
+      ]
+    },
+    {
+      "name": "Uşak",
+      "slug": "usak",
+      "adjacentTerritories": [
+        "isparta",
+        "balikesir",
+        "izmir",
+        "aydin",
+        "eskisehir",
+        "kutahya"
+      ]
+    },
+    {
+      "name": "Eskişehir",
+      "slug": "eskisehir",
+      "adjacentTerritories": [
+        "ankara",
+        "usak",
+        "izmit",
+        "sakarya",
+        "konya",
+        "balikesir",
+        "kutahya",
+        "kastamonu"
+      ]
+    },
+    {
+      "name": "Kütahya",
+      "slug": "kutahya",
+      "adjacentTerritories": [
+        "usak",
+        "konya",
+        "eskisehir",
+        "isparta"
+      ]
+    },
+    {
+      "name": "Ankara",
+      "slug": "ankara",
+      "adjacentTerritories": [
+        "kastamonu",
+        "sivas",
+        "konya",
+        "eskisehir"
+      ]
+    },
+    {
+      "name": "Konya",
+      "slug": "konya",
+      "adjacentTerritories": [
+        "antalya",
+        "isparta",
+        "sivas",
+        "ankara",
+        "adana",
+        "eskisehir",
+        "kutahya"
+      ]
+    },
+    {
+      "name": "Sivas",
+      "slug": "sivas",
+      "adjacentTerritories": [
+        "samsun",
+        "kastamonu",
+        "ankara",
+        "adana",
+        "maras",
+        "erzurum",
+        "konya",
+        "trabzon",
+        "elazig"
+      ]
+    },
+    {
+      "name": "Kastamonu",
+      "slug": "kastamonu",
+      "adjacentTerritories": [
+        "samsun",
+        "sivas",
+        "ankara",
+        "sakarya",
+        "eskisehir"
+      ]
+    },
+    {
+      "name": "Samsun",
+      "slug": "samsun",
+      "adjacentTerritories": [
+        "kastamonu",
+        "sivas",
+        "trabzon"
+      ]
+    },
+    {
+      "name": "Trabzon",
+      "slug": "trabzon",
+      "adjacentTerritories": [
+        "samsun",
+        "sivas",
+        "erzurum",
+        "kars",
+        "gyumri"
+      ]
+    },
+    {
+      "name": "Erzurum",
+      "slug": "erzurum",
+      "adjacentTerritories": [
+        "sivas",
+        "van",
+        "igdir",
+        "kars",
+        "trabzon",
+        "elazig",
+        "diyarbakir"
+      ]
+    },
+    {
+      "name": "Van",
+      "slug": "van",
+      "adjacentTerritories": [
+        "erzurum",
+        "mosul",
+        "diyarbakir",
+        "aleppo"
+      ]
+    },
+    {
+      "name": "Elazığ",
+      "slug": "elazig",
+      "adjacentTerritories": [
+        "sivas",
+        "maras",
+        "erzurum",
+        "diyarbakir"
+      ]
+    },
+    {
+      "name": "Diyarbakır",
+      "slug": "diyarbakir",
+      "adjacentTerritories": [
+        "maras",
+        "erzurum",
+        "van",
+        "elazig",
+        "aleppo"
+      ]
+    },
+    {
+      "name": "Salonica",
+      "slug": "salonica",
+      "adjacentTerritories": [
+        "western-thrace",
+        "plovdiv",
+        "kozani"
+      ]
+    },
+    {
+      "name": "Kozani",
+      "slug": "kozani",
+      "adjacentTerritories": [
+        "salonica"
+      ]
+    },
+    {
+      "name": "Western Thrace",
+      "slug": "western-thrace",
+      "adjacentTerritories": [
+        "lesbos",
+        "burgas",
+        "edirne",
+        "salonica",
+        "plovdiv"
+      ]
+    },
+    {
+      "name": "Lesbos",
+      "slug": "lesbos",
+      "adjacentTerritories": [
+        "rhodes",
+        "western-thrace",
+        "balikesir",
+        "izmir"
+      ]
+    },
+    {
+      "name": "Rhodes",
+      "slug": "rhodes",
+      "adjacentTerritories": [
+        "lesbos",
+        "aydin",
+        "antalya",
+        "izmir"
+      ]
+    },
+    {
+      "name": "İzmir",
+      "slug": "izmir",
+      "adjacentTerritories": [
+        "lesbos",
+        "rhodes",
+        "usak",
+        "balikesir",
+        "aydin"
+      ]
+    },
+    {
+      "name": "Aydın",
+      "slug": "aydin",
+      "adjacentTerritories": [
+        "antalya",
+        "isparta",
+        "usak",
+        "izmir",
+        "rhodes"
+      ]
+    },
+    {
+      "name": "Sofia",
+      "slug": "sofia",
+      "adjacentTerritories": [
+        "varna",
+        "plovdiv"
+      ]
+    },
+    {
+      "name": "Plovdiv",
+      "slug": "plovdiv",
+      "adjacentTerritories": [
+        "burgas",
+        "western-thrace",
+        "salonica",
+        "sofia"
+      ]
+    },
+    {
+      "name": "Varna",
+      "slug": "varna",
+      "adjacentTerritories": [
+        "burgas",
+        "sofia"
+      ]
+    },
+    {
+      "name": "Burgas",
+      "slug": "burgas",
+      "adjacentTerritories": [
+        "varna",
+        "western-thrace",
+        "edirne",
+        "plovdiv"
+      ]
+    },
+    {
+      "name": "Gyumri",
+      "slug": "gyumri",
+      "adjacentTerritories": [
+        "vanadzor",
+        "kars",
+        "yerevan",
+        "trabzon"
+      ]
+    },
+    {
+      "name": "Yerevan",
+      "slug": "yerevan",
+      "adjacentTerritories": [
+        "vanadzor",
+        "sevan",
+        "igdir",
+        "kars",
+        "gyumri"
+      ]
+    },
+    {
+      "name": "Vanadzor",
+      "slug": "vanadzor",
+      "adjacentTerritories": [
+        "sevan",
+        "gyumri",
+        "yerevan"
+      ]
+    },
+    {
+      "name": "Sevan",
+      "slug": "sevan",
+      "adjacentTerritories": [
+        "vanadzor",
+        "yerevan"
+      ]
+    },
+    {
+      "name": "Antalya",
+      "slug": "antalya",
+      "adjacentTerritories": [
+        "rhodes",
+        "isparta",
+        "adana",
+        "konya",
+        "aydin"
+      ]
+    },
+    {
+      "name": "Isparta",
+      "slug": "isparta",
+      "adjacentTerritories": [
+        "antalya",
+        "usak",
+        "konya",
+        "aydin",
+        "kutahya"
+      ]
+    },
+    {
+      "name": "İstanbul",
+      "slug": "istanbul",
+      "adjacentTerritories": [
+        "edirne",
+        "izmit",
+        "gelibolu",
+        "canakkale"
+      ]
+    },
+    {
+      "name": "İzmit",
+      "slug": "izmit",
+      "adjacentTerritories": [
+        "istanbul",
+        "sakarya",
+        "gelibolu",
+        "eskisehir"
+      ]
+    },
+    {
+      "name": "Gelibolu",
+      "slug": "gelibolu",
+      "adjacentTerritories": [
+        "edirne",
+        "izmit",
+        "istanbul",
+        "canakkale"
+      ]
+    },
+    {
+      "name": "Çanakkale",
+      "slug": "canakkale",
+      "adjacentTerritories": [
+        "balikesir",
+        "gelibolu",
+        "istanbul"
+      ]
+    },
+    {
+      "name": "Sakarya",
+      "slug": "sakarya",
+      "adjacentTerritories": [
+        "kastamonu",
+        "izmit",
+        "eskisehir"
+      ]
+    },
+    {
+      "name": "Adana",
+      "slug": "adana",
+      "adjacentTerritories": [
+        "antalya",
+        "sivas",
+        "maras",
+        "konya"
+      ]
+    },
+    {
+      "name": "Maraş",
+      "slug": "maras",
+      "adjacentTerritories": [
+        "sivas",
+        "adana",
+        "hatay",
+        "elazig",
+        "diyarbakir",
+        "aleppo"
+      ]
+    },
+    {
+      "name": "Hatay",
+      "slug": "hatay",
+      "adjacentTerritories": [
+        "maras",
+        "aleppo"
+      ]
+    },
+    {
+      "name": "Aleppo",
+      "slug": "aleppo",
+      "adjacentTerritories": [
+        "maras",
+        "van",
+        "hatay",
+        "mosul",
+        "baghdad",
+        "diyarbakir"
+      ]
+    },
+    {
+      "name": "Mosul",
+      "slug": "mosul",
+      "adjacentTerritories": [
+        "van",
+        "baghdad",
+        "aleppo"
+      ]
+    },
+    {
+      "name": "Baghdad",
+      "slug": "baghdad",
+      "adjacentTerritories": [
+        "mosul",
+        "aleppo"
+      ]
+    },
+    {
+      "name": "Kars",
+      "slug": "kars",
+      "adjacentTerritories": [
+        "erzurum",
+        "igdir",
+        "trabzon",
+        "gyumri",
+        "yerevan"
+      ]
+    },
+    {
+      "name": "Iğdır",
+      "slug": "igdir",
+      "adjacentTerritories": [
+        "erzurum",
+        "kars",
+        "yerevan"
+      ]
+    }
+  ]
+}

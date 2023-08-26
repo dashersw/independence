@@ -1,0 +1,13 @@
+node_modules
+.cache
+.parcel-cache
+dist
+.parcel-cache-alt
+.playwright-mcp/
+.parcel-cache-alt2
+
+# training logs
+train*.log
+
+# generated sound takes (candidates); chosen files live in src/assets/sounds
+sounds/candidates/

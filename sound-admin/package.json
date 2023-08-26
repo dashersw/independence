@@ -1,0 +1,33 @@
+{
+  "name": "independence-sound-admin",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "File-based admin tool for the game's generated audio: prompt registry, ElevenLabs SFX/Music generation with a job queue, candidate audition, and promotion to the live game assets",
+  "scripts": {
+    "start": "node server/index.mjs",
+    "generate": "node server/generate.mjs",
+    "build": "parcel build ui/index.html --dist-dir public --public-url ./ --no-source-maps --cache-dir .parcel-cache",
+    "watch": "parcel watch ui/index.html --dist-dir public --public-url ./ --no-source-maps --cache-dir .parcel-cache"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "targets": {
+    "default": {
+      "context": "browser",
+      "distDir": "public",
+      "publicUrl": "./"
+    }
+  },
+  "browserslist": "last 3 Chrome versions, last 3 Safari versions, last 3 Firefox versions",
+  "dependencies": {
+    "express": "^5.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "parcel": "^2.12.0",
+    "process": "^0.11.10"
+  }
+}
