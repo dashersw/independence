@@ -1,0 +1,3636 @@
+{
+  "$schema": "campaign-map.v1",
+  "id": "turkish-war-of-independence",
+  "version": 1,
+  "title": "Turkish War of Independence",
+  "description": "Political, military and treaty events from May 1919 through the final Lausanne deadline.",
+  "calendar": {
+    "starts": {
+      "year": 1919,
+      "month": 5
+    },
+    "monthsPerRound": 3
+  },
+  "groups": {
+    "nationalPact": [
+      "edirne",
+      "istanbul",
+      "izmit",
+      "gelibolu",
+      "canakkale",
+      "sakarya",
+      "balikesir",
+      "usak",
+      "eskisehir",
+      "kutahya",
+      "ankara",
+      "konya",
+      "sivas",
+      "kastamonu",
+      "samsun",
+      "trabzon",
+      "erzurum",
+      "van",
+      "elazig",
+      "diyarbakir",
+      "izmir",
+      "aydin",
+      "antalya",
+      "isparta",
+      "adana",
+      "maras",
+      "hatay",
+      "kars",
+      "igdir",
+      "mosul"
+    ],
+    "westernProvinces": ["balikesir", "usak", "eskisehir", "kutahya", "sakarya", "izmir", "aydin"],
+    "occupiers": ["Greece", "Britain", "France", "Italy", "Armenia"],
+    "assemblySeats": ["ankara", "sivas"],
+    "armenianHomeland": ["gyumri", "yerevan", "vanadzor", "sevan"],
+    "easternCongress": ["erzurum", "van", "elazig", "diyarbakir", "sivas", "trabzon", "kars", "igdir"],
+    "mudanyaApproaches": ["izmit", "gelibolu", "canakkale"],
+    "mubadeleTurkish": ["izmir", "aydin", "balikesir", "canakkale"],
+    "mubadeleGreek": ["salonica", "kozani", "western-thrace"],
+    "mosulQuestion": ["baghdad", "mosul"],
+    "sheikhSaidProvinces": ["diyarbakir", "elazig", "erzurum", "van"],
+    "landingPowers": ["Britain", "France", "Greece"],
+    "landingSites": [
+      "lesbos",
+      "rhodes",
+      "izmir",
+      "aydin",
+      "balikesir",
+      "canakkale",
+      "gelibolu",
+      "edirne",
+      "antalya",
+      "adana",
+      "maras",
+      "hatay",
+      "aleppo"
+    ],
+    "straits": ["gelibolu", "canakkale"]
+  },
+  "variables": {
+    "assembly": {
+      "active": false,
+      "everConvened": false,
+      "reconveneTurns": 0
+    },
+    "britain": {
+      "stoodDown": false
+    },
+    "caliphate": {
+      "abolished": false
+    },
+    "conference": {
+      "pactHeldTurns": 0,
+      "rejectedAt": 0
+    },
+    "exhaustion": {
+      "round": 0
+    },
+    "government": {
+      "fortifyBonus": 0
+    },
+    "greatOffensive": {
+      "round": 0
+    },
+    "greece": {
+      "collapsed": false
+    },
+    "grants": {
+      "sovietAid2": false
+    },
+    "reinforcementPools": {
+      "Armenia": 0
+    },
+    "sakarya": {
+      "round": 0
+    },
+    "sanRemo": {
+      "completed": false
+    },
+    "sevres": {
+      "shockUntil": 0
+    },
+    "sovietAid": {
+      "first": {
+        "received": false
+      },
+      "moscow": {
+        "received": false
+      }
+    },
+    "tekalif": {
+      "until": 0
+    },
+    "treaties": {
+      "alexandropol": {
+        "signed": false
+      },
+      "kars": {
+        "signed": false
+      },
+      "ankara": {
+        "signed": false
+      }
+    },
+    "venizelos": {
+      "fell": false
+    },
+    "withdrawals": {
+      "Italy": false,
+      "France": false
+    }
+  },
+  "events": [
+    {
+      "id": "event.erzurumCongress",
+      "title": "Erzurum Congress",
+      "at": {
+        "year": 1919,
+        "month": 7,
+        "day": 23
+      },
+      "actor": "Turkey",
+      "category": "political",
+      "data": {
+        "provinces": ["sivas", "trabzon", "erzurum", "van", "elazig", "diyarbakir", "kars", "igdir"]
+      },
+      "when": [
+        {
+          "territories.erzurum.heldBy": "Turkey"
+        }
+      ],
+      "gate": {
+        "id": "erzurum.held",
+        "label": "Turkey holds Erzurum"
+      },
+      "then": {
+        "territories": [
+          {
+            "where": {
+              "slug": {
+                "$in": {
+                  "$group": "easternCongress"
+                }
+              },
+              "heldBy": "Turkey",
+              "entrenched": {
+                "$lt": 4
+              }
+            },
+            "set": {
+              "troops": {
+                "$add": ["$troops", 1]
+              },
+              "entrenched": {
+                "$add": ["$entrenched", 1]
+              },
+              "quietTurns": 0
+            }
+          }
+        ]
+      },
+      "outcome": {
+        "id": "erzurum.pulse",
+        "label": "Eastern provinces gain militia"
+      }
+    },
+    {
+      "id": "event.sivasCongress",
+      "title": "Sivas Congress",
+      "at": {
+        "year": 1919,
+        "month": 9,
+        "day": 4
+      },
+      "actor": "Turkey",
+      "category": "political",
+      "when": [
+        {
+          "territories.sivas.heldBy": "Turkey"
+        }
+      ],
+      "gate": {
+        "id": "sivas.held",
+        "label": "Turkey holds Sivas"
+      },
+      "then": {
+        "territories": [
+          {
+            "where": {
+              "heldBy": "Turkey",
+              "entrenched": {
+                "$lt": 4
+              }
+            },
+            "set": {
+              "troops": {
+                "$add": ["$troops", 1]
+              },
+              "entrenched": {
+                "$add": ["$entrenched", 1]
+              },
+              "quietTurns": 0
+            }
+          }
+        ]
+      },
+      "outcome": {
+        "id": "sivas.pulse",
+        "label": "Every Turkish province gains militia"
+      }
+    },
+    {
+      "id": "event.istanbulOccupied",
+      "title": "Occupation of İstanbul",
+      "at": {
+        "year": 1920,
+        "month": 3,
+        "day": 16
+      },
+      "actor": "Britain",
+      "category": "political",
+      "when": [
+        {
+          "territories.istanbul.heldBy": "Turkey"
+        }
+      ],
+      "gate": {
+        "id": "istanbul.occupation-window",
+        "label": "Within its three-round window and Turkey holds İstanbul"
+      },
+      "retry": {
+        "mode": "window",
+        "rounds": 3
+      },
+      "then": {
+        "territories": [
+          {
+            "where": {
+              "slug": "istanbul",
+              "heldBy": "Turkey"
+            },
+            "set": {
+              "heldBy": "Britain",
+              "troops": {
+                "$max": [
+                  1,
+                  {
+                    "$round": [
+                      {
+                        "$multiply": ["$troops", 0.5]
+                      },
+                      "down"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "cards": [
+          {
+            "faction": "Turkey",
+            "count": 1
+          }
+        ]
+      },
+      "outcome": {
+        "id": "istanbul.occupied",
+        "label": "Britain occupies İstanbul",
+        "writes": ["territory.istanbul"]
+      }
+    },
+    {
+      "id": "event.sanRemo",
+      "title": "Conference of San Remo",
+      "at": {
+        "year": 1920,
+        "month": 4,
+        "day": 19
+      },
+      "actor": "System",
+      "category": "political",
+      "then": {
+        "variables": {
+          "sanRemo.completed": true
+        }
+      },
+      "outcome": {
+        "id": "san-remo.thrace",
+        "label": "The Entente administration of Western Thrace ends"
+      }
+    },
+    {
+      "id": "event.tbmm",
+      "title": "Grand National Assembly",
+      "at": {
+        "year": 1920,
+        "month": 4,
+        "day": 23
+      },
+      "actor": "Turkey",
+      "category": "political",
+      "data": {
+        "fallbackAfterAttempts": 3
+      },
+      "when": [
+        {
+          "$or": [
+            {
+              "territories.ankara.heldBy": "Turkey"
+            },
+            {
+              "$and": [
+                {
+                  "event.attempts": {
+                    "$gte": 3
+                  }
+                },
+                {
+                  "territories.sivas.heldBy": "Turkey"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "gate": {
+        "id": "tbmm.seat",
+        "label": "Turkey holds Ankara, or Sivas after three delays"
+      },
+      "retry": {
+        "mode": "forever"
+      },
+      "vars": {
+        "date": "$presentation.currentDate",
+        "city": "$presentation.assemblySeat"
+      },
+      "then": {
+        "variables": {
+          "assembly.active": true,
+          "assembly.everConvened": true
+        }
+      },
+      "outcome": {
+        "id": "tbmm.convenes",
+        "label": "Assembly becomes active",
+        "writes": ["variables.assembly.active", "variables.assembly.everConvened"]
+      }
+    },
+    {
+      "id": "event.sevres",
+      "title": "Treaty of Sèvres",
+      "at": {
+        "year": 1920,
+        "month": 8,
+        "day": 10
+      },
+      "category": "treaty",
+      "data": {
+        "shockRounds": 2
+      },
+      "vars": {
+        "n": "$event.data.shockRounds"
+      },
+      "then": {
+        "variables": {
+          "sevres.shockUntil": {
+            "$add": ["$game.round", "$event.data.shockRounds"]
+          }
+        }
+      },
+      "outcome": {
+        "id": "sevres.shock",
+        "label": "Recruitment shock begins",
+        "writes": ["variables.sevres.shockUntil"]
+      }
+    },
+    {
+      "id": "event.ethem",
+      "title": "Çerkes Ethem revolt",
+      "at": {
+        "year": 1920,
+        "month": 12
+      },
+      "actor": "Turkey",
+      "category": "battle",
+      "when": [
+        {
+          "variables.assembly.active": true
+        },
+        {
+          "territories": {
+            "$some": {
+              "slug": {
+                "$in": {
+                  "$group": "westernProvinces"
+                }
+              },
+              "heldBy": "Turkey",
+              "troops": {
+                "$gt": 1
+              }
+            }
+          }
+        }
+      ],
+      "gate": {
+        "id": "ethem.ready",
+        "label": "Assembly is active and Turkey holds an eligible western province",
+        "requires": ["event.tbmm"]
+      },
+      "then": {
+        "territories": [
+          {
+            "where": {
+              "slug": {
+                "$in": {
+                  "$group": "westernProvinces"
+                }
+              },
+              "heldBy": "Turkey",
+              "troops": {
+                "$gt": 1
+              }
+            },
+            "select": {
+              "$sample": {
+                "fraction": 0.5,
+                "round": "up"
+              }
+            },
+            "set": {
+              "troops": {
+                "$round": [
+                  {
+                    "$multiply": ["$troops", 0.5]
+                  },
+                  "down"
+                ]
+              },
+              "entrenched": 0,
+              "quietTurns": 0
+            }
+          }
+        ]
+      },
+      "outcome": {
+        "id": "ethem.revolt",
+        "label": "Western garrisons revolt"
+      }
+    },
+    {
+      "id": "event.inonu",
+      "title": "Second Battle of İnönü",
+      "at": {
+        "year": 1921,
+        "month": 4
+      },
+      "actor": "Turkey",
+      "category": "battle",
+      "data": {
+        "greekLosses": 3
+      },
+      "when": [
+        {
+          "variables.assembly.active": true
+        },
+        {
+          "territories.eskisehir.heldBy": "Turkey"
+        },
+        {
+          "territories": {
+            "$some": {
+              "heldBy": "Greece",
+              "slug": {
+                "$in": {
+                  "$group": "nationalPact"
+                }
+              }
+            }
+          }
+        },
+        {
+          "variables.greece.collapsed": {
+            "$ne": true
+          }
+        }
+      ],
+      "gate": {
+        "id": "inonu.front",
+        "label": "Assembly active, Greece fighting, Turkey holds Eskişehir",
+        "requires": ["event.tbmm"]
+      },
+      "retry": {
+        "mode": "window",
+        "rounds": 3
+      },
+      "then": {
+        "territories": [
+          {
+            "where": {
+              "heldBy": "Greece",
+              "adjacent": {
+                "$some": {
+                  "slug": "eskisehir"
+                }
+              }
+            },
+            "select": {
+              "$sort": {
+                "troops": "desc"
+              },
+              "$limit": 1
+            },
+            "set": {
+              "troops": {
+                "$max": [
+                  1,
+                  {
+                    "$subtract": ["$troops", 3]
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "cards": [
+          {
+            "faction": "Turkey"
+          }
+        ]
+      },
+      "outcome": {
+        "id": "inonu.stand",
+        "label": "Greek army loses units at Eskişehir"
+      }
+    },
+    {
+      "id": "event.greekOffensive",
+      "title": "Greek summer offensive",
+      "at": {
+        "year": 1921,
+        "month": 7
+      },
+      "actor": "Greece",
+      "category": "battle",
+      "data": {
+        "troopsPerFront": 2
+      },
+      "when": [
+        {
+          "variables.greece.collapsed": {
+            "$ne": true
+          }
+        },
+        {
+          "territories": {
+            "$some": {
+              "heldBy": "Greece",
+              "slug": {
+                "$in": {
+                  "$group": "nationalPact"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "gate": {
+        "id": "greek-offensive.ready",
+        "label": "Greece still fights in Anatolia and has not collapsed"
+      },
+      "retry": {
+        "mode": "window",
+        "rounds": 3
+      },
+      "then": {
+        "territories": [
+          {
+            "where": {
+              "heldBy": "Greece",
+              "slug": {
+                "$in": {
+                  "$group": "nationalPact"
+                }
+              },
+              "adjacent": {
+                "$some": {
+                  "heldByAlliance": "turkey"
+                }
+              }
+            },
+            "set": {
+              "troops": {
+                "$add": ["$troops", 2]
+              },
+              "entrenched": {
+                "$min": [
+                  6,
+                  {
+                    "$add": ["$entrenched", 1]
+                  }
+                ]
+              },
+              "quietTurns": 0
+            }
+          }
+        ]
+      },
+      "outcome": {
+        "id": "greek-offensive.surge",
+        "label": "Greek Anatolian front is reinforced and entrenched"
+      }
+    },
+    {
+      "id": "event.sakarya",
+      "title": "Battle of Sakarya",
+      "at": {
+        "year": 1921,
+        "month": 9,
+        "day": 13
+      },
+      "actor": "Turkey",
+      "category": "battle",
+      "data": {
+        "freezeRounds": 2,
+        "greekAttackDice": 2
+      },
+      "vars": {
+        "n": 2
+      },
+      "when": [
+        {
+          "variables.assembly.active": true
+        },
+        {
+          "territories.ankara.heldBy": "Turkey"
+        },
+        {
+          "variables.greece.collapsed": {
+            "$ne": true
+          }
+        },
+        {
+          "territories": {
+            "$some": {
+              "heldBy": "Greece",
+              "slug": {
+                "$in": {
+                  "$group": "nationalPact"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "gate": {
+        "id": "sakarya.front",
+        "label": "Assembly active, Greece fighting, Turkey holds Ankara",
+        "requires": ["event.tbmm"]
+      },
+      "retry": {
+        "mode": "window",
+        "rounds": 3
+      },
+      "then": {
+        "variables": {
+          "sakarya.round": "$game.round"
+        }
+      },
+      "outcome": {
+        "id": "sakarya.stand",
+        "label": "Greek offensive freezes and permanently weakens",
+        "writes": ["variables.sakarya.round"]
+      }
+    },
+    {
+      "id": "event.karsTreaty",
+      "title": "Treaty of Kars",
+      "at": {
+        "year": 1921,
+        "month": 10,
+        "day": 13
+      },
+      "actor": "Turkey",
+      "category": "treaty",
+      "when": [
+        {
+          "variables.assembly.active": true
+        },
+        {
+          "variables.treaties.alexandropol.signed": true
+        },
+        {
+          "territories": {
+            "$none": {
+              "slug": {
+                "$in": {
+                  "$group": "armenianHomeland"
+                }
+              },
+              "heldBy": {
+                "$ne": "Armenia"
+              }
+            }
+          }
+        },
+        {
+          "territories": {
+            "$none": {
+              "slug": {
+                "$in": {
+                  "$group": "nationalPact"
+                }
+              },
+              "heldBy": "Armenia"
+            }
+          }
+        }
+      ],
+      "gate": {
+        "id": "kars.ready",
+        "label": "Assembly active, Alexandropol signed, Armenian homeland restored and National Pact clear",
+        "requires": ["event.tbmm", "event.alexandropol"]
+      },
+      "retry": {
+        "mode": "forever"
+      },
+      "then": {
+        "variables": {
+          "treaties.kars.signed": true
+        },
+        "territories": [
+          {
+            "where": {
+              "heldBy": "Armenia",
+              "slug": {
+                "$nin": {
+                  "$group": "armenianHomeland"
+                }
+              }
+            },
+            "set": {
+              "heldBy": "$homelandOwner",
+              "troops": 1
+            }
+          }
+        ]
+      },
+      "outcome": {
+        "id": "kars.signed",
+        "label": "Borders settle and both sides are confined by the peace",
+        "writes": ["variables.treaties.kars.signed"]
+      }
+    },
+    {
+      "id": "event.mudanya",
+      "title": "Armistice of Mudanya",
+      "at": {
+        "year": 1922,
+        "month": 10,
+        "day": 11
+      },
+      "actor": "Britain",
+      "category": "treaty",
+      "data": {
+        "approaches": ["izmit", "gelibolu", "canakkale"]
+      },
+      "when": [
+        {
+          "variables.assembly.active": true
+        },
+        {
+          "territories.istanbul.heldBy": "Britain"
+        },
+        {
+          "territories": {
+            "$none": {
+              "slug": {
+                "$in": {
+                  "$group": "mudanyaApproaches"
+                }
+              },
+              "heldBy": {
+                "$ne": "Turkey"
+              }
+            }
+          }
+        }
+      ],
+      "gate": {
+        "id": "mudanya.ready",
+        "label": "Assembly active, Turkey holds the approaches, Britain holds İstanbul",
+        "requires": ["event.tbmm"]
+      },
+      "retry": {
+        "mode": "forever"
+      },
+      "then": {
+        "territories": [
+          {
+            "where": {
+              "heldBy": "Britain",
+              "slug": {
+                "$ne": "istanbul"
+              }
+            },
+            "set": {
+              "troops": {
+                "$add": [
+                  "$troops",
+                  {
+                    "$round": [
+                      {
+                        "$divide": ["$territories.istanbul.troops", "$selection.count"]
+                      },
+                      "down"
+                    ]
+                  },
+                  {
+                    "$if": [
+                      {
+                        "$lt": [
+                          "$selection.index",
+                          {
+                            "$mod": ["$territories.istanbul.troops", "$selection.count"]
+                          }
+                        ]
+                      },
+                      1,
+                      0
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "where": {
+              "slug": "istanbul",
+              "heldBy": "Britain"
+            },
+            "set": {
+              "heldBy": "Turkey",
+              "troops": 1
+            }
+          }
+        ]
+      },
+      "outcome": {
+        "id": "mudanya.armistice",
+        "label": "İstanbul returns to Turkey and Britain redeploys",
+        "writes": ["territory.istanbul"]
+      }
+    },
+    {
+      "id": "event.lloydGeorge",
+      "title": "Lloyd George falls",
+      "at": {
+        "year": 1922,
+        "month": 10,
+        "day": 19
+      },
+      "actor": "Britain",
+      "category": "political",
+      "when": [
+        {
+          "factions.Britain.territoryCount": {
+            "$lt": {
+              "$multiply": ["$factions.Britain.setupTerritoryCount", 2]
+            }
+          }
+        }
+      ],
+      "gate": {
+        "id": "lloyd-george.not-ascendant",
+        "label": "Britain is not ascendant"
+      },
+      "retry": {
+        "mode": "forever"
+      },
+      "then": {
+        "variables": {
+          "britain.stoodDown": true
+        }
+      },
+      "outcome": {
+        "id": "lloyd-george.stand-down",
+        "label": "Britain becomes passive",
+        "writes": ["variables.britain.stoodDown"]
+      }
+    },
+    {
+      "id": "event.sultanate",
+      "title": "Sultanate abolished",
+      "at": {
+        "year": 1922,
+        "month": 11,
+        "day": 1
+      },
+      "actor": "Turkey",
+      "category": "political",
+      "data": {
+        "fortifyBonus": 1
+      },
+      "when": [
+        {
+          "variables.assembly.active": true
+        }
+      ],
+      "gate": {
+        "id": "sultanate.assembly",
+        "label": "Assembly is active",
+        "requires": ["event.tbmm"]
+      },
+      "retry": {
+        "mode": "forever"
+      },
+      "then": {
+        "variables": {
+          "government.fortifyBonus": {
+            "$add": ["$variables.government.fortifyBonus", 1]
+          }
+        }
+      },
+      "outcome": {
+        "id": "sultanate.abolished",
+        "label": "Turkey gains a fortify move",
+        "writes": ["variables.government.fortifyBonus"]
+      }
+    },
+    {
+      "id": "event.greekCollapse",
+      "title": "Greek army collapses",
+      "at": {
+        "year": 1923,
+        "month": 1
+      },
+      "actor": "Greece",
+      "category": "battle",
+      "when": [
+        {
+          "factions.Greece.territoryCount": {
+            "$lt": {
+              "$multiply": ["$factions.Greece.setupTerritoryCount", 2]
+            }
+          }
+        }
+      ],
+      "gate": {
+        "id": "greek-collapse.not-ascendant",
+        "label": "Greece is not ascendant"
+      },
+      "retry": {
+        "mode": "forever"
+      },
+      "then": {
+        "variables": {
+          "greece.collapsed": true
+        }
+      },
+      "outcome": {
+        "id": "greek-collapse.army",
+        "label": "Greece fields no new units",
+        "writes": ["variables.greece.collapsed"]
+      }
+    },
+    {
+      "id": "event.mubadele",
+      "title": "Population exchange",
+      "at": {
+        "year": 1923,
+        "month": 1,
+        "day": 30
+      },
+      "category": "treaty",
+      "data": {
+        "turkish": ["izmir", "aydin", "balikesir", "canakkale"],
+        "greek": ["salonica", "kozani", "western-thrace"]
+      },
+      "when": [
+        {
+          "variables.assembly.active": true
+        }
+      ],
+      "gate": {
+        "id": "mubadele.assembly",
+        "label": "Assembly is active",
+        "requires": ["event.tbmm"]
+      },
+      "retry": {
+        "mode": "forever"
+      },
+      "then": {
+        "territories": [
+          {
+            "where": {
+              "slug": {
+                "$in": {
+                  "$group": "mubadeleTurkish"
+                }
+              },
+              "heldBy": "Turkey"
+            },
+            "set": {
+              "troops": {
+                "$add": ["$troops", 1]
+              }
+            }
+          },
+          {
+            "where": {
+              "slug": {
+                "$in": {
+                  "$group": "mubadeleGreek"
+                }
+              },
+              "heldBy": "Greece"
+            },
+            "set": {
+              "troops": {
+                "$max": [
+                  1,
+                  {
+                    "$subtract": ["$troops", 1]
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "outcome": {
+        "id": "mubadele.exchange",
+        "label": "Aegean coastal garrisons are resettled"
+      }
+    },
+    {
+      "id": "event.caliphate",
+      "title": "Caliphate abolished",
+      "at": {
+        "year": 1924,
+        "month": 3,
+        "day": 3
+      },
+      "actor": "Turkey",
+      "category": "political",
+      "when": [
+        {
+          "variables.assembly.active": true
+        }
+      ],
+      "gate": {
+        "id": "caliphate.assembly",
+        "label": "Assembly is active",
+        "requires": ["event.tbmm"]
+      },
+      "retry": {
+        "mode": "forever"
+      },
+      "then": {
+        "variables": {
+          "caliphate.abolished": true
+        },
+        "cards": [
+          {
+            "faction": "Turkey"
+          }
+        ]
+      },
+      "outcome": {
+        "id": "caliphate.abolished",
+        "label": "Caliphate state is abolished and Turkey draws a card",
+        "writes": ["variables.caliphate.abolished"]
+      }
+    },
+    {
+      "id": "event.mosulQuestion",
+      "title": "Mosul question",
+      "at": {
+        "year": 1924,
+        "month": 10
+      },
+      "category": "treaty",
+      "data": {
+        "territories": ["baghdad", "mosul"]
+      },
+      "when": [
+        {
+          "territories": {
+            "$some": {
+              "slug": {
+                "$in": {
+                  "$group": "mosulQuestion"
+                }
+              },
+              "heldBy": "Britain"
+            }
+          }
+        }
+      ],
+      "gate": {
+        "id": "mosul.british-award",
+        "label": "Britain holds Baghdad or Mosul"
+      },
+      "then": {
+        "territories": [
+          {
+            "where": {
+              "slug": {
+                "$in": {
+                  "$group": "mosulQuestion"
+                }
+              },
+              "heldBy": "Britain"
+            },
+            "set": {
+              "heldBy": "Iraq"
+            }
+          }
+        ]
+      },
+      "outcome": {
+        "id": "mosul.settled",
+        "label": "British Mesopotamian territory passes to Iraq"
+      }
+    },
+    {
+      "id": "event.sheikhSaid",
+      "title": "Sheikh Said rebellion",
+      "at": {
+        "year": 1925,
+        "month": 2,
+        "day": 13
+      },
+      "actor": "Turkey",
+      "category": "battle",
+      "data": {
+        "provinces": ["diyarbakir", "elazig", "erzurum", "van"]
+      },
+      "when": [
+        {
+          "variables.caliphate.abolished": true
+        },
+        {
+          "territories": {
+            "$some": {
+              "slug": {
+                "$in": {
+                  "$group": "sheikhSaidProvinces"
+                }
+              },
+              "heldBy": "Turkey",
+              "troops": {
+                "$gt": 1
+              }
+            }
+          }
+        }
+      ],
+      "gate": {
+        "id": "sheikh-said.ready",
+        "label": "Caliphate abolished and Turkey holds an affected eastern province",
+        "requires": ["event.caliphate"]
+      },
+      "retry": {
+        "mode": "forever"
+      },
+      "then": {
+        "territories": [
+          {
+            "where": {
+              "slug": {
+                "$in": {
+                  "$group": "sheikhSaidProvinces"
+                }
+              },
+              "heldBy": "Turkey",
+              "troops": {
+                "$gt": 1
+              }
+            },
+            "set": {
+              "troops": {
+                "$subtract": [
+                  "$troops",
+                  {
+                    "$round": [
+                      {
+                        "$multiply": ["$troops", 0.5]
+                      },
+                      "down"
+                    ]
+                  }
+                ]
+              },
+              "entrenched": 0,
+              "quietTurns": 0
+            }
+          }
+        ]
+      },
+      "outcome": {
+        "id": "sheikh-said.revolt",
+        "label": "Eastern garrisons and entrenchments are halved"
+      }
+    },
+    {
+      "id": "event.venizelos",
+      "title": "Venizelos falls",
+      "at": {
+        "year": 1920,
+        "month": 11
+      },
+      "actor": "Greece",
+      "category": "political",
+      "when": [
+        {
+          "variables.assembly.active": true
+        },
+        {
+          "territories.ankara.heldBy": {
+            "$ne": "Greece"
+          }
+        }
+      ],
+      "gate": {
+        "id": "venizelos.ready",
+        "label": "Assembly is active and Greece does not hold Ankara",
+        "requires": ["event.tbmm"]
+      },
+      "retry": {
+        "mode": "forever"
+      },
+      "then": {
+        "variables": {
+          "venizelos.fell": true
+        }
+      },
+      "outcome": {
+        "id": "venizelos.falls",
+        "label": "Salonica levy stops",
+        "writes": ["variables.venizelos.fell"]
+      }
+    },
+    {
+      "id": "event.alexandropol",
+      "title": "Treaty of Alexandropol",
+      "at": {
+        "year": 1920,
+        "month": 12
+      },
+      "actor": "Armenia",
+      "category": "treaty",
+      "data": {
+        "remobilizationTroops": 20
+      },
+      "vars": {
+        "n": 20
+      },
+      "when": [
+        {
+          "variables.assembly.active": true
+        },
+        {
+          "factions.Armenia.territoryCount": {
+            "$lt": {
+              "$multiply": ["$factions.Armenia.setupTerritoryCount", 2]
+            }
+          }
+        }
+      ],
+      "gate": {
+        "id": "alexandropol.ready",
+        "label": "Assembly is active and Armenia is not ascendant",
+        "requires": ["event.tbmm"]
+      },
+      "retry": {
+        "mode": "forever"
+      },
+      "then": {
+        "variables": {
+          "treaties.alexandropol.signed": true
+        },
+        "turn": {
+          "reinforcementsLeft": {
+            "$if": [
+              {
+                "$eq": ["$turn.currentFaction", "Armenia"]
+              },
+              0,
+              "$turn.reinforcementsLeft"
+            ]
+          }
+        }
+      },
+      "outcome": {
+        "id": "alexandropol.signed",
+        "label": "Armenia makes peace and demobilizes",
+        "writes": ["variables.treaties.alexandropol.signed"]
+      }
+    },
+    {
+      "id": "event.italyWithdraws",
+      "title": "Italy withdraws",
+      "at": {
+        "year": 1921,
+        "month": 6
+      },
+      "actor": "Italy",
+      "category": "treaty",
+      "then": {
+        "variables": {
+          "withdrawals.Italy": true
+        },
+        "territories": [
+          {
+            "where": {
+              "heldBy": "Italy",
+              "homelandOwner": {
+                "$ne": "Italy"
+              },
+              "factions.Italy.peaceBroken": false
+            },
+            "set": {
+              "heldBy": "$homelandOwner",
+              "troops": 1
+            }
+          }
+        ]
+      },
+      "outcome": {
+        "id": "italy.withdraws",
+        "label": "Italian conquests return to homeland owners",
+        "writes": ["variables.withdrawals.Italy"]
+      }
+    },
+    {
+      "id": "event.ankaraAgreement",
+      "title": "Ankara Agreement",
+      "at": {
+        "year": 1921,
+        "month": 10
+      },
+      "actor": "France",
+      "category": "treaty",
+      "when": [
+        {
+          "variables.assembly.active": true
+        }
+      ],
+      "gate": {
+        "id": "ankara-agreement.assembly",
+        "label": "Assembly is active",
+        "requires": ["event.tbmm"]
+      },
+      "retry": {
+        "mode": "forever"
+      },
+      "then": {
+        "variables": {
+          "treaties.ankara.signed": true,
+          "withdrawals.France": true
+        },
+        "territories": [
+          {
+            "where": {
+              "heldBy": "France",
+              "homelandOwner": {
+                "$ne": "France"
+              },
+              "factions.France.peaceBroken": false
+            },
+            "set": {
+              "heldBy": "$homelandOwner",
+              "troops": 1
+            }
+          }
+        ]
+      },
+      "outcome": {
+        "id": "ankara-agreement.signed",
+        "label": "France makes peace and returns its conquests",
+        "writes": ["variables.treaties.ankara.signed"]
+      }
+    },
+    {
+      "id": "event.exhaustion",
+      "title": "Occupation exhaustion",
+      "at": {
+        "year": 1922,
+        "month": 8
+      },
+      "category": "political",
+      "when": [
+        {
+          "factions": {
+            "$none": {
+              "name": {
+                "$in": {
+                  "$group": "occupiers"
+                }
+              },
+              "territoryCount": {
+                "$gte": {
+                  "$multiply": ["$setupTerritoryCount", 2]
+                }
+              }
+            }
+          }
+        }
+      ],
+      "gate": {
+        "id": "exhaustion.no-ascendant",
+        "label": "No occupying power is ascendant"
+      },
+      "retry": {
+        "mode": "forever"
+      },
+      "then": {
+        "variables": {
+          "exhaustion.round": "$game.round"
+        }
+      },
+      "outcome": {
+        "id": "exhaustion.begins",
+        "label": "Occupation reinforcement and entrenchment end",
+        "writes": ["variables.exhaustion.round"]
+      }
+    },
+    {
+      "id": "event.sovietAid1",
+      "title": "First Soviet shipment",
+      "at": {
+        "year": 1920,
+        "month": 9
+      },
+      "actor": "Turkey",
+      "category": "supply",
+      "then": {
+        "variables": {
+          "sovietAid.first.received": true
+        },
+        "turn": {
+          "reinforcementsLeft": {
+            "$if": [
+              {
+                "$and": [
+                  {
+                    "turn.currentFaction": "Turkey"
+                  },
+                  {
+                    "turn.phase": "reinforce"
+                  }
+                ]
+              },
+              {
+                "$add": ["$turn.reinforcementsLeft", 1]
+              },
+              "$turn.reinforcementsLeft"
+            ]
+          }
+        }
+      },
+      "outcome": {
+        "id": "soviet-aid-1.received",
+        "label": "Turkish standing levy improves",
+        "writes": ["variables.sovietAid.first.received"]
+      }
+    },
+    {
+      "id": "event.sovietAid2",
+      "title": "Treaty of Moscow",
+      "at": {
+        "year": 1921,
+        "month": 3,
+        "day": 16
+      },
+      "actor": "Turkey",
+      "category": "supply",
+      "data": {
+        "troops": 5
+      },
+      "when": [
+        {
+          "variables.assembly.active": true
+        }
+      ],
+      "gate": {
+        "id": "soviet-aid-2.assembly",
+        "label": "Assembly is active",
+        "requires": ["event.tbmm"]
+      },
+      "retry": {
+        "mode": "forever"
+      },
+      "then": {
+        "variables": {
+          "sovietAid.moscow.received": true,
+          "grants.sovietAid2": {
+            "$and": [
+              {
+                "turn.currentFaction": "Turkey"
+              },
+              {
+                "turn.phase": "reinforce"
+              }
+            ]
+          }
+        },
+        "turn": {
+          "reinforcementsLeft": {
+            "$if": [
+              {
+                "$and": [
+                  {
+                    "turn.currentFaction": "Turkey"
+                  },
+                  {
+                    "turn.phase": "reinforce"
+                  }
+                ]
+              },
+              {
+                "$add": ["$turn.reinforcementsLeft", 5]
+              },
+              "$turn.reinforcementsLeft"
+            ]
+          }
+        }
+      },
+      "outcome": {
+        "id": "soviet-aid-2.received",
+        "label": "Turkey receives five units",
+        "writes": ["variables.sovietAid.moscow.received"]
+      }
+    },
+    {
+      "id": "event.tekalif",
+      "title": "Tekâlif-i Milliye",
+      "at": {
+        "year": 1921,
+        "month": 8
+      },
+      "actor": "Turkey",
+      "category": "political",
+      "data": {
+        "durationRounds": 3,
+        "levyPenalty": 3,
+        "pressedExchanges": 2
+      },
+      "vars": {
+        "n": 3,
+        "cost": 3
+      },
+      "when": [
+        {
+          "variables.assembly.active": true
+        },
+        {
+          "territories.ankara.heldBy": "Turkey"
+        }
+      ],
+      "gate": {
+        "id": "tekalif.ready",
+        "label": "Assembly is active and Turkey holds Ankara",
+        "requires": ["event.tbmm"]
+      },
+      "retry": {
+        "mode": "forever"
+      },
+      "choices": [
+        {
+          "key": "requisition",
+          "label": "Proclaim the orders",
+          "then": {
+            "variables": {
+              "tekalif.until": {
+                "$add": ["$game.round", 2]
+              }
+            }
+          }
+        },
+        {
+          "key": "decline",
+          "label": "Decline the orders"
+        }
+      ]
+    },
+    {
+      "id": "event.greatOffensive",
+      "title": "Great Offensive",
+      "at": {
+        "year": 1922,
+        "month": 8,
+        "day": 26
+      },
+      "actor": "Turkey",
+      "category": "battle",
+      "when": [
+        {
+          "variables.assembly.active": true
+        },
+        {
+          "territories": {
+            "$some": {
+              "slug": {
+                "$in": {
+                  "$group": "nationalPact"
+                }
+              },
+              "heldBy": {
+                "$in": {
+                  "$group": "occupiers"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "gate": {
+        "id": "great-offensive.ready",
+        "label": "Assembly is active and an occupier remains in the National Pact",
+        "requires": ["event.tbmm"]
+      },
+      "retry": {
+        "mode": "forever"
+      },
+      "then": {
+        "variables": {
+          "greatOffensive.round": "$game.round"
+        }
+      },
+      "outcome": {
+        "id": "great-offensive.launched",
+        "label": "Full mobilization and three-die combat begin",
+        "writes": ["variables.greatOffensive.round"]
+      }
+    },
+    {
+      "id": "event.conference",
+      "title": "Lausanne Conference",
+      "at": {
+        "year": 1923,
+        "month": 7,
+        "day": 24
+      },
+      "category": "treaty",
+      "data": {
+        "pactHoldRounds": 3,
+        "landingPowers": ["Britain", "France", "Greece"],
+        "landingsPerRound": 2,
+        "firstWaveTroops": 30,
+        "laterWaveTroops": 10,
+        "landingSites": [
+          "lesbos",
+          "rhodes",
+          "izmir",
+          "aydin",
+          "balikesir",
+          "canakkale",
+          "gelibolu",
+          "edirne",
+          "antalya",
+          "adana",
+          "maras",
+          "hatay",
+          "aleppo"
+        ],
+        "straits": ["gelibolu", "canakkale"]
+      },
+      "when": [
+        {
+          "variables.assembly.active": true
+        },
+        {
+          "game.phase": {
+            "$ne": "gameover"
+          }
+        },
+        {
+          "$or": [
+            {
+              "variables.conference.rejectedAt": {
+                "$exists": false
+              }
+            },
+            {
+              "variables.conference.rejectedAt": 0
+            }
+          ]
+        },
+        {
+          "game.pactProgress": {
+            "$lt": {
+              "$count": {
+                "$group": "nationalPact"
+              }
+            }
+          }
+        },
+        {
+          "factions": {
+            "$some": {
+              "name": {
+                "$in": {
+                  "$group": "landingPowers"
+                }
+              },
+              "eliminated": false
+            }
+          }
+        }
+      ],
+      "gate": {
+        "id": "conference.open",
+        "label": "Assembly is active and negotiated terms are available",
+        "requires": ["event.tbmm"]
+      },
+      "retry": {
+        "mode": "forever"
+      },
+      "vars": {
+        "held": "$game.pactProgress",
+        "total": {
+          "$count": {
+            "$group": "nationalPact"
+          }
+        }
+      },
+      "choices": [
+        {
+          "key": "accept",
+          "label": "Sign the treaty",
+          "then": {
+            "game": {
+              "phase": "gameover",
+              "endedRound": "$game.round",
+              "winner": {
+                "$if": [
+                  {
+                    "$eq": [
+                      "$game.pactProgress",
+                      {
+                        "$count": {
+                          "$group": "nationalPact"
+                        }
+                      }
+                    ]
+                  },
+                  "Turkey",
+                  null
+                ]
+              },
+              "humanDefeated": {
+                "$ne": [
+                  "$game.pactProgress",
+                  {
+                    "$count": {
+                      "$group": "nationalPact"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "key": "reject",
+          "label": "Fight on",
+          "then": {
+            "variables": {
+              "conference.rejectedAt": "$game.round",
+              "conference.pactHeldTurns": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event.lausanne",
+      "title": "Final Lausanne settlement",
+      "at": {
+        "year": 1925,
+        "month": 10
+      },
+      "category": "deadline",
+      "then": {
+        "game": {
+          "phase": "gameover",
+          "endedRound": "$game.round",
+          "winner": {
+            "$if": [
+              {
+                "$eq": [
+                  "$game.pactProgress",
+                  {
+                    "$count": {
+                      "$group": "nationalPact"
+                    }
+                  }
+                ]
+              },
+              "Turkey",
+              null
+            ]
+          },
+          "humanDefeated": {
+            "$ne": [
+              "$game.pactProgress",
+              {
+                "$count": {
+                  "$group": "nationalPact"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "outcome": {
+        "id": "lausanne.settled",
+        "label": "End the campaign at the outer deadline",
+        "writes": ["phase", "endedRound"]
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule.reinforcements.turkey-foundation",
+      "on": "reinforcements.calculate",
+      "priority": 10,
+      "when": [
+        {
+          "action.faction": "Turkey"
+        }
+      ],
+      "then": {
+        "result": {
+          "value": {
+            "$max": [
+              2,
+              {
+                "$round": [
+                  {
+                    "$divide": [
+                      "$factions.Turkey.territoryCount",
+                      {
+                        "$if": [
+                          {
+                            "variables.assembly.active": true
+                          },
+                          1.5,
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  "down"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.reinforcements.turkey-soviet-equipment",
+      "on": "reinforcements.calculate",
+      "priority": 20,
+      "when": [
+        {
+          "action.faction": "Turkey"
+        }
+      ],
+      "then": {
+        "result": {
+          "value": {
+            "$add": [
+              "$result.value",
+              {
+                "$if": [
+                  {
+                    "variables.sovietAid.first.received": true
+                  },
+                  3,
+                  2
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.reinforcements.sevres",
+      "on": "reinforcements.calculate",
+      "priority": 30,
+      "when": [
+        {
+          "action.faction": "Turkey"
+        },
+        {
+          "variables.sevres.shockUntil": {
+            "$gt": 0
+          }
+        }
+      ],
+      "then": {
+        "result": {
+          "value": {
+            "$if": [
+              {
+                "game.round": {
+                  "$lt": "$variables.sevres.shockUntil"
+                }
+              },
+              {
+                "$max": [
+                  2,
+                  {
+                    "$round": [
+                      {
+                        "$divide": ["$result.value", 2]
+                      },
+                      "down"
+                    ]
+                  }
+                ]
+              },
+              {
+                "$add": ["$result.value", 1]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.reinforcements.turkey-exhaustion",
+      "on": "reinforcements.calculate",
+      "priority": 40,
+      "when": [
+        {
+          "action.faction": "Turkey"
+        }
+      ],
+      "then": {
+        "result": {
+          "value": {
+            "$max": [
+              2,
+              {
+                "$round": [
+                  {
+                    "$multiply": [
+                      "$result.value",
+                      {
+                        "$if": [
+                          {
+                            "variables.greatOffensive.round": {
+                              "$gt": 0
+                            }
+                          },
+                          1,
+                          {
+                            "$if": [
+                              {
+                                "variables.assembly.active": true
+                              },
+                              0.9,
+                              0.75
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "down"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.reinforcements.tekalif-cost",
+      "on": "reinforcements.calculate",
+      "priority": 50,
+      "when": [
+        {
+          "action.faction": "Turkey"
+        },
+        {
+          "variables.tekalif.until": {
+            "$gte": "$game.round"
+          }
+        }
+      ],
+      "then": {
+        "result": {
+          "value": {
+            "$max": [
+              2,
+              {
+                "$subtract": ["$result.value", 3]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.reinforcements.britain-demobilization",
+      "on": "reinforcements.calculate",
+      "priority": 10,
+      "when": [
+        {
+          "action.faction": "Britain"
+        }
+      ],
+      "then": {
+        "result": {
+          "value": {
+            "$max": [
+              2,
+              {
+                "$subtract": ["$result.value", 2]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.reinforcements.bulgaria-cap",
+      "on": "reinforcements.calculate",
+      "priority": 10,
+      "when": [
+        {
+          "action.faction": "Bulgaria"
+        }
+      ],
+      "then": {
+        "result": {
+          "value": {
+            "$min": ["$result.value", 2]
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.reinforcements.greek-collapse",
+      "on": "reinforcements.calculate",
+      "priority": 20,
+      "when": [
+        {
+          "action.faction": "Greece"
+        },
+        {
+          "variables.greece.collapsed": true
+        }
+      ],
+      "then": {
+        "result": {
+          "value": {
+            "$max": [
+              1,
+              {
+                "$round": [
+                  {
+                    "$divide": ["$factions.Greece.homeTerritoryCount", 3]
+                  },
+                  "down"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.reinforcements.sakarya",
+      "on": "reinforcements.calculate",
+      "priority": 21,
+      "when": [
+        {
+          "action.faction": "Greece"
+        },
+        {
+          "variables.greece.collapsed": {
+            "$ne": true
+          }
+        },
+        {
+          "variables.sakarya.round": {
+            "$gt": 0
+          }
+        }
+      ],
+      "then": {
+        "result": {
+          "value": {
+            "$max": [
+              1,
+              {
+                "$subtract": ["$result.value", 1]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.reinforcements.alexandropol",
+      "on": "reinforcements.calculate",
+      "priority": 20,
+      "when": [
+        {
+          "action.faction": "Armenia"
+        },
+        {
+          "variables.treaties.alexandropol.signed": true
+        },
+        {
+          "factions.Armenia.peaceBroken": false
+        }
+      ],
+      "then": {
+        "result": {
+          "value": 0
+        }
+      }
+    },
+    {
+      "id": "rule.reinforcements.italian-withdrawal",
+      "on": "reinforcements.calculate",
+      "priority": 20,
+      "when": [
+        {
+          "action.faction": "Italy"
+        },
+        {
+          "variables.withdrawals.Italy": true
+        },
+        {
+          "factions.Italy.peaceBroken": false
+        }
+      ],
+      "then": {
+        "result": {
+          "value": 0
+        }
+      }
+    },
+    {
+      "id": "rule.reinforcements.ankara-agreement",
+      "on": "reinforcements.calculate",
+      "priority": 20,
+      "when": [
+        {
+          "action.faction": "France"
+        },
+        {
+          "variables.treaties.ankara.signed": true
+        },
+        {
+          "factions.France.peaceBroken": false
+        }
+      ],
+      "then": {
+        "result": {
+          "value": {
+            "$round": [
+              {
+                "$divide": ["$result.value", 2]
+              },
+              "down"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.reinforcements.occupation-exhaustion",
+      "on": "reinforcements.calculate",
+      "priority": 100,
+      "when": [
+        {
+          "action.alliance": {
+            "$ne": "turkey"
+          }
+        },
+        {
+          "variables.exhaustion.round": {
+            "$gt": 0
+          }
+        },
+        {
+          "action.peaceBroken": false
+        }
+      ],
+      "then": {
+        "result": {
+          "value": {
+            "$min": [
+              "$result.value",
+              {
+                "$round": [
+                  {
+                    "$divide": ["$action.homeTerritoryCount", 3]
+                  },
+                  "down"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.turn.apply-armenian-remobilization",
+      "on": "turn.started",
+      "priority": 10,
+      "when": [
+        {
+          "action.faction": "Armenia"
+        },
+        {
+          "variables.reinforcementPools.Armenia": {
+            "$gt": 0
+          }
+        }
+      ],
+      "then": {
+        "turn": {
+          "reinforcementsLeft": {
+            "$add": ["$turn.reinforcementsLeft", "$variables.reinforcementPools.Armenia"]
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.turn.clear-armenian-remobilization",
+      "on": "turn.started",
+      "priority": 11,
+      "when": [
+        {
+          "action.faction": "Armenia"
+        },
+        {
+          "variables.reinforcementPools.Armenia": {
+            "$gt": 0
+          }
+        }
+      ],
+      "then": {
+        "variables": {
+          "reinforcementPools.Armenia": 0
+        }
+      }
+    },
+    {
+      "id": "rule.turn.deliver-moscow-grant",
+      "on": "turn.started",
+      "priority": 20,
+      "when": [
+        {
+          "action.faction": "Turkey"
+        },
+        {
+          "variables.sovietAid.moscow.received": true
+        },
+        {
+          "variables.grants.sovietAid2": {
+            "$ne": true
+          }
+        }
+      ],
+      "then": {
+        "turn": {
+          "reinforcementsLeft": {
+            "$add": ["$turn.reinforcementsLeft", 5]
+          }
+        },
+        "variables": {
+          "grants.sovietAid2": true
+        }
+      }
+    },
+    {
+      "id": "rule.peace.britain",
+      "on": "faction.peaceStatus",
+      "when": [
+        {
+          "action.faction": "Britain"
+        },
+        {
+          "action.peaceBroken": false
+        },
+        {
+          "variables.britain.stoodDown": true
+        }
+      ],
+      "then": {
+        "result": {
+          "passive": true,
+          "atPeace": true
+        }
+      }
+    },
+    {
+      "id": "rule.peace.greece",
+      "on": "faction.peaceStatus",
+      "when": [
+        {
+          "action.faction": "Greece"
+        },
+        {
+          "action.peaceBroken": false
+        },
+        {
+          "variables.greece.collapsed": true
+        }
+      ],
+      "then": {
+        "result": {
+          "passive": true,
+          "atPeace": true
+        }
+      }
+    },
+    {
+      "id": "rule.peace.armenia",
+      "on": "faction.peaceStatus",
+      "when": [
+        {
+          "action.faction": "Armenia"
+        },
+        {
+          "action.peaceBroken": false
+        },
+        {
+          "variables.treaties.alexandropol.signed": true
+        }
+      ],
+      "then": {
+        "result": {
+          "passive": true,
+          "atPeace": true
+        }
+      }
+    },
+    {
+      "id": "rule.peace.italy",
+      "on": "faction.peaceStatus",
+      "when": [
+        {
+          "action.faction": "Italy"
+        },
+        {
+          "action.peaceBroken": false
+        },
+        {
+          "variables.withdrawals.Italy": true
+        }
+      ],
+      "then": {
+        "result": {
+          "passive": true,
+          "atPeace": true
+        }
+      }
+    },
+    {
+      "id": "rule.peace.france",
+      "on": "faction.peaceStatus",
+      "when": [
+        {
+          "action.faction": "France"
+        },
+        {
+          "action.peaceBroken": false
+        },
+        {
+          "variables.treaties.ankara.signed": true
+        }
+      ],
+      "then": {
+        "result": {
+          "passive": true,
+          "atPeace": true
+        }
+      }
+    },
+    {
+      "id": "rule.assembly.suspend",
+      "on": "round.upkeep",
+      "priority": 110,
+      "when": [
+        {
+          "variables.assembly.everConvened": true
+        },
+        {
+          "variables.assembly.active": true
+        },
+        {
+          "territories": {
+            "$none": {
+              "slug": {
+                "$in": {
+                  "$group": "assemblySeats"
+                }
+              },
+              "heldBy": "Turkey"
+            }
+          }
+        }
+      ],
+      "then": {
+        "variables": {
+          "assembly.active": false,
+          "assembly.reconveneTurns": 0
+        },
+        "logs": [
+          {
+            "key": "log.assemblySuspended",
+            "faction": "Turkey",
+            "event": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "rule.assembly.count-reconvening",
+      "on": "round.upkeep",
+      "priority": 120,
+      "when": [
+        {
+          "variables.assembly.everConvened": true
+        },
+        {
+          "variables.assembly.active": false
+        },
+        {
+          "territories": {
+            "$some": {
+              "slug": {
+                "$in": {
+                  "$group": "assemblySeats"
+                }
+              },
+              "heldBy": "Turkey"
+            }
+          }
+        }
+      ],
+      "then": {
+        "variables": {
+          "assembly.reconveneTurns": {
+            "$add": ["$variables.assembly.reconveneTurns", 1]
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.assembly.reset-reconvening",
+      "on": "round.upkeep",
+      "priority": 125,
+      "when": [
+        {
+          "variables.assembly.everConvened": true
+        },
+        {
+          "variables.assembly.active": false
+        },
+        {
+          "variables.assembly.reconveneTurns": {
+            "$gt": 0
+          }
+        },
+        {
+          "territories": {
+            "$none": {
+              "slug": {
+                "$in": {
+                  "$group": "assemblySeats"
+                }
+              },
+              "heldBy": "Turkey"
+            }
+          }
+        }
+      ],
+      "then": {
+        "variables": {
+          "assembly.reconveneTurns": 0
+        }
+      }
+    },
+    {
+      "id": "rule.assembly.reconvene",
+      "on": "round.upkeep",
+      "priority": 130,
+      "when": [
+        {
+          "variables.assembly.active": false
+        },
+        {
+          "variables.assembly.reconveneTurns": {
+            "$gte": 3
+          }
+        }
+      ],
+      "then": {
+        "variables": {
+          "assembly.active": true,
+          "assembly.reconveneTurns": 0
+        },
+        "logs": [
+          {
+            "key": "log.assemblyReconvened",
+            "faction": "Turkey",
+            "vars": {
+              "city": "$presentation.assemblySeat"
+            },
+            "event": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "rule.combat.invader-cap",
+      "on": "combatDice.calculate",
+      "priority": 10,
+      "when": [
+        {
+          "action.kind": {
+            "$ne": "landing"
+          }
+        },
+        {
+          "action.attackerAlliance": {
+            "$ne": "turkey"
+          }
+        },
+        {
+          "action.defenderAlliance": "turkey"
+        },
+        {
+          "action.target.slug": {
+            "$in": {
+              "$group": "nationalPact"
+            }
+          }
+        },
+        {
+          "$or": [
+            {
+              "variables.greatOffensive.round": {
+                "$exists": false
+              }
+            },
+            {
+              "variables.greatOffensive.round": 0
+            }
+          ]
+        }
+      ],
+      "then": {
+        "result": {
+          "attacker": {
+            "$min": ["$result.attacker", 2]
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.combat.turkish-irregular-cap",
+      "on": "combatDice.calculate",
+      "priority": 10,
+      "when": [
+        {
+          "action.attackerAlliance": "turkey"
+        },
+        {
+          "$or": [
+            {
+              "variables.greatOffensive.round": {
+                "$exists": false
+              }
+            },
+            {
+              "variables.greatOffensive.round": 0
+            }
+          ]
+        }
+      ],
+      "then": {
+        "result": {
+          "attacker": {
+            "$min": ["$result.attacker", 2]
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.combat.tekalif-equipment",
+      "on": "combatDice.calculate",
+      "priority": 20,
+      "when": [
+        {
+          "action.attackerAlliance": "turkey"
+        },
+        {
+          "variables.tekalif.until": {
+            "$gte": "$game.round"
+          }
+        },
+        {
+          "action.target.slug": {
+            "$in": {
+              "$group": "nationalPact"
+            }
+          }
+        },
+        {
+          "action.exchangesSpent": {
+            "$lt": 2
+          }
+        }
+      ],
+      "then": {
+        "result": {
+          "attacker": 3,
+          "equipped": true
+        }
+      }
+    },
+    {
+      "id": "rule.combat.sakarya-greek-cap",
+      "on": "combatDice.calculate",
+      "priority": 30,
+      "when": [
+        {
+          "action.attacker": "Greece"
+        },
+        {
+          "variables.sakarya.round": {
+            "$gt": 0
+          }
+        },
+        {
+          "action.target.slug": {
+            "$in": {
+              "$group": "nationalPact"
+            }
+          }
+        }
+      ],
+      "then": {
+        "result": {
+          "attacker": {
+            "$min": ["$result.attacker", 2]
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.combat.great-offensive-defence",
+      "on": "combatDice.calculate",
+      "priority": 30,
+      "when": [
+        {
+          "action.attackerAlliance": {
+            "$ne": "turkey"
+          }
+        },
+        {
+          "action.defenderAlliance": "turkey"
+        },
+        {
+          "action.target.slug": {
+            "$in": {
+              "$group": "nationalPact"
+            }
+          }
+        },
+        {
+          "variables.greatOffensive.round": {
+            "$gt": 0
+          }
+        }
+      ],
+      "then": {
+        "result": {
+          "defender": 3
+        }
+      }
+    },
+    {
+      "id": "rule.turn.sakarya-freeze",
+      "on": "faction.turnStatus",
+      "when": [
+        {
+          "action.faction": "Greece"
+        },
+        {
+          "variables.sakarya.round": {
+            "$gt": 0
+          }
+        },
+        {
+          "game.round": {
+            "$lt": {
+              "$add": ["$variables.sakarya.round", 2]
+            }
+          }
+        }
+      ],
+      "then": {
+        "result": {
+          "frozen": true
+        }
+      }
+    },
+    {
+      "id": "rule.combat.great-offensive-advance-depth",
+      "on": "maximumAdvanceDepth.calculate",
+      "when": [
+        {
+          "action.faction": "Turkey"
+        },
+        {
+          "action.target.slug": {
+            "$in": {
+              "$group": "nationalPact"
+            }
+          }
+        },
+        {
+          "variables.greatOffensive.round": {
+            "$gt": 0
+          }
+        }
+      ],
+      "then": {
+        "result": {
+          "value": 3
+        }
+      }
+    },
+    {
+      "id": "rule.fortify.sultanate",
+      "on": "fortifyLimit.calculate",
+      "when": [
+        {
+          "action.faction": "Turkey"
+        }
+      ],
+      "then": {
+        "result": {
+          "value": {
+            "$add": ["$result.value", "$variables.government.fortifyBonus"]
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.levy.ankara",
+      "on": "round.upkeep",
+      "priority": 50,
+      "then": {
+        "territories": [
+          {
+            "where": {
+              "slug": "ankara",
+              "heldBy": "Turkey"
+            },
+            "set": {
+              "troops": {
+                "$add": ["$troops", 1]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rule.levy.salonica",
+      "on": "round.upkeep",
+      "priority": 50,
+      "when": [
+        {
+          "variables.venizelos.fell": {
+            "$ne": true
+          }
+        },
+        {
+          "variables.greece.collapsed": {
+            "$ne": true
+          }
+        }
+      ],
+      "then": {
+        "territories": [
+          {
+            "where": {
+              "slug": "salonica",
+              "heldBy": "Greece"
+            },
+            "set": {
+              "troops": {
+                "$add": ["$troops", 1]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rule.entrench.turkish-clock",
+      "on": "round.upkeep",
+      "priority": 10,
+      "when": [
+        {
+          "$or": [
+            {
+              "variables.greatOffensive.round": {
+                "$exists": false
+              }
+            },
+            {
+              "variables.greatOffensive.round": 0
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "variables.tekalif.until": {
+                "$exists": false
+              }
+            },
+            {
+              "variables.tekalif.until": {
+                "$lt": "$game.round"
+              }
+            }
+          ]
+        }
+      ],
+      "then": {
+        "territories": [
+          {
+            "where": {
+              "heldByAlliance": "turkey"
+            },
+            "set": {
+              "quietTurns": {
+                "$add": ["$quietTurns", 1]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rule.entrench.turkish-pulse",
+      "on": "round.upkeep",
+      "priority": 11,
+      "when": [
+        {
+          "$or": [
+            {
+              "variables.greatOffensive.round": {
+                "$exists": false
+              }
+            },
+            {
+              "variables.greatOffensive.round": 0
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "variables.tekalif.until": {
+                "$exists": false
+              }
+            },
+            {
+              "variables.tekalif.until": {
+                "$lt": "$game.round"
+              }
+            }
+          ]
+        }
+      ],
+      "then": {
+        "territories": [
+          {
+            "where": {
+              "heldByAlliance": "turkey",
+              "quietTurns": {
+                "$gte": 4
+              },
+              "entrenched": {
+                "$lt": 4
+              }
+            },
+            "set": {
+              "quietTurns": 0,
+              "entrenched": {
+                "$add": ["$entrenched", 1]
+              },
+              "troops": {
+                "$add": ["$troops", 1]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rule.entrench.occupier-clock",
+      "on": "round.upkeep",
+      "priority": 20,
+      "when": [
+        {
+          "$or": [
+            {
+              "variables.exhaustion.round": {
+                "$exists": false
+              }
+            },
+            {
+              "variables.exhaustion.round": 0
+            }
+          ]
+        }
+      ],
+      "then": {
+        "territories": [
+          {
+            "where": {
+              "heldByAlliance": {
+                "$ne": "turkey"
+              },
+              "slug": {
+                "$in": {
+                  "$group": "nationalPact"
+                }
+              }
+            },
+            "set": {
+              "quietTurns": {
+                "$add": ["$quietTurns", 1]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rule.entrench.occupier-pulse",
+      "on": "round.upkeep",
+      "priority": 21,
+      "when": [
+        {
+          "$or": [
+            {
+              "variables.exhaustion.round": {
+                "$exists": false
+              }
+            },
+            {
+              "variables.exhaustion.round": 0
+            }
+          ]
+        }
+      ],
+      "then": {
+        "territories": [
+          {
+            "where": {
+              "heldByAlliance": {
+                "$ne": "turkey"
+              },
+              "slug": {
+                "$in": {
+                  "$group": "nationalPact"
+                }
+              },
+              "quietTurns": {
+                "$gte": 2
+              },
+              "entrenched": {
+                "$lt": 6
+              }
+            },
+            "set": {
+              "quietTurns": 0,
+              "entrenched": {
+                "$add": ["$entrenched", 1]
+              },
+              "troops": {
+                "$add": ["$troops", 1]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rule.conference.reset-pact-clock",
+      "on": "round.upkeep",
+      "priority": 210,
+      "when": [
+        {
+          "game.phase": {
+            "$ne": "gameover"
+          }
+        },
+        {
+          "game.pactProgress": {
+            "$lt": {
+              "$count": {
+                "$group": "nationalPact"
+              }
+            }
+          }
+        }
+      ],
+      "then": {
+        "variables": {
+          "conference.pactHeldTurns": 0
+        }
+      }
+    },
+    {
+      "id": "rule.conference.advance-pact-clock",
+      "on": "round.upkeep",
+      "priority": 210,
+      "when": [
+        {
+          "game.phase": {
+            "$ne": "gameover"
+          }
+        },
+        {
+          "game.pactProgress": {
+            "$eq": {
+              "$count": {
+                "$group": "nationalPact"
+              }
+            }
+          }
+        }
+      ],
+      "then": {
+        "variables": {
+          "conference.pactHeldTurns": {
+            "$add": ["$variables.conference.pactHeldTurns", 1]
+          }
+        }
+      }
+    },
+    {
+      "id": "rule.conference.pact-victory",
+      "on": "round.upkeep",
+      "priority": 220,
+      "when": [
+        {
+          "variables.conference.pactHeldTurns": {
+            "$gte": 3
+          }
+        }
+      ],
+      "then": {
+        "game": {
+          "phase": "gameover",
+          "endedRound": "$game.round",
+          "winner": "Turkey",
+          "humanDefeated": false
+        },
+        "logs": [
+          {
+            "key": "log.victory",
+            "faction": "Turkey",
+            "vars": {
+              "date": "$presentation.currentDateLoc"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rule.conference.unopposed-settlement",
+      "on": "round.upkeep",
+      "priority": 230,
+      "when": [
+        {
+          "game.phase": {
+            "$ne": "gameover"
+          }
+        },
+        {
+          "game.round": {
+            "$gte": 18
+          }
+        },
+        {
+          "$or": [
+            {
+              "variables.conference.rejectedAt": {
+                "$exists": false
+              }
+            },
+            {
+              "variables.conference.rejectedAt": 0
+            }
+          ]
+        },
+        {
+          "factions": {
+            "$none": {
+              "name": {
+                "$in": {
+                  "$group": "landingPowers"
+                }
+              },
+              "eliminated": false
+            }
+          }
+        }
+      ],
+      "then": {
+        "game": {
+          "phase": "gameover",
+          "endedRound": "$game.round",
+          "winner": {
+            "$if": [
+              {
+                "$eq": [
+                  "$game.pactProgress",
+                  {
+                    "$count": {
+                      "$group": "nationalPact"
+                    }
+                  }
+                ]
+              },
+              "Turkey",
+              null
+            ]
+          },
+          "humanDefeated": {
+            "$ne": [
+              "$game.pactProgress",
+              {
+                "$count": {
+                  "$group": "nationalPact"
+                }
+              }
+            ]
+          }
+        },
+        "logs": [
+          {
+            "key": {
+              "$if": [
+                {
+                  "$eq": [
+                    "$game.pactProgress",
+                    {
+                      "$count": {
+                        "$group": "nationalPact"
+                      }
+                    }
+                  ]
+                },
+                "log.victory",
+                "log.lausanneShort"
+              ]
+            },
+            "faction": {
+              "$if": [
+                {
+                  "$eq": [
+                    "$game.pactProgress",
+                    {
+                      "$count": {
+                        "$group": "nationalPact"
+                      }
+                    }
+                  ]
+                },
+                "Turkey",
+                null
+              ]
+            },
+            "vars": {
+              "date": "$presentation.currentDateLoc",
+              "held": "$game.pactProgress",
+              "total": {
+                "$count": {
+                  "$group": "nationalPact"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rule.conference.landings",
+      "on": "round.upkeep",
+      "priority": 240,
+      "when": [
+        {
+          "game.phase": {
+            "$ne": "gameover"
+          }
+        },
+        {
+          "variables.conference.rejectedAt": {
+            "$gt": 0
+          }
+        },
+        {
+          "game.round": {
+            "$gt": "$variables.conference.rejectedAt"
+          }
+        }
+      ],
+      "then": {
+        "battles": [
+          {
+            "repeat": 2,
+            "attacker": {
+              "from": "factions",
+              "where": {
+                "name": {
+                  "$in": {
+                    "$group": "landingPowers"
+                  }
+                },
+                "eliminated": false
+              },
+              "select": "$sample"
+            },
+            "target": {
+              "from": "territories",
+              "where": {
+                "$or": [
+                  {
+                    "slug": {
+                      "$in": {
+                        "$group": "landingSites"
+                      }
+                    }
+                  },
+                  {
+                    "$and": [
+                      {
+                        "slug": "istanbul"
+                      },
+                      {
+                        "territories.gelibolu.heldByAlliance": {
+                          "$ne": "turkey"
+                        }
+                      },
+                      {
+                        "territories.canakkale.heldByAlliance": {
+                          "$ne": "turkey"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "$and": [
+                      {
+                        "slug": "izmit"
+                      },
+                      {
+                        "territories.istanbul.heldByAlliance": {
+                          "$ne": "turkey"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "select": "$sample"
+            },
+            "troops": {
+              "$if": [
+                {
+                  "$eq": [
+                    "$game.round",
+                    {
+                      "$add": ["$variables.conference.rejectedAt", 1]
+                    }
+                  ]
+                },
+                30,
+                10
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rule.alexandropol-breach",
+      "on": "attack.started",
+      "priority": 10,
+      "when": [
+        {
+          "action.attacker": "Turkey"
+        },
+        {
+          "action.defender": "Armenia"
+        },
+        {
+          "variables.treaties.alexandropol.signed": true
+        },
+        {
+          "factions.Armenia.peaceBroken": false
+        }
+      ],
+      "then": {
+        "variables": {
+          "reinforcementPools.Armenia": {
+            "$add": ["$variables.reinforcementPools.Armenia", 20]
+          }
+        },
+        "result": {
+          "remobilized": 20
+        }
+      }
+    },
+    {
+      "id": "rule.peace.break",
+      "on": "attack.started",
+      "priority": 20,
+      "when": [
+        {
+          "action.defenderAtPeace": true
+        }
+      ],
+      "then": {
+        "factions": [
+          {
+            "where": {
+              "name": "$action.defender"
+            },
+            "set": {
+              "peaceBroken": true
+            }
+          }
+        ],
+        "result": {
+          "peaceBroken": true
+        }
+      }
+    },
+    {
+      "id": "rule.liberation.irregulars",
+      "on": "territory.captured",
+      "priority": 10,
+      "when": [
+        {
+          "action.attackerAlliance": "turkey"
+        },
+        {
+          "action.target.slug": {
+            "$in": {
+              "$group": "nationalPact"
+            }
+          }
+        },
+        {
+          "variables.greatOffensive.round": 0
+        }
+      ],
+      "then": {
+        "territories": [
+          {
+            "where": {
+              "slug": "$action.target.slug"
+            },
+            "set": {
+              "troops": {
+                "$add": [
+                  "$troops",
+                  {
+                    "$if": [
+                      {
+                        "$lte": ["$action.occupiedFor", 1]
+                      },
+                      2,
+                      1
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rule.liberation.regular-army",
+      "on": "territory.captured",
+      "priority": 20,
+      "when": [
+        {
+          "action.attackerAlliance": "turkey"
+        },
+        {
+          "action.target.slug": {
+            "$in": {
+              "$group": "nationalPact"
+            }
+          }
+        },
+        {
+          "variables.greatOffensive.round": {
+            "$gt": 0
+          }
+        },
+        {
+          "game.liberatedThisTurn": false
+        }
+      ],
+      "then": {
+        "territories": [
+          {
+            "where": {
+              "slug": "$action.target.slug"
+            },
+            "set": {
+              "troops": {
+                "$add": ["$troops", 1]
+              }
+            }
+          }
+        ],
+        "game": {
+          "liberatedThisTurn": true
+        }
+      }
+    },
+    {
+      "id": "rule.attack.iraq-bystander",
+      "on": "attack.validate",
+      "priority": 1,
+      "when": [
+        {
+          "$or": [
+            {
+              "action.attacker": "Iraq"
+            },
+            {
+              "action.defender": "Iraq"
+            }
+          ]
+        }
+      ],
+      "then": {
+        "result": {
+          "allowed": false
+        }
+      }
+    },
+    {
+      "id": "rule.attack.national-pact-restraint",
+      "on": "attack.target.validate",
+      "priority": 5,
+      "when": [
+        {
+          "action.attackerAlliance": "turkey"
+        },
+        {
+          "action.target.slug": {
+            "$nin": {
+              "$group": "nationalPact"
+            }
+          }
+        },
+        {
+          "game.pactProgress": {
+            "$lt": {
+              "$count": {
+                "$group": "nationalPact"
+              }
+            }
+          }
+        },
+        {
+          "action.targetLandedOn": false
+        },
+        {
+          "action.retaliationActive": false
+        }
+      ],
+      "then": {
+        "result": {
+          "allowed": false
+        }
+      }
+    },
+    {
+      "id": "rule.attack.san-remo-thrace",
+      "on": "attack.target.validate",
+      "priority": 5,
+      "when": [
+        {
+          "action.attacker": "Bulgaria"
+        },
+        {
+          "action.defender": "Greece"
+        },
+        {
+          "variables.sanRemo.completed": false
+        }
+      ],
+      "then": {
+        "result": {
+          "allowed": false
+        }
+      }
+    },
+    {
+      "id": "rule.kars-protects-armenia",
+      "on": "attack.validate",
+      "when": [
+        {
+          "variables.treaties.kars.signed": true
+        },
+        {
+          "action.attacker": "Turkey"
+        },
+        {
+          "action.defender": "Armenia"
+        }
+      ],
+      "then": {
+        "result": {
+          "allowed": false
+        }
+      }
+    },
+    {
+      "id": "rule.alexandropol-pacifies-armenia",
+      "on": "attack.validate",
+      "when": [
+        {
+          "action.attacker": "Armenia"
+        },
+        {
+          "variables.treaties.alexandropol.signed": true
+        },
+        {
+          "factions.Armenia.peaceBroken": false
+        }
+      ],
+      "then": {
+        "result": {
+          "allowed": false
+        }
+      }
+    },
+    {
+      "id": "rule.kars-confines-armenia",
+      "on": "attack.target.validate",
+      "when": [
+        {
+          "variables.treaties.kars.signed": true
+        },
+        {
+          "action.attacker": "Armenia"
+        },
+        {
+          "action.target.slug": {
+            "$nin": {
+              "$group": "armenianHomeland"
+            }
+          }
+        }
+      ],
+      "then": {
+        "result": {
+          "allowed": false
+        }
+      }
+    }
+  ]
+}

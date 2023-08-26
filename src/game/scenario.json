@@ -1,0 +1,55 @@
+{
+  "$schema": "game-scenario.v1",
+  "humanFaction": "Turkey",
+  "alliances": {
+    "Turkey": "turkey",
+    "Greece": "entente",
+    "Britain": "entente",
+    "France": "entente",
+    "Italy": "entente",
+    "Armenia": "entente",
+    "Bulgaria": "neutral",
+    "Iraq": "neutral"
+  },
+  "diplomacy": {
+    "grudgesOverride": true,
+    "permissions": [
+      { "attackerAlliance": "turkey" },
+      { "attackerAlliance": "entente", "defenderAlliance": "turkey" },
+      { "attacker": "Bulgaria", "defender": "Greece" }
+    ]
+  },
+  "movement": {
+    "navies": ["Greece", "Britain", "Italy", "France"],
+    "seaLanes": [
+      { "ports": ["salonica", "izmir"], "at": [285, 330] },
+      { "ports": ["salonica", "lesbos"], "at": [276, 311] },
+      { "ports": ["salonica", "rhodes"], "at": [306, 389] }
+    ],
+    "crossingRounds": 2,
+    "crossingCapacity": 6,
+    "occupiedTerritoryGroup": "nationalPact",
+    "occupiedMovementFactor": 0.5
+  },
+  "combat": {
+    "attacksPerTurn": 3,
+    "advanceDepth": {
+      "homeland": 2,
+      "foreign": 2
+    }
+  },
+  "economy": {
+    "minimumReinforcements": 2,
+    "territoriesPerReinforcement": 3,
+    "defaultFortifyLimit": 1,
+    "fortifyLimitByFaction": { "Turkey": 2 },
+    "cardTypes": ["infantry", "cavalry", "cannon"],
+    "tradeBonuses": [4, 6, 8, 10, 12, 15],
+    "tradeIncrement": 5
+  },
+  "presentation": {
+    "governmentFaction": "Turkey",
+    "governmentSeats": ["ankara", "sivas"]
+  },
+  "retaliationWindow": 3
+}

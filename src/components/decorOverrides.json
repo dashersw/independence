@@ -1,0 +1,15 @@
+{
+  "serbia": { "x": 110.7, "y": 88.2, "ang": -9, "len": 134, "size": 17.2, "bow": -10.5 },
+  "romania": { "x": 285, "y": 26, "ang": 0, "len": 134, "size": 17.5, "bow": 3.5 },
+  "black-sea": { "x": 792.5, "y": 108.2, "ang": 0, "len": 284, "size": 30, "bow": -19.5 },
+  "aegean-sea": { "x": 303.1, "y": 452.7, "ang": -90, "len": 221, "size": 23.2, "bow": -12 },
+  "mediterranean-sea": { "x": 510.7, "y": 732.5, "ang": 0, "len": 464, "size": 27.9, "bow": 16.5 },
+  "iran": { "x": 1429.4, "y": 467.7, "ang": 0, "len": 127, "size": 26.6, "bow": -5.5 },
+  "crete": { "x": 295, "y": 658.2, "ang": 0, "len": 74, "size": 16.2, "bow": 7 },
+  "cyprus": { "x": 737.2, "y": 674.1, "ang": -19, "len": 82, "size": 13, "bow": 7 },
+  "greece": { "x": 116.8, "y": 413.1, "ang": 63, "len": 204, "size": 22, "bow": -14.5 },
+  "macedonia": { "x": 129.1, "y": 203.7, "ang": -34, "len": 123, "size": 13, "bow": 10 },
+  "russia": { "x": 1291, "y": 75.1, "ang": 20, "len": 238, "size": 28.2, "bow": -9.5 },
+  "georgia": { "x": 1260.7, "y": 178.1, "ang": 25, "len": 171, "size": 18.6, "bow": -14 },
+  "azerbaijan": { "x": 1446.4, "y": 287.1, "ang": 31, "len": 168, "size": 16, "bow": -18 }
+}

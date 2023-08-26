@@ -1,0 +1,39 @@
+{
+  "players": [
+    {
+      "name": "Mustafa Kemal",
+      "type": "Human",
+      "faction": "Turkey"
+    },
+    {
+      "name": "Eleftherios Venizelos",
+      "type": "AI",
+      "faction": "Greece"
+    },
+    {
+      "name": "Aleksandar Stamboliyski",
+      "type": "AI",
+      "faction": "Bulgaria"
+    },
+    {
+      "name": "Hovhannes Kajaznuni",
+      "type": "AI",
+      "faction": "Armenia"
+    },
+    {
+      "name": "Vittorio Emanuele Orlando",
+      "type": "AI",
+      "faction": "Italy"
+    },
+    {
+      "name": "David Lloyd George",
+      "type": "AI",
+      "faction": "Britain"
+    },
+    {
+      "name": "Georges Clemenceau",
+      "type": "AI",
+      "faction": "France"
+    }
+  ]
+}

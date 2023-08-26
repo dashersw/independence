@@ -1,0 +1,26 @@
+node_modules
+dist
+.cache
+.parcel-cache*
+.playwright-mcp
+.agents
+.claude
+docs
+**/README.md
+skills-lock.json
+
+# Generated and runtime data
+package-lock.json
+sound-admin/package-lock.json
+sound-admin/public
+sound-admin/data
+src/ai/models/*.json
+src/game/map-data.json
+scripts/carve.json
+
+# Binary assets
+src/assets
+sounds
+
+# Experiment / training output dirs (models-200k, models-800k, ...)
+src/ai/models-*/

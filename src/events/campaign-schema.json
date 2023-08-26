@@ -1,0 +1,208 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$defs": {
+    "jsonValue": {
+      "anyOf": [
+        { "type": ["string", "number", "boolean", "null"] },
+        { "type": "array", "items": { "$ref": "#/$defs/jsonValue" } },
+        { "type": "object", "additionalProperties": { "$ref": "#/$defs/jsonValue" } }
+      ]
+    },
+    "queryArray": { "type": "array", "items": { "type": "object" } },
+    "date": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["year", "month"],
+      "properties": {
+        "year": { "type": "integer" },
+        "month": { "type": "integer", "minimum": 1, "maximum": 12 },
+        "day": { "type": "integer", "minimum": 1, "maximum": 31 }
+      }
+    },
+    "entityUpdate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["set"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "where": { "type": "object" },
+        "select": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "$sample": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "fraction": { "type": "number", "minimum": 0, "maximum": 1 },
+                "count": { "type": "integer", "minimum": 0 },
+                "round": { "enum": ["up", "down"] }
+              }
+            },
+            "$sort": { "type": "object", "additionalProperties": { "enum": ["asc", "desc"] } },
+            "$limit": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "set": { "type": "object", "additionalProperties": { "$ref": "#/$defs/jsonValue" } }
+      }
+    },
+    "then": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "variables": { "type": "object", "additionalProperties": { "$ref": "#/$defs/jsonValue" } },
+        "territories": { "type": "array", "items": { "$ref": "#/$defs/entityUpdate" } },
+        "factions": { "type": "array", "items": { "$ref": "#/$defs/entityUpdate" } },
+        "turn": { "type": "object", "additionalProperties": { "$ref": "#/$defs/jsonValue" } },
+        "game": { "type": "object", "additionalProperties": { "$ref": "#/$defs/jsonValue" } },
+        "result": { "type": "object", "additionalProperties": { "$ref": "#/$defs/jsonValue" } },
+        "cards": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["faction"],
+            "properties": {
+              "faction": { "$ref": "#/$defs/jsonValue" },
+              "count": { "$ref": "#/$defs/jsonValue" }
+            }
+          }
+        },
+        "logs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["key"],
+            "properties": {
+              "key": { "$ref": "#/$defs/jsonValue" },
+              "faction": { "$ref": "#/$defs/jsonValue" },
+              "vars": { "type": "object", "additionalProperties": { "$ref": "#/$defs/jsonValue" } },
+              "event": { "$ref": "#/$defs/jsonValue" }
+            }
+          }
+        },
+        "battles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["attacker", "target", "troops"],
+            "properties": {
+              "repeat": { "$ref": "#/$defs/jsonValue" },
+              "attacker": { "$ref": "#/$defs/selection" },
+              "target": { "$ref": "#/$defs/selection" },
+              "troops": { "$ref": "#/$defs/jsonValue" }
+            }
+          }
+        }
+      }
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from"],
+      "properties": {
+        "from": { "enum": ["factions", "territories"] },
+        "where": { "type": "object" },
+        "select": { "const": "$sample" },
+        "field": { "type": "string" }
+      }
+    },
+    "choice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "label"],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "label": { "type": "string", "minLength": 1 },
+        "then": { "$ref": "#/$defs/then" }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "at"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "at": { "$ref": "#/$defs/date" },
+        "actor": { "type": "string" },
+        "category": { "enum": ["political", "battle", "treaty", "supply", "deadline"] },
+        "presentation": { "type": "object" },
+        "data": { "type": "object", "additionalProperties": { "$ref": "#/$defs/jsonValue" } },
+        "when": { "$ref": "#/$defs/queryArray" },
+        "gate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "label"],
+          "properties": {
+            "id": { "type": "string" },
+            "label": { "type": "string" },
+            "requires": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+          }
+        },
+        "retry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode"],
+          "properties": {
+            "mode": { "enum": ["forever", "window"] },
+            "rounds": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "then": { "$ref": "#/$defs/then" },
+        "outcome": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "label"],
+          "properties": {
+            "id": { "type": "string" },
+            "label": { "type": "string" },
+            "writes": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+          }
+        },
+        "choices": { "type": "array", "items": { "$ref": "#/$defs/choice" } },
+        "vars": { "type": "object", "additionalProperties": { "$ref": "#/$defs/jsonValue" } }
+      }
+    },
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "on", "then"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "on": { "type": "string", "minLength": 1 },
+        "priority": { "type": "number" },
+        "when": { "$ref": "#/$defs/queryArray" },
+        "then": { "$ref": "#/$defs/then" }
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "id", "version", "title", "calendar", "events"],
+  "properties": {
+    "$schema": { "const": "campaign-map.v1" },
+    "id": { "type": "string", "minLength": 1 },
+    "version": { "type": "integer", "minimum": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "description": { "type": "string" },
+    "calendar": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["starts", "monthsPerRound"],
+      "properties": {
+        "starts": { "$ref": "#/$defs/date" },
+        "monthsPerRound": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "groups": {
+      "type": "object",
+      "additionalProperties": { "type": "array", "items": { "$ref": "#/$defs/jsonValue" }, "uniqueItems": true }
+    },
+    "variables": { "type": "object", "additionalProperties": { "$ref": "#/$defs/jsonValue" } },
+    "events": { "type": "array", "items": { "$ref": "#/$defs/event" } },
+    "rules": { "type": "array", "items": { "$ref": "#/$defs/rule" } }
+  }
+}

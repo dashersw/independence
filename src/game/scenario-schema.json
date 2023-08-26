@@ -1,0 +1,142 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "humanFaction",
+    "alliances",
+    "diplomacy",
+    "movement",
+    "combat",
+    "economy",
+    "presentation",
+    "retaliationWindow"
+  ],
+  "properties": {
+    "$schema": { "const": "game-scenario.v1" },
+    "humanFaction": { "type": "string", "minLength": 1 },
+    "alliances": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "enum": ["turkey", "entente", "neutral"] }
+    },
+    "diplomacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["grudgesOverride", "permissions"],
+      "properties": {
+        "grudgesOverride": { "type": "boolean" },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "minProperties": 1,
+            "properties": {
+              "attacker": { "type": "string" },
+              "attackerAlliance": { "enum": ["turkey", "entente", "neutral"] },
+              "defender": { "type": "string" },
+              "defenderAlliance": { "enum": ["turkey", "entente", "neutral"] }
+            }
+          }
+        }
+      }
+    },
+    "movement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "navies",
+        "seaLanes",
+        "crossingRounds",
+        "crossingCapacity",
+        "occupiedTerritoryGroup",
+        "occupiedMovementFactor"
+      ],
+      "properties": {
+        "navies": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "seaLanes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["ports", "at"],
+            "properties": {
+              "ports": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "at": {
+                "type": "array",
+                "items": { "type": "number" },
+                "minItems": 2,
+                "maxItems": 2
+              }
+            }
+          }
+        },
+        "crossingRounds": { "type": "integer", "minimum": 1 },
+        "crossingCapacity": { "type": "integer", "minimum": 1 },
+        "occupiedTerritoryGroup": { "type": "string" },
+        "occupiedMovementFactor": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 }
+      }
+    },
+    "combat": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["attacksPerTurn", "advanceDepth"],
+      "properties": {
+        "attacksPerTurn": { "type": "integer", "minimum": 0 },
+        "advanceDepth": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["homeland", "foreign"],
+          "properties": {
+            "homeland": { "type": "integer", "minimum": 0 },
+            "foreign": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "economy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minimumReinforcements",
+        "territoriesPerReinforcement",
+        "defaultFortifyLimit",
+        "fortifyLimitByFaction",
+        "cardTypes",
+        "tradeBonuses",
+        "tradeIncrement"
+      ],
+      "properties": {
+        "minimumReinforcements": { "type": "integer", "minimum": 0 },
+        "territoriesPerReinforcement": { "type": "integer", "minimum": 1 },
+        "defaultFortifyLimit": { "type": "integer", "minimum": 0 },
+        "fortifyLimitByFaction": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        "cardTypes": {
+          "type": "array",
+          "items": { "enum": ["infantry", "cavalry", "cannon"] },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "tradeBonuses": { "type": "array", "items": { "type": "integer", "minimum": 0 }, "minItems": 1 },
+        "tradeIncrement": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "presentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["governmentFaction", "governmentSeats"],
+      "properties": {
+        "governmentFaction": { "type": "string" },
+        "governmentSeats": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+      }
+    },
+    "retaliationWindow": { "type": "integer", "minimum": 0 }
+  }
+}

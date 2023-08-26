@@ -1,0 +1,130 @@
+<!doctype html>
+<!--
+  The app icon, drawn rather than stored: the same watercolour wash, blotch and
+  paper grain the map is painted with, over the flag's dark red. Open this file
+  and screenshot the 512×512 tile, then downscale for the smaller sizes:
+
+    src/icon-512.png   PWA / Android
+    src/icon-192.png   PWA / Android
+    src/icon-180.png   apple-touch-icon (iOS ignores SVG here, PNG only)
+
+  Square on purpose — iOS and Android apply their own corner mask, and baking
+  one in leaves a rounded icon inside a rounded icon.
+-->
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Independence — app icon</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: #222;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="icon" style="width: 512px; height: 512px; position: relative; overflow: hidden; background: #8f1d1d">
+      <svg width="0" height="0" style="position: absolute">
+        <!-- fine, even paper grain: one octave, high frequency. Stacked octaves
+             smear it into blotches, which the wash layers already provide. -->
+        <filter id="grain">
+          <feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="1" seed="7" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+          <feComponentTransfer><feFuncA type="linear" slope="0.95" /></feComponentTransfer>
+        </filter>
+        <!-- broad watercolour unevenness -->
+        <filter id="wash">
+          <feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="5" seed="3" />
+          <feColorMatrix type="saturate" values="0" />
+          <feComponentTransfer><feFuncA type="linear" slope="1.6" intercept="-0.15" /></feComponentTransfer>
+        </filter>
+        <!-- tighter pooling, the way a wash dries at its edges -->
+        <filter id="blotch">
+          <feTurbulence type="fractalNoise" baseFrequency="0.013" numOctaves="4" seed="19" />
+          <feColorMatrix type="saturate" values="0" />
+          <feComponentTransfer><feFuncA type="linear" slope="1.9" intercept="-0.35" /></feComponentTransfer>
+        </filter>
+      </svg>
+
+      <!-- every layer multiplies: a screen pass lifts the red into pink -->
+      <div style="position: absolute; inset: -25%; filter: url(#wash); opacity: 0.85; mix-blend-mode: multiply"></div>
+      <div
+        style="
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(
+            ellipse at 32% 26%,
+            rgba(216, 53, 60, 0.95) 0%,
+            rgba(143, 29, 29, 0.35) 55%,
+            rgba(74, 14, 14, 0.7) 100%
+          );
+        "
+      ></div>
+      <div style="position: absolute; inset: -25%; filter: url(#wash); opacity: 0.4; mix-blend-mode: multiply"></div>
+      <div style="position: absolute; inset: -25%; filter: url(#blotch); opacity: 0.5; mix-blend-mode: multiply"></div>
+
+      <div
+        style="
+          position: absolute;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          padding: 14px 0 8px;
+          box-sizing: border-box;
+        "
+      >
+        <!-- KURTULUŞ is sized to the exact width of 1919 (see the script below) -->
+        <span
+          id="word"
+          style="
+            font-family: 'Iowan Old Style', Palatino, Georgia, serif;
+            color: #fdf6e6;
+            white-space: nowrap;
+            letter-spacing: 3px;
+            text-shadow: 0 3px 10px rgba(50, 10, 10, 0.5);
+          "
+          >KURTULUŞ</span
+        >
+        <span
+          id="year"
+          style="
+            font-family: 'Iowan Old Style', Palatino, Georgia, serif;
+            font-size: 168px;
+            letter-spacing: 6px;
+            line-height: 0.94;
+            color: #fdf6e6;
+            text-shadow:
+              0 6px 18px rgba(50, 10, 10, 0.55),
+              0 1px 0 rgba(255, 255, 255, 0.25);
+          "
+          >1919</span
+        >
+      </div>
+
+      <div style="position: absolute; inset: 0; filter: url(#grain); mix-blend-mode: multiply; opacity: 0.34"></div>
+      <div style="position: absolute; inset: 0; filter: url(#grain); mix-blend-mode: multiply; opacity: 0.16"></div>
+      <div
+        style="
+          position: absolute;
+          inset: 0;
+          box-shadow:
+            inset 0 0 90px rgba(40, 8, 8, 0.6),
+            inset 0 2px 0 rgba(255, 255, 255, 0.12);
+        "
+      ></div>
+    </div>
+
+    <script>
+      // solve for the word's font size rather than eyeballing it
+      const word = document.getElementById('word')
+      const target = document.getElementById('year').getBoundingClientRect().width
+      word.style.fontSize = '100px'
+      word.style.fontSize = `${(100 * target) / word.getBoundingClientRect().width}px`
+    </script>
+  </body>
+</html>
