@@ -3,6 +3,7 @@ import { Lang, getLang, setLang, t } from '../i18n'
 import { SaveMeta, deleteSave, listSaves } from '../saves'
 import Dialog, { DialogRequest } from './Dialog'
 import { canFullscreen, isFullscreen, isStandalone, toggleFullscreen } from './fullscreen'
+import { musicEnabled, musicVolume, setMusicEnabled, setMusicVolume } from '../music'
 
 const LANGS: { code: Lang; flag: string }[] = [
   { code: 'en', flag: '🇬🇧' },
@@ -27,6 +28,8 @@ const SettingsMenu = ({ onSave, onLoad, defaultSaveName }: Props) => {
   // the API is only offered where it exists and there is chrome to escape
   const [fsOffered] = useState(() => canFullscreen())
   const [fullscreen, setFullscreen] = useState(() => isFullscreen())
+  const [music, setMusic] = useState(() => musicEnabled())
+  const [volume, setVolume] = useState(() => musicVolume())
 
   useEffect(() => {
     const sync = () => setFullscreen(isFullscreen())
@@ -136,6 +139,35 @@ const SettingsMenu = ({ onSave, onLoad, defaultSaveName }: Props) => {
               )}
             </div>
           )}
+
+          <div className="settings-section">
+            <p className="settings-label">{t('menu.sound')}</p>
+            <button
+              className="save-action"
+              onClick={() => {
+                setMusicEnabled(!music)
+                setMusic(!music)
+              }}
+            >
+              {music ? `🎵 ${t('menu.musicOff')}` : `🎵 ${t('menu.musicOn')}`}
+            </button>
+            <label className="volume-row">
+              <input
+                type="range"
+                className="volume-slider"
+                min={0}
+                max={100}
+                value={Math.round(volume * 100)}
+                aria-label={t('menu.musicVolume')}
+                onChange={e => {
+                  const level = Number(e.target.value) / 100
+                  setMusicVolume(level)
+                  setVolume(level)
+                }}
+              />
+              <span className="volume-value">{t('menu.volumeValue', { volume: Math.round(volume * 100) })}</span>
+            </label>
+          </div>
 
           <div className="settings-section">
             <p className="settings-label">{t('menu.saves')}</p>

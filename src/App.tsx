@@ -7,6 +7,7 @@ import SettingsMenu from './components/SettingsMenu'
 import IntroScreen from './components/IntroScreen'
 import { t, onLangChange } from './i18n'
 import { loadSnapshot, saveGame } from './saves'
+import { startMusic } from './music'
 import { makeScorer, makeSelector } from './ai/policy'
 import { MODELS } from './ai/models'
 
@@ -36,6 +37,8 @@ const App = () => {
   // a language switch re-renders the whole tree (territory/faction names,
   // phase copy, map labels) rather than needing a context provider
   useEffect(() => onLangChange(refresh), [])
+
+  useEffect(() => startMusic(), [])
 
   const clearSelection = () => {
     setSelected(null)

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Lang, getLang, setLang, t } from '../i18n'
+import { musicEnabled, setMusicEnabled } from '../music'
 
 interface Props {
   onStart: () => void
@@ -16,6 +17,7 @@ const LANGS: Lang[] = ['en', 'tr']
 const IntroScreen = ({ onStart, onBegin, mapReady }: Props) => {
   const [leaving, setLeaving] = useState(false)
   const [preparing, setPreparing] = useState(false)
+  const [music, setMusic] = useState(() => musicEnabled())
   const beginButton = useRef<HTMLButtonElement>(null)
   const transitionStarted = useRef(false)
   const lang = getLang()
@@ -36,6 +38,11 @@ const IntroScreen = ({ onStart, onBegin, mapReady }: Props) => {
     if (preparing || leaving) return
     setPreparing(true)
     onStart()
+  }
+
+  const toggleMusic = () => {
+    setMusicEnabled(!music)
+    setMusic(!music)
   }
 
   const keepFocusInside = (event: React.KeyboardEvent<HTMLElement>) => {
@@ -98,6 +105,21 @@ const IntroScreen = ({ onStart, onBegin, mapReady }: Props) => {
           <p className="intro-caption">{t('intro.caption')}</p>
         </div>
       </div>
+
+      <button
+        className={`intro-sound${music ? '' : ' muted'}`}
+        onClick={toggleMusic}
+        aria-label={music ? t('menu.musicOff') : t('menu.musicOn')}
+        aria-pressed={music}
+        title={music ? t('menu.musicOff') : t('menu.musicOn')}
+      >
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M9 18V5l12-2v13" />
+          <circle cx="6" cy="18" r="3" />
+          <circle cx="18" cy="16" r="3" />
+          {!music && <line x1="2.5" y1="2.5" x2="21.5" y2="21.5" />}
+        </svg>
+      </button>
     </section>
   )
 }

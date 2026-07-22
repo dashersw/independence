@@ -267,6 +267,38 @@ body {
   letter-spacing: 1px;
 }
 
+.intro-sound {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ecd9a0;
+  background: rgba(16, 22, 33, 0.55);
+  border: 1px solid rgba(238, 226, 195, 0.25);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.intro-sound.muted {
+  color: rgba(236, 217, 160, 0.45);
+}
+
+.intro-sound:hover {
+  background: rgba(30, 40, 56, 0.7);
+  border-color: rgba(236, 217, 160, 0.5);
+}
+
+.intro-sound:focus-visible {
+  outline: 2px solid #f4d981;
+  outline-offset: 4px;
+}
+
 @keyframes intro-content-in {
   from {
     opacity: 0;
@@ -297,6 +329,13 @@ body {
   .intro-caption {
     padding-inline: 32px;
     line-height: 1.45;
+  }
+
+  .intro-sound {
+    right: max(14px, env(safe-area-inset-right, 0px));
+    bottom: max(14px, env(safe-area-inset-bottom, 0px));
+    width: 40px;
+    height: 40px;
   }
 }
 
@@ -1303,6 +1342,28 @@ button.primary:hover {
 
 .save-action:hover {
   background: rgba(255, 255, 255, 0.14);
+}
+
+.volume-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 0 2px;
+}
+
+.volume-slider {
+  flex: 1;
+  accent-color: #ecd9a0;
+  cursor: pointer;
+}
+
+.volume-value {
+  min-width: 34px;
+  text-align: right;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: #b8b2a2;
 }
 
 .save-list {
