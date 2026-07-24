@@ -194,6 +194,22 @@ export class CampaignRuntime {
     return this.resultBoolean(status.root, 'result.atPeace')
   }
 
+  /**
+   * Has this faction settled out of the war — signed its treaty or withdrawn —
+   * regardless of whether that peace has since been broken? Peace is bilateral:
+   * a third party breaking a settled faction's peace (Britain hitting a withdrawn
+   * France) must not reopen its war with everyone else. We detect the settlement
+   * by asking the peace-status rules as if the peace were intact (peaceBroken
+   * forced false), so a broken peace with ONE attacker cannot hide it.
+   */
+  hasSettled(faction: Faction) {
+    const status = this.fireRules('faction.peaceStatus', {
+      action: { faction: faction.name, peaceBroken: false },
+      result: { passive: false, atPeace: false },
+    })
+    return this.resultBoolean(status.root, 'result.atPeace')
+  }
+
   frontClosed(attacker: Faction, target: Territory) {
     const game = this.game
     const validation = this.fireRules('attack.target.validate', {
@@ -225,6 +241,11 @@ export class CampaignRuntime {
     })
     if (!this.resultBoolean(validation.root, 'result.allowed')) return false
     if (SCENARIO.diplomacy.grudgesOverride && attacker.grudges.has(defender.name)) return true
+    // Peace is reciprocal between two countries, not blanket passivism. A faction
+    // that has settled out of the war may only fight factions that actually
+    // attacked it (its grudges); it will NOT resume the war against the country it
+    // made peace with just because a third party broke its peace elsewhere.
+    if (this.hasSettled(attacker)) return attacker.grudges.has(defender.name)
     return SCENARIO.diplomacy.permissions.some((permission) => this.permissionMatches(permission, attacker, defender))
   }
 

@@ -110,7 +110,11 @@ describe('the Treaty of Kars settles Armenian conquests', () => {
     const armenia = faction(g, 'Armenia')
     setVariable(g, 'treaties.alexandropol.signed', true)
     setVariable(g, 'treaties.kars.signed', true)
+    // A real breach is caused by an attacker and records a grudge against it
+    // (see combat.ts breakPeace). Turkey took gyumri, so the grudge is with Turkey —
+    // that is what lets a settled Armenia fight Turkey again (peace is reciprocal).
     armenia.peaceBroken = true
+    armenia.grudges.add('Turkey')
     give(g, 'gyumri', turkey(g))
     g.turn.configure({ playerIndex: g.players.findIndex((p) => p.faction === armenia) })
     g.turn.configure({ phase: 'attack' })

@@ -57,6 +57,31 @@ describe('staging a battle', () => {
     assert.equal(italy.peaceBroken, true)
     assert.equal(g.campaign.isPassive(italy), false, 'a broken peace re-mobilizes them')
   })
+
+  test('a broken peace is reciprocal — a settled faction only fights whoever attacked it', () => {
+    const g = fresh()
+    g.turn.configure({ round: 12 })
+    const france = faction(g, 'France')
+    const britain = faction(g, 'Britain')
+    setVariable(g, 'treaties.ankara.signed', true)
+    assert.equal(g.campaign.atPeace(france), true, 'France has withdrawn from the war')
+    assert.equal(g.campaign.hasSettled(france), true)
+
+    // A THIRD party (Britain) breaks France's peace; France's grudge is with Britain.
+    france.peaceBroken = true
+    france.grudges.add('Britain')
+    assert.equal(g.campaign.isPassive(france), false, 'the breach re-mobilizes France')
+    assert.equal(g.campaign.mayAttack(france, britain), true, 'France fights the power that hit it')
+    assert.equal(
+      g.campaign.mayAttack(france, turkey(g)),
+      false,
+      'but NOT the country it made peace with — Britain breaking the peace does not drag Turkey back in',
+    )
+
+    // Only once Turkey itself attacks France (a grudge) may France turn on Turkey.
+    france.grudges.add('Turkey')
+    assert.equal(g.campaign.mayAttack(france, turkey(g)), true)
+  })
 })
 
 describe('operational limits', () => {
