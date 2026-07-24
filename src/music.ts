@@ -14,7 +14,7 @@ const TRACKS = [
   new URL('assets/music/a-nation-unchained.mp3', import.meta.url),
 ]
 
-const DEFAULT_VOLUME = 0.2
+const DEFAULT_VOLUME = 0.5
 const STORAGE_KEY = 'independence.music'
 const VOLUME_KEY = 'independence.musicVolume'
 
@@ -87,8 +87,15 @@ export const setMusicEnabled = (on: boolean) => {
 
   if (!audio) return
 
-  if (on) audio.play().catch(retryOnGesture)
-  else audio.pause()
+  if (!on) {
+    audio.pause()
+    return
+  }
+  // Turning music on: if the element was created while music was off it has no
+  // src yet, so play() alone is silent — load the current track first. Once a
+  // track is loaded, plain play() resumes it.
+  if (!audio.src) playCurrent()
+  else audio.play().catch(retryOnGesture)
 }
 
 export const startMusic = () => {

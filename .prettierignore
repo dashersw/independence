@@ -17,6 +17,7 @@ sound-admin/data
 src/ai/models/*.json
 src/game/map-data.json
 scripts/carve.json
+src/sounds-manifest.ts
 
 # Binary assets
 src/assets

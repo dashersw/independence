@@ -248,9 +248,17 @@ describe('resolving a battle', () => {
     g.turn.configure({ playerIndex: g.players.findIndex((p) => p.isHuman) })
     g.combat.begin(own.slug, first.slug)
     g.combat.step(own.slug, first.slug)
+    const repelsBeforeSwitch = g.log.filter((e) => e.key === 'log.repelled').length
     const staged = g.combat.begin(own.slug, second.slug)
     assert.equal(staged?.to.slug, second.slug)
     assert.equal(staged?.attackerLosses, 0, 'the new battle starts clean')
+    // Retargeting is a change of mind, not a repel: it must not log log.repelled,
+    // or the sound observer would voice a pull-back the player never made.
+    assert.equal(
+      g.log.filter((e) => e.key === 'log.repelled').length,
+      repelsBeforeSwitch,
+      'switching targets must not log a repel',
+    )
   })
 })
 

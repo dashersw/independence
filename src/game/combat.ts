@@ -142,7 +142,10 @@ export class CombatSystem {
 
   private ensureActive(context: AttackContext) {
     const { from, to, attacker, defender } = context
-    if (this.active && (this.active.from !== from || this.active.to !== to)) this.pullBack()
+    // Retargeting abandons the setup for the previous attack. That's a change of
+    // mind, not a repel — reset silently so it neither logs a repel nor triggers
+    // the pull-back sound the log observer would otherwise voice.
+    if (this.active && (this.active.from !== from || this.active.to !== to)) this.active = null
     if (this.active) return this.active
     if (!this.game.turn.useAttack(from.slug, to.slug)) return null
     this.active = { from, to, attackerLosses: 0, defenderLosses: 0 }
