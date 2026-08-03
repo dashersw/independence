@@ -14,7 +14,7 @@ const TRACKS = [
   new URL('assets/music/a-nation-unchained.mp3', import.meta.url),
 ]
 
-const DEFAULT_VOLUME = 0.5
+const DEFAULT_VOLUME = 0.33
 const STORAGE_KEY = 'independence.music'
 const VOLUME_KEY = 'independence.musicVolume'
 

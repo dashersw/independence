@@ -42,7 +42,7 @@ export type SoundName = keyof typeof CUES
 // The live takes for one cue, in play order, as promoted by the sound admin.
 const takesFor = (id: string): string[] => CLIPS[id] ?? []
 
-const DEFAULT_VOLUME = 0.8
+const DEFAULT_VOLUME = 0.6
 const STORAGE_KEY = 'independence.sfx'
 const VOLUME_KEY = 'independence.sfxVolume'
 
@@ -50,8 +50,8 @@ const VOLUME_KEY = 'independence.sfxVolume'
 // loudness roughly logarithmically, so a linear slider feels loud almost
 // immediately. Mapping through a perceptual taper (fraction^1.5) makes low
 // settings genuinely quiet the way Spotify's slider does — the clips are
-// peak-normalized to 0 dBFS, so the 80% default lands near -3 dBFS: loud and
-// present, while low settings stay soft but audible rather than dropping away.
+// peak-normalized to 0 dBFS, so the 60% default lands near -7 dBFS: present
+// without overpowering the music, while low settings stay soft but audible.
 const gainFor = (fraction: number) => fraction * Math.sqrt(fraction)
 // Length of the ramp-to-silence applied at each clip's tail. Long enough to
 // smooth an abrupt final sample into silence, short enough to be inaudible.
