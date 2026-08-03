@@ -1,0 +1,1063 @@
+.landing-page-body {
+  overflow: auto;
+  padding: 0;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-touch-callout: default;
+  scroll-behavior: smooth;
+}
+.landing-page {
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
+  color: var(--ink);
+  background: var(--bg);
+  font-family: var(--sans);
+  line-height: 1.6;
+}
+.landing-page::after {
+  content: '';
+  position: fixed;
+  z-index: 90;
+  inset: 0;
+  opacity: 0.1;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 249, 231, 0.03) 0,
+    rgba(255, 249, 231, 0.03) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  animation: grain-breathe 1.4s steps(3) infinite;
+}
+@keyframes grain-breathe {
+  0%,
+  100% {
+    background-position: 0 0;
+  }
+  33% {
+    background-position: 0 1px;
+  }
+  66% {
+    background-position: 1px 0;
+  }
+}
+
+/* The Misak-ı Millî bar as scroll progress — the game's pact bar, page-wide */
+.scroll-pact {
+  position: fixed;
+  z-index: 96;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: none;
+  height: 3px;
+  background: rgba(236, 217, 160, 0.07);
+  pointer-events: none;
+}
+.scroll-pact i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #b8563e, #ecd9a0 62%, #f4d981);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+@supports (animation-timeline: scroll()) {
+  .scroll-pact {
+    display: block;
+  }
+  .scroll-pact i {
+    animation: pact-fill linear both;
+    animation-timeline: scroll();
+  }
+}
+@keyframes pact-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.landing-page * {
+  box-sizing: border-box;
+}
+.landing-page a {
+  color: inherit;
+  text-decoration: none;
+}
+.landing-page button,
+.landing-page input {
+  font: inherit;
+}
+.landing-page button {
+  cursor: pointer;
+}
+.landing-page img {
+  display: block;
+  max-width: 100%;
+}
+.landing-page a:focus-visible,
+.landing-page button:focus-visible,
+.landing-page input:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 4px;
+}
+
+/* Scroll reveals — the museum walk. Text rises as the visitor reaches it;
+   artwork settles from a slow over-scale once it enters the frame. */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 1s ease,
+    transform 1s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-timing-function:
+    ease,
+    linear(
+      0,
+      0.008 1.1%,
+      0.106 4.7%,
+      0.415 10.6%,
+      0.702 16.3%,
+      0.852 20.4%,
+      0.964 25%,
+      1.031 30.8%,
+      1.046 38.2%,
+      1.023 51.1%,
+      0.999 66.9%,
+      1
+    );
+  transition-delay: var(--d, 0s);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+.reveal.is-visible img {
+  transform: scale(1);
+}
+.faction-wall .reveal:nth-child(even) {
+  --d: 0.12s;
+}
+.route.reveal li {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+  transition-delay: calc(var(--i, 0) * 0.14s);
+}
+.route.reveal.is-visible li {
+  opacity: 1;
+  transform: none;
+}
+.route li:nth-child(1) {
+  --i: 0;
+}
+.route li:nth-child(2) {
+  --i: 1;
+}
+.route li:nth-child(3) {
+  --i: 2;
+}
+.route li:nth-child(4) {
+  --i: 3;
+}
+.route li:nth-child(5) {
+  --i: 4;
+}
+.route li:nth-child(6) {
+  --i: 5;
+}
+
+/* Scenes — full-bleed paintings whose edges dissolve into the page */
+.scene {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 100svh;
+  isolation: isolate;
+  overflow: hidden;
+}
+/* The mask lives on a fixed wrapper; the painting moves inside it, so the
+   dissolve into the page never shifts no matter how the art drifts. */
+.scene-art-wrap {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+}
+.scene-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* Scroll-driven parallax: the painting drifts inside its frame as it crosses
+   the viewport; the label drifts against it. Progressive — @supports gated. */
+@supports (animation-timeline: view()) {
+  .scene:not(.scene-hero):not(.scene-sea) .scene-art {
+    animation: art-parallax linear both;
+    animation-timeline: view();
+  }
+  .scene:not(.scene-hero) .scene-label {
+    animation: label-drift linear both;
+    animation-timeline: view();
+  }
+}
+@keyframes art-parallax {
+  from {
+    transform: translateY(4%) scale(1.09);
+  }
+  to {
+    transform: translateY(-4%) scale(1.09);
+  }
+}
+@keyframes label-drift {
+  from {
+    transform: translateY(3vh);
+  }
+  to {
+    transform: translateY(-3vh);
+  }
+}
+.scene-hero .scene-art-wrap {
+  -webkit-mask-image: linear-gradient(180deg, #000, #000 78%, transparent);
+  mask-image: linear-gradient(180deg, #000, #000 78%, transparent);
+}
+.scene-hero .scene-art {
+  animation: sea-drift 55s ease-out both;
+}
+/* The triptych keeps its full composition: height follows the 16:9 frame */
+.scene-hands {
+  min-height: min(100svh, 56.25vw);
+}
+/* Sea scenes open close-in and pull away almost imperceptibly — the water
+   seems to move. Each starts only once its scene has been seen. */
+.scene-sea .scene-art {
+  animation: sea-drift 55s ease-out both;
+  animation-play-state: paused;
+}
+.scene-sea.seen .scene-art {
+  animation-play-state: running;
+}
+@keyframes sea-drift {
+  from {
+    transform: scale(1.16);
+  }
+  to {
+    transform: scale(1.02);
+  }
+}
+.scene-label {
+  position: relative;
+  width: min(470px, calc(100% - 48px));
+  margin: 0 0 16vh clamp(24px, 9vw, 140px);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.85);
+}
+.scene-right .scene-label {
+  margin-left: auto;
+  margin-right: clamp(24px, 9vw, 140px);
+}
+.scene-label::before {
+  content: '';
+  display: block;
+  width: 44px;
+  height: 1px;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+.scene-label span {
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.scene-label h3 {
+  margin: 12px 0;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.4vw, 46px);
+  font-weight: 500;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.scene-label p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 15.5px;
+  line-height: 1.7;
+}
+.scene-label .action-primary {
+  margin-top: 26px;
+}
+
+/* Hero */
+.scene-hero {
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.hero-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: min(760px, calc(100% - 40px));
+  margin-top: clamp(56px, 11vh, 130px);
+  text-align: center;
+}
+.hero-actions {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: min(760px, calc(100% - 40px));
+  margin-bottom: clamp(44px, 8vh, 90px);
+  text-align: center;
+}
+.hero-actions > * {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: hero-rise 0.9s ease forwards;
+}
+.hero-actions > :nth-child(1) {
+  animation-delay: 1s;
+}
+.hero-actions > :nth-child(2) {
+  animation-delay: 1.2s;
+}
+.hero-actions .action-primary {
+  min-width: 250px;
+  margin-top: 0;
+}
+.hero-date {
+  margin: 0;
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+}
+.hero-content h1 {
+  margin: 0;
+  color: var(--gold);
+  font-family: var(--serif);
+  font-size: clamp(52px, 7.4vw, 100px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.65));
+}
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .hero-content h1 {
+    background:
+      linear-gradient(110deg, transparent 42%, rgba(255, 252, 240, 0.5) 50%, transparent 58%) no-repeat -120% 0 / 220%
+        100%,
+      linear-gradient(180deg, #f7e7b0 0%, #ecd9a0 44%, #c9a250 68%, #f4d981 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation:
+      hero-rise 0.9s ease 0.45s forwards,
+      gilt-sheen 9s ease-in-out 2.2s infinite;
+  }
+}
+@keyframes gilt-sheen {
+  0%,
+  82%,
+  100% {
+    background-position:
+      -120% 0,
+      0 0;
+  }
+  92% {
+    background-position:
+      220% 0,
+      0 0;
+  }
+}
+.hero-mark {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--gold-soft);
+}
+.hero-mark span {
+  width: clamp(60px, 10vw, 130px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, currentColor);
+}
+.hero-mark span:last-child {
+  transform: scaleX(-1);
+}
+.hero-mark i {
+  font-size: 13px;
+  font-style: normal;
+}
+.hero-sub {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: clamp(16px, 2vw, 21px);
+  font-style: italic;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.8);
+}
+.hero-meta {
+  margin: 4px 0 0;
+  color: var(--faint);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+.hero-content > * {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: hero-rise 0.9s ease forwards;
+}
+.hero-content > :nth-child(1) {
+  animation-delay: 0.25s;
+}
+.hero-content > :nth-child(2) {
+  animation-delay: 0.45s;
+}
+.hero-content > :nth-child(3) {
+  animation-delay: 0.65s;
+}
+.hero-content > :nth-child(4) {
+  animation-delay: 0.85s;
+}
+.hero-content > :nth-child(5) {
+  animation-delay: 1.05s;
+}
+.hero-content > :nth-child(6) {
+  animation-delay: 1.3s;
+}
+@keyframes hero-rise {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Gold action button — the game's Continue / Auto-deploy button. On hover it
+   gains the marching-ants outline the game draws around an attackable target. */
+.action-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  min-height: 52px;
+  margin-top: 8px;
+  padding: 0 22px 0 26px;
+  color: #241c0d !important;
+  background: linear-gradient(180deg, #f0d795, #dfbd66);
+  border: 1px solid rgba(255, 246, 217, 0.55);
+  border-radius: 3px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 4px 14px rgba(0, 0, 0, 0.45);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  transition:
+    filter 0.18s ease,
+    transform 0.18s ease;
+}
+.action-primary::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  opacity: 0;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(244, 217, 129, 0.85) 0 6px, transparent 6px 12px),
+    repeating-linear-gradient(90deg, rgba(244, 217, 129, 0.85) 0 6px, transparent 6px 12px),
+    repeating-linear-gradient(0deg, rgba(244, 217, 129, 0.85) 0 6px, transparent 6px 12px),
+    repeating-linear-gradient(0deg, rgba(244, 217, 129, 0.85) 0 6px, transparent 6px 12px);
+  background-size:
+    100% 2px,
+    100% 2px,
+    2px 100%,
+    2px 100%;
+  background-position:
+    0 0,
+    0 100%,
+    0 0,
+    100% 0;
+  background-repeat: no-repeat;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+.action-primary:hover::after,
+.action-primary:focus-visible::after {
+  opacity: 1;
+  animation: ants-march 1s linear infinite;
+}
+@keyframes ants-march {
+  to {
+    background-position:
+      12px 0,
+      -12px 100%,
+      0 -12px,
+      100% 12px;
+  }
+}
+.action-primary > span {
+  font-size: 17px;
+  transition: transform 0.18s ease;
+}
+.action-primary:hover {
+  filter: brightness(1.07);
+  transform: translateY(-2px);
+}
+.action-primary:hover > span {
+  transform: translateX(3px);
+}
+.hero-content .action-primary {
+  min-width: 250px;
+}
+
+/* Interludes — wall text under a museum spotlight */
+.interlude {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: clamp(110px, 15vh, 190px) 24px clamp(56px, 8vh, 100px);
+  text-align: center;
+}
+.interlude::before {
+  content: '';
+  position: absolute;
+  inset: 8% 0 0;
+  margin: 0 auto;
+  width: min(760px, 94%);
+  background: radial-gradient(ellipse 60% 55% at 50% 32%, rgba(236, 217, 160, 0.075), transparent 70%);
+  pointer-events: none;
+}
+.kicker {
+  margin: 0;
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+}
+.interlude h2 {
+  margin: 18px 0 0;
+  color: var(--gold);
+  font-family: var(--serif);
+  font-size: clamp(34px, 4.2vw, 54px);
+  font-weight: 500;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.interlude-copy {
+  max-width: 640px;
+  margin: 22px auto 0;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+/* The route — one thread, from the departure to the Assembly */
+.route {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  width: min(1100px, calc(100% - 48px));
+  margin: clamp(40px, 7vh, 90px) auto;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.landing-page .route li,
+.landing-page .route li:nth-child(even) {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 96px;
+  padding: 22px 16px 0 0;
+  color: var(--muted);
+  background: transparent;
+}
+.route li::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  background: var(--gold);
+  transform: rotate(45deg);
+}
+.route span {
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.route b {
+  margin: 3px 0 1px;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+}
+.route small {
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+/* Display cases — the game itself, framed HUD-style */
+.case-shell {
+  width: min(var(--content), calc(100% - 48px));
+  margin: 0 auto;
+}
+.board-window {
+  position: relative;
+  overflow: hidden;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  box-shadow: var(--bevel);
+}
+.board-window-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 48px;
+  padding: 0 18px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+}
+.hud-chip {
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.board-window img {
+  width: 100%;
+  aspect-ratio: 16/8.7;
+  object-fit: cover;
+}
+.board-objective {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  width: 270px;
+  padding: 16px 18px;
+  background: rgba(16, 22, 33, 0.72);
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
+  backdrop-filter: blur(12px) saturate(1.15);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  box-shadow: var(--bevel);
+}
+.board-objective span {
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.board-objective b {
+  display: block;
+  margin: 4px 0 8px;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 30px;
+  font-weight: 500;
+}
+.pact-bar {
+  height: 5px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+}
+.pact-bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #b8563e, #ecd9a0);
+  border-radius: 3px;
+}
+.board-objective p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* The standards — faction flags on the wall */
+.faction-wall {
+  width: min(880px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--line);
+}
+.landing-page .faction-wall li,
+.landing-page .faction-wall li:nth-child(even) {
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  align-items: center;
+  gap: 22px;
+  padding: 20px 0;
+  color: inherit;
+  background: transparent;
+  border-top: 1px solid var(--line);
+}
+.faction-flag {
+  display: block;
+  width: 54px;
+  height: 36px;
+  border-radius: 2px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.25),
+    0 3px 8px rgba(0, 0, 0, 0.45);
+}
+.faction-wall b {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--gold);
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 500;
+}
+.faction-wall p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* The charge — vast space, one address to the player, focused like a lens */
+.charge {
+  padding: clamp(120px, 18vh, 220px) 24px;
+  text-align: center;
+}
+.charge > div {
+  max-width: 860px;
+  margin: 0 auto;
+}
+.charge .reveal {
+  filter: blur(10px);
+  transform: translateY(26px) scale(0.985);
+  transition:
+    opacity 1.4s ease,
+    transform 1.4s cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter 1.4s ease;
+}
+.charge .reveal.is-visible {
+  filter: blur(0);
+  transform: none;
+}
+.charge-line {
+  margin: 0 0 18px;
+  color: var(--gold);
+  font-family: var(--serif);
+  font-size: clamp(26px, 3.6vw, 44px);
+  font-weight: 500;
+  line-height: 1.3;
+}
+.charge-sub {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--serif);
+  font-size: clamp(15px, 1.9vw, 20px);
+  font-style: italic;
+}
+
+/* Final scene */
+.scene-final {
+  align-items: center;
+  justify-content: center;
+  min-height: 92svh;
+  text-align: center;
+}
+.scene-final .scene-art {
+  object-position: center 30%;
+  opacity: 0.5;
+}
+
+/* The game's own switcher, pinned to the page instead of the intro screen */
+.landing-page .intro-languages {
+  position: fixed;
+  z-index: 98;
+  top: max(16px, env(safe-area-inset-top, 0px));
+  right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* The floor guide — museum dots, one per hall */
+.floor-nav {
+  position: fixed;
+  z-index: 95;
+  top: 50%;
+  right: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transform: translateY(-50%);
+}
+.floor-nav a {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+.floor-nav a:hover {
+  border-color: var(--gold-bright);
+  transform: scale(1.25);
+}
+.floor-nav a.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 10px rgba(236, 217, 160, 0.45);
+}
+.floor-nav a::after {
+  content: attr(data-label);
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  padding: 5px 10px;
+  color: var(--gold);
+  background: rgba(16, 22, 33, 0.92);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-50%) translateX(4px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  pointer-events: none;
+}
+.floor-nav a:hover::after,
+.floor-nav a:focus-visible::after {
+  opacity: 1;
+  transform: translateY(-50%);
+}
+
+/* Footer */
+.landing-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  width: fit-content;
+  text-transform: uppercase;
+}
+.brand-seal {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  color: var(--gold);
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  font-size: 11px;
+}
+.landing-brand > span:last-child {
+  display: flex;
+  flex-direction: column;
+}
+.landing-brand b {
+  color: var(--gold);
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 3px;
+}
+.landing-brand small {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+.landing-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  gap: 30px;
+  min-height: 112px;
+  padding: 28px max(24px, calc((100% - var(--content)) / 2)) calc(28px + 72px + env(safe-area-inset-bottom, 0px));
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+}
+.landing-footer > p {
+  justify-self: center;
+  max-width: 360px;
+  margin: 0;
+  font-size: 12px;
+  text-align: center;
+}
+.landing-footer > div {
+  justify-self: end;
+  display: flex;
+  gap: 24px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+.landing-footer > div a {
+  transition: color 0.15s ease;
+}
+.landing-footer > div a:hover {
+  color: var(--gold-bright);
+}
+.landing-brand b {
+  transition: color 0.15s ease;
+}
+.landing-brand:hover b {
+  color: var(--gold-bright);
+}
+
+@media (max-width: 900px) {
+  .floor-nav {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .interlude {
+    padding: 84px 20px 44px;
+  }
+  .route {
+    grid-template-columns: 1fr;
+  }
+  .interlude h2 {
+    font-size: 34px;
+  }
+  .interlude-copy {
+    font-size: 14px;
+  }
+  .scene {
+    min-height: 88svh;
+  }
+  .scene-label {
+    margin: 0 24px 12vh;
+  }
+  .scene-right .scene-label {
+    margin: 0 24px 12vh;
+  }
+  .scene-label h3 {
+    font-size: 30px;
+  }
+  .hero-content {
+    margin-top: 64px;
+    gap: 13px;
+  }
+  .hero-content h1 {
+    font-size: clamp(42px, 12vw, 60px);
+    letter-spacing: 0.05em;
+  }
+  .route {
+    grid-template-columns: 1fr;
+    margin-left: 38px;
+    border-top: 0;
+    border-left: 1px solid var(--line);
+  }
+  .landing-page .route li,
+  .landing-page .route li:nth-child(even) {
+    min-height: 64px;
+    padding: 0 0 18px 22px;
+  }
+  .route li::before {
+    top: 5px;
+    left: -4px;
+  }
+  .board-window img {
+    aspect-ratio: 4/3;
+  }
+  .board-objective {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: auto;
+    margin: -1px;
+    border-radius: 0 0 6px 6px;
+  }
+  .landing-footer {
+    grid-template-columns: 1fr;
+    padding: 34px 20px;
+    text-align: center;
+  }
+  .landing-footer .landing-brand,
+  .landing-footer > p,
+  .landing-footer > div {
+    justify-self: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .interlude h2 {
+    font-size: 30px;
+  }
+  .hero-content h1 {
+    font-size: 42px;
+  }
+  .landing-footer > div {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-page *,
+  .landing-page *::before,
+  .landing-page *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .landing-page-body {
+    scroll-behavior: auto;
+  }
+  .reveal,
+  .route.reveal li {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  .hero-content > * {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  .scene-art,
+  .scene-label,
+  .scroll-pact i,
+  .landing-page::after {
+    animation: none !important;
+  }
+  .hero-content h1 {
+    animation: none;
+  }
+}

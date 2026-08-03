@@ -1,0 +1,1 @@
+export { PlayerBar } from './component'

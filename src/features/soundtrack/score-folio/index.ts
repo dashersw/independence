@@ -1,0 +1,1 @@
+export { ScoreFolio } from './component'

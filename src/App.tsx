@@ -7,8 +7,9 @@ import SettingsMenu from './components/SettingsMenu'
 import { useGameSession } from './components/game/hooks/useGameSession'
 import { FlagIcon } from './components/map-flags'
 import { t } from './i18n'
+import { LandingPage } from './features/landing'
 
-const App = () => {
+const GameApp = () => {
   const session = useGameSession()
   const { game, interaction } = session
 
@@ -76,5 +77,9 @@ const App = () => {
     </div>
   )
 }
+
+const isGameRoute = () => location.pathname === '/game' || location.pathname.startsWith('/game/')
+
+const App = () => (isGameRoute() ? <GameApp /> : <LandingPage />)
 
 export default App

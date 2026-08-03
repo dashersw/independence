@@ -1,0 +1,17 @@
+/* Design tokens shared by every feature — the game's palette and type scale. */
+:root {
+  --bg: #14100a;
+  --panel: rgba(16, 22, 33, 0.92);
+  --line: rgba(236, 217, 160, 0.18);
+  --line-strong: rgba(236, 217, 160, 0.38);
+  --gold: #ecd9a0;
+  --gold-bright: #f4d981;
+  --gold-soft: rgba(236, 217, 160, 0.72);
+  --ink: #f0e9d6;
+  --muted: rgba(240, 232, 212, 0.78);
+  --faint: rgba(240, 232, 212, 0.55);
+  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --sans: 'Avenir Next', 'Segoe UI', Helvetica, Arial, sans-serif;
+  --content: 1200px;
+  --bevel: inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 0 -1px 0 rgba(0, 0, 0, 0.5), 0 4px 12px rgba(6, 10, 18, 0.45);
+}

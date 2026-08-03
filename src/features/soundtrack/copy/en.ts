@@ -1,0 +1,31 @@
+export const en = {
+  brand: ['Independence', 'Original game score'],
+  nowPlaying: 'Now playing',
+  download: 'Download this track',
+  listLabel: 'Original soundtrack tracks',
+  playerLabel: 'Soundtrack player',
+  seekLabel: 'Track position',
+  previous: 'Previous track',
+  next: 'Next track',
+  coverAlt: (title: string) => `Cover for ${title}`,
+  downloadTrack: (title: string) => `Download ${title}`,
+  play: (title: string) => `Play ${title}`,
+  pause: (title: string) => `Pause ${title}`,
+  chapters: [
+    'The war begins',
+    'The occupation',
+    'The movement gathers',
+    'The new capital',
+    'The soldiers of Anatolia',
+    'The first victory',
+    'The line of defense',
+    'The Great Offensive',
+    'The fallen',
+    'The final pursuit',
+    'The peace',
+    'A new beginning',
+    'Independence won',
+  ],
+}
+
+export type SoundtrackCopy = typeof en
