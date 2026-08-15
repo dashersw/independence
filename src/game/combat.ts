@@ -4,6 +4,7 @@ import type Territory from './territory'
 import type { BattleResult, BattleRound } from './types'
 import { logFaction, logTerritory } from './log'
 import { exchangeOdds, resolveDice, rollDice } from './combat-dice'
+import { applyTerrainRoll, terrainExchangeFactor, terrainFor } from './terrain'
 
 interface ActiveBattle {
   from: Territory
@@ -81,7 +82,8 @@ export class CombatSystem {
     const caps = this.diceCaps(from, to)
     const odds = exchangeOdds(Math.min(caps.attacker, from.troops - 1), Math.min(caps.defender, to.troops))
     if (!odds || odds.defender <= odds.attacker) return false
-    const cost = (to.troops * odds.attacker) / odds.defender
+    const terrainFactor = terrainExchangeFactor(terrainFor(to.slug))
+    const cost = (to.troops * odds.attacker) / (odds.defender * terrainFactor)
     return from.troops - 1 > cost
   }
 
@@ -175,6 +177,7 @@ export class CombatSystem {
       to,
       attacker,
       defender,
+      terrain: terrainFor(to.slug),
       rounds: [],
       conquered: false,
       attackerLosses: battle?.attackerLosses ?? 0,
@@ -195,8 +198,11 @@ export class CombatSystem {
     const caps = this.diceCaps(from, to)
     if (caps.equipped) battle.equippedUsed = (battle.equippedUsed ?? 0) + 1
 
-    const attackerDice = rollDice(game.random, Math.min(caps.attacker, from.troops - 1))
-    const defenderDice = rollDice(game.random, Math.min(caps.defender, to.troops))
+    const terrain = terrainFor(to.slug)
+    const rawAttackerDice = rollDice(game.random, Math.min(caps.attacker, from.troops - 1))
+    const rawDefenderDice = rollDice(game.random, Math.min(caps.defender, to.troops))
+    const attackerDice = applyTerrainRoll(game.random, rawAttackerDice, terrain.attacker)
+    const defenderDice = applyTerrainRoll(game.random, rawDefenderDice, terrain.defender)
     const { attacker: attackerLosses, defender: defenderLosses } = resolveDice(attackerDice, defenderDice)
     from.troops -= attackerLosses
     to.troops -= defenderLosses
@@ -251,6 +257,7 @@ export class CombatSystem {
       to,
       attacker,
       defender,
+      terrain,
       rounds: [round],
       conquered,
       attackerLosses: totalAttackerLosses,
@@ -337,9 +344,12 @@ export class CombatSystem {
     const caps = game.campaign.combatDice(power, defender, site, Number.MAX_SAFE_INTEGER, 'landing')
     const attackerCap = caps.attacker
     const defenderCap = caps.defender
+    const terrain = terrainFor(site.slug)
     while (attackers > 0 && defenders > 0) {
-      const attackDice = rollDice(game.random, Math.min(attackerCap, attackers))
-      const defenceDice = rollDice(game.random, Math.min(defenderCap, defenders))
+      const rawAttackDice = rollDice(game.random, Math.min(attackerCap, attackers))
+      const rawDefenceDice = rollDice(game.random, Math.min(defenderCap, defenders))
+      const attackDice = applyTerrainRoll(game.random, rawAttackDice, terrain.attacker)
+      const defenceDice = applyTerrainRoll(game.random, rawDefenceDice, terrain.defender)
       const losses = resolveDice(attackDice, defenceDice)
       attackers -= losses.attacker
       defenders -= losses.defender

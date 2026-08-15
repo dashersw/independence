@@ -5,6 +5,7 @@ import { NATIONAL_PACT } from '../src/game/campaign-data'
 import territoriesData from '../src/game/territories.json'
 import factionData from '../src/game/factions.json'
 import playerData from '../src/game/db.json'
+import { TERRAIN_BY_TERRITORY, terrainFor } from '../src/game/terrain'
 
 const slugs = new Set(territoriesData.territories.map((t) => t.slug))
 
@@ -15,6 +16,21 @@ describe('territory data', () => {
 
   test('every territory has a name', () => {
     for (const t of territoriesData.territories) assert.ok(t.name?.length, `${t.slug} has no name`)
+  })
+
+  test('every territory has exactly one terrain assignment', () => {
+    assert.deepEqual(new Set(Object.keys(TERRAIN_BY_TERRITORY)), slugs)
+  })
+
+  test('terrain follows the representative examples and stays bounded', () => {
+    assert.deepEqual(terrainFor('konya'), { type: 'plain', attacker: 10, defender: 0 })
+    assert.deepEqual(terrainFor('sivas'), { type: 'hills', attacker: -5, defender: 5 })
+    assert.deepEqual(terrainFor('erzurum'), { type: 'mountains', attacker: -15, defender: 10 })
+    for (const slug of slugs) {
+      const terrain = terrainFor(slug)
+      assert.ok(Math.abs(terrain.attacker) <= 15, `${slug} attack modifier is too large`)
+      assert.ok(Math.abs(terrain.defender) <= 10, `${slug} defence modifier is too large`)
+    }
   })
 
   test('every adjacency points at a real province', () => {

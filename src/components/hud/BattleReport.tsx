@@ -18,8 +18,14 @@ export const BattleReport = ({
   onPullBack: () => void
 }) => {
   const lastRound = battle.rounds[battle.rounds.length - 1]
+  const signed = (value: number) => `${value > 0 ? '+' : ''}${value}%`
   return (
     <div className={`battle-report${battle.pending ? ' pending' : battle.conquered ? ' won' : ' lost'}`}>
+      <span className={`terrain-modifier terrain-${battle.terrain.type}`}>
+        <strong>{t(`terrain.${battle.terrain.type}`)}</strong>
+        <span>{t('terrain.attacker', { value: signed(battle.terrain.attacker) })}</span>
+        <span>{t('terrain.defender', { value: signed(battle.terrain.defender) })}</span>
+      </span>
       {lastRound && (
         <>
           <span className="dice attacker">{lastRound.attackerDice.map((value) => DICE[value - 1]).join(' ')}</span>

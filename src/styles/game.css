@@ -882,6 +882,7 @@ button.primary:hover {
 
 .battle-report {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 12px;
   font-size: 14px;
@@ -889,6 +890,24 @@ button.primary:hover {
   border-radius: 9px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   background: rgba(0, 0, 0, 0.3);
+}
+
+.terrain-modifier {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 8px;
+  border: 1px solid rgba(224, 198, 132, 0.3);
+  border-radius: 6px;
+  color: #d9ccb0;
+  background: rgba(120, 95, 48, 0.16);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.terrain-modifier strong {
+  color: #f0d99e;
+  letter-spacing: 0.03em;
 }
 
 .battle-report .dice {
