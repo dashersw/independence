@@ -235,7 +235,13 @@ const SHOW_FACTION_BORDER_SHADOWS = false
 // stack only changes on conquest, so it is rendered ONCE into an offscreen
 // bitmap and the live SVG shows a single <image>; the filters never run
 // during gestures. Edit mode (?labelEdit) keeps the fully live tree.
-export const ART_SCALE = 2.5 // bitmap px per map unit for the map art
+// Bitmap px per map unit for the map art, sized to the DEVICE instead of a
+// fixed 2.5×: a 1× display cannot show the extra pixels a 2.5× bake pays for
+// (quadratically, in filter time, encode time and memory), while phones at
+// DPR 3 are capped at 2 to respect iOS canvas-area/memory budgets. Zoom
+// beyond the baked resolution upscales, exactly as the old fixed scale did.
+const dpr = typeof window === 'undefined' ? 1 : window.devicePixelRatio || 1
+export const ART_SCALE = Math.min(Math.max(dpr, 1.5), 2)
 export const OVERLAY_SCALE = 1.5 // grain/blotch overlays — noise needs less
 // The baked SVG is a standalone document that cannot see external
 // stylesheets — keep these in sync with .map rules in game.css / map.css.
@@ -244,25 +250,6 @@ export const ART_CSS = `
 .sea-label { font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif; font-style: italic; fill: #4f6b80; letter-spacing: 0.38em; opacity: 0.8; }
 .country-label { font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif; fill: #8a7a5f; letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.85; }
 `
-
-// rasterize an SVG document string into a fixed-resolution bitmap object URL
-export const bakeSvg = (markup: string, width: number, height: number, cb: (url: string) => void) => {
-  const blob = new Blob([markup], { type: 'image/svg+xml;charset=utf-8' })
-  const url = URL.createObjectURL(blob)
-  const img = new Image()
-  img.onload = () => {
-    URL.revokeObjectURL(url)
-    const canvas = document.createElement('canvas')
-    canvas.width = Math.round(width)
-    canvas.height = Math.round(height)
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-    canvas.toBlob((b) => b && cb(URL.createObjectURL(b)))
-  }
-  img.onerror = () => URL.revokeObjectURL(url)
-  img.src = url
-}
 
 /**
  * One territory's name, exactly as it is drawn live and exactly as it is baked.

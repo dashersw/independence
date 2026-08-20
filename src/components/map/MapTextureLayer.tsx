@@ -1,12 +1,14 @@
 interface MapTextureLayerProps {
   editMode: boolean
-  grainUrl: string | null
-  blotchUrl: string | null
 }
 
-export const MapTextureLayer = ({ editMode, grainUrl, blotchUrl }: MapTextureLayerProps) => (
+// In play the grain/blotch are pre-multiplied into the baked map bitmap and
+// the desk texture (see useMapBaking) — live blend-mode layers cost a
+// full-screen compositor pass and a ~30 MB texture each. Edit mode keeps the
+// live filters so the tuning view stays fully dynamic.
+export const MapTextureLayer = ({ editMode }: MapTextureLayerProps) => (
   <>
-    {editMode ? (
+    {editMode && (
       <rect
         x={-400}
         y={-300}
@@ -17,20 +19,8 @@ export const MapTextureLayer = ({ editMode, grainUrl, blotchUrl }: MapTextureLay
         style={{ mixBlendMode: 'multiply' }}
         pointerEvents="none"
       />
-    ) : grainUrl ? (
-      <image
-        x={-400}
-        y={-300}
-        width={2360}
-        height={1420}
-        href={grainUrl}
-        preserveAspectRatio="none"
-        opacity={0.4}
-        style={{ mixBlendMode: 'multiply' }}
-        pointerEvents="none"
-      />
-    ) : null}
-    {editMode ? (
+    )}
+    {editMode && (
       <rect
         x={-400}
         y={-300}
@@ -41,19 +31,7 @@ export const MapTextureLayer = ({ editMode, grainUrl, blotchUrl }: MapTextureLay
         style={{ mixBlendMode: 'soft-light' }}
         pointerEvents="none"
       />
-    ) : blotchUrl ? (
-      <image
-        x={-400}
-        y={-300}
-        width={2360}
-        height={1420}
-        href={blotchUrl}
-        preserveAspectRatio="none"
-        opacity={0.6}
-        style={{ mixBlendMode: 'soft-light' }}
-        pointerEvents="none"
-      />
-    ) : null}
+    )}
     <rect x={-400} y={-300} width={2360} height={1420} fill="url(#vignette-grad)" pointerEvents="none" />
   </>
 )
