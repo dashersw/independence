@@ -1,5 +1,6 @@
 import type Faction from './faction'
 import type Territory from './territory'
+import type { TerrainCombatModifier } from './terrain'
 
 export type Phase = 'reinforce' | 'attack' | 'fortify' | 'gameover'
 
@@ -37,6 +38,7 @@ export interface BattleResult {
   to: Territory
   attacker: Faction
   defender: Faction
+  terrain: TerrainCombatModifier
   rounds: BattleRound[]
   conquered: boolean
   attackerLosses: number

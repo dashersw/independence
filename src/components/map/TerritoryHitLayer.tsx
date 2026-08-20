@@ -1,6 +1,7 @@
 import mapData from '../../game/map-data.json'
 import Territory from '../../game/territory'
 import { t as i18nT, tFaction, tTerritory } from '../../i18n'
+import { terrainFor } from '../../game/terrain'
 
 interface TerritoryHitLayerProps {
   bySlug: Record<string, Territory>
@@ -49,6 +50,7 @@ export const TerritoryHitLayer = ({
               name: tTerritory(territory.slug, territory.name),
               faction: tFaction(territory.faction.name),
               troops: territory.troops,
+              terrain: i18nT(`terrain.${terrainFor(slug).type}`),
             })}
           </title>
         </g>

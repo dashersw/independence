@@ -4,11 +4,13 @@ import { NATIONAL_PACT } from '../../game/campaign-data'
 import type Game from '../../game/game'
 import { t } from '../../i18n'
 import { PHASE_TITLE_KEYS, Swatch } from './HudPrimitives'
+import { LeaderPortrait } from './LeaderPortrait'
 
 export const CampaignStatus = ({ game }: { game: Game }) => {
   const human = game.turn.currentPlayer.isHuman
   const fortifiesLeft = game.campaign.fortifyLimit - game.turn.fortifiesUsed
   const requisitionUntil = Number(CAMPAIGN_EVENTS.variable(game, 'tekalif.until'))
+  const leader = game.leaderName(game.turn.currentPlayer)
 
   return (
     <>
@@ -18,42 +20,47 @@ export const CampaignStatus = ({ game }: { game: Game }) => {
       </header>
 
       <div className="hud hud-phase">
-        <div className="hud-player">
-          <Swatch faction={game.turn.currentPlayer.faction.name} />
-          <span>{game.leaderName(game.turn.currentPlayer)}</span>
-        </div>
-        <div className={`hud-phase-title phase-${game.turn.phase}`}>
-          {t(PHASE_TITLE_KEYS[game.turn.phase])}
-          {human && game.turn.phase === 'reinforce' && (
-            <span className="hud-count">
-              {' '}
-              · {game.turn.reinforcementsLeft} {t('hud.left')}
-            </span>
-          )}
-          {human && game.turn.phase === 'attack' && (
-            <span className="hud-count">
-              {' '}
-              · {game.turn.attacksLeft} {t('hud.attacks')}
-            </span>
-          )}
-          {human && game.turn.phase === 'fortify' && game.campaign.fortifyLimit > 1 && (
-            <span className="hud-count">
-              {' '}
-              · {fortifiesLeft} {t('hud.moves')}
-            </span>
-          )}
-        </div>
-        {game.turn.round <= requisitionUntil && (
-          <div className="hud-requisition" title={t('hud.requisitionTitle')}>
-            ⚖️ {t('hud.requisition', { n: requisitionUntil - game.turn.round + 1 })}
+        <div className="hud-leader">
+          <div className="hud-player">
+            <Swatch faction={game.turn.currentPlayer.faction.name} />
+            <span>{leader}</span>
           </div>
-        )}
-        <div className="hud-pact">
-          <span>
-            {t('hud.pact')} {game.pactProgress}/{NATIONAL_PACT.length}
-          </span>
-          <div className="pact-bar">
-            <div className="pact-fill" style={{ width: `${(100 * game.pactProgress) / NATIONAL_PACT.length}%` }} />
+          <LeaderPortrait name={leader} />
+        </div>
+        <div className="hud-phase-main">
+          <div className={`hud-phase-title phase-${game.turn.phase}`}>
+            {t(PHASE_TITLE_KEYS[game.turn.phase])}
+            {human && game.turn.phase === 'reinforce' && (
+              <span className="hud-count">
+                {' '}
+                · {game.turn.reinforcementsLeft} {t('hud.left')}
+              </span>
+            )}
+            {human && game.turn.phase === 'attack' && (
+              <span className="hud-count">
+                {' '}
+                · {game.turn.attacksLeft} {t('hud.attacks')}
+              </span>
+            )}
+            {human && game.turn.phase === 'fortify' && game.campaign.fortifyLimit > 1 && (
+              <span className="hud-count">
+                {' '}
+                · {fortifiesLeft} {t('hud.moves')}
+              </span>
+            )}
+          </div>
+          {game.turn.round <= requisitionUntil && (
+            <div className="hud-requisition" title={t('hud.requisitionTitle')}>
+              ⚖️ {t('hud.requisition', { n: requisitionUntil - game.turn.round + 1 })}
+            </div>
+          )}
+          <div className="hud-pact">
+            <span>
+              {t('hud.pact')} {game.pactProgress}/{NATIONAL_PACT.length}
+            </span>
+            <div className="pact-bar">
+              <div className="pact-fill" style={{ width: `${(100 * game.pactProgress) / NATIONAL_PACT.length}%` }} />
+            </div>
           </div>
         </div>
       </div>
