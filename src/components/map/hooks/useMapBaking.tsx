@@ -386,7 +386,15 @@ export const useMapBaking = ({
       setReveal(null)
     }
     raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
+    return () => {
+      // an interrupted reveal (unmount, edit-mode flip, replacement) must not
+      // strand the old bitmap or the overlay's backing store — close() and a
+      // re-zero are no-ops when the animation already finished cleanly
+      cancelAnimationFrame(raf)
+      overlay.width = 0
+      overlay.height = 0
+      reveal.old.close()
+    }
   }, [reveal])
 
   // The dark desk surround keeps its grain/blotch texture as ONE small opaque
@@ -394,6 +402,7 @@ export const useMapBaking = ({
   // color). Low resolution suffices — it is noise on a flat dark surface.
   // (The vignette stays a live gradient rect: gradients are cheap.)
   const [deskUrl, setDeskUrl] = useState<string | null>(null)
+  const deskUrlRef = useRef<string | null>(null)
   useEffect(() => {
     const DESK_SCALE = 0.5
     const AREA = { x: -400, y: -300, w: 2360, h: 1420 }
@@ -423,7 +432,9 @@ export const useMapBaking = ({
         c.toBlob((b) => {
           c.width = 0
           c.height = 0
-          if (b && !cancelled) setDeskUrl(URL.createObjectURL(b))
+          if (!b || cancelled) return
+          deskUrlRef.current = URL.createObjectURL(b)
+          setDeskUrl(deskUrlRef.current)
         })
       } catch (e) {
         console.error('desk texture bake failed', e)
@@ -431,6 +442,7 @@ export const useMapBaking = ({
     })()
     return () => {
       cancelled = true
+      if (deskUrlRef.current) URL.revokeObjectURL(deskUrlRef.current)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
