@@ -5,8 +5,7 @@ import { getLang } from '../i18n'
 import { contiguousFactionComponents, geographicFactionClusters } from './map-geometry'
 // Cropped frame: Balkans to the Caucasus, hiding far-off background lands.
 // The camera maths live apart from the view so they can be tested directly.
-import { VB } from './viewport'
-import { useMapBaking } from './map/hooks/useMapBaking'
+import { ART_H, ART_W, useMapBaking } from './map/hooks/useMapBaking'
 import { useMapCamera } from './map/hooks/useMapCamera'
 import { useMapLabelEditor } from './map/hooks/useMapLabelEditor'
 import { MapArt, PaintDefs } from './map-art'
@@ -45,7 +44,7 @@ const MapView = ({
   // hover tracked in state (not CSS :hover) so the badge/label layer above the
   // hit layer also lights up its territory
   const [hovered, setHovered] = useState<string | null>(null)
-  const { svgRef, aspectRef, viewRef, viewBox, dotScale } = useMapCamera()
+  const { svgRef, artStackRef, aspectRef, viewRef, viewBox, dotScale } = useMapCamera()
   const bySlug = Object.fromEntries(territories.map((t) => [t.slug, t]))
   // re-read every render — App re-renders the whole tree on a language switch
   const lang = getLang()
@@ -59,7 +58,7 @@ const MapView = ({
   const editor = useMapLabelEditor({ territories, lang, bySlug, svgRef, viewRef, aspectRef })
   const { layouts, editMode, overrides, decorOverrides, selected: editSelection, dotFor, decorFor, startDrag } = editor
 
-  const { artUrl, reveal, revealCircleRef, grainUrl, blotchUrl } = useMapBaking({
+  const { deskUrl, artCanvasRef, revealCanvasRef } = useMapBaking({
     territories,
     bySlug,
     flagClusters,
@@ -72,56 +71,50 @@ const MapView = ({
 
   return (
     <>
+      {/* the baked map bitmap lives on real canvases UNDER the svg — no PNG
+        round-trip, and the compositor moves them via one CSS transform that
+        useMapCamera keeps in lockstep with the viewBox */}
+      {!editMode && (
+        <div className="map-underlay">
+          <div className="map-art-stack" ref={artStackRef}>
+            <canvas ref={artCanvasRef} className="map-art" width={ART_W} height={ART_H} />
+            <canvas ref={revealCanvasRef} className="map-reveal" width={0} height={0} />
+          </div>
+        </div>
+      )}
       <svg ref={svgRef} className="map" viewBox={viewBox} preserveAspectRatio="xMidYMid slice">
         <FlagDefs />
         <PaintDefs />
         <clipPath id="map-frame">
           <rect x={30} y={0} width={1500} height={820} />
         </clipPath>
-        {/* conquest reveal: soft-edged growing circle masking the fresh bake */}
-        <radialGradient id="reveal-grad">
-          <stop offset="65%" stopColor="#fff" />
-          <stop offset="100%" stopColor="#fff" stopOpacity="0" />
-        </radialGradient>
-        <mask id="conquest-reveal" maskUnits="userSpaceOnUse" x={VB.x} y={VB.y} width={VB.w} height={VB.h}>
-          {reveal && (
-            <circle ref={revealCircleRef} cx={reveal.origin[0]} cy={reveal.origin[1]} r={0} fill="url(#reveal-grad)" />
-          )}
-        </mask>
-        {/* dark parchment-desk surround fills the viewport outside the map frame */}
-        <rect x={-4000} y={-4000} width={9500} height={9000} fill="#2e2419" />
+        <clipPath id="desk-hole">
+          <path d="M-400 -300 h2360 v1420 h-2360 Z M30 0 h1500 v820 h-1500 Z" clipRule="evenodd" fillRule="evenodd" />
+        </clipPath>
+        {/* dark parchment-desk surround fills the viewport outside the map
+          frame; in play it leaves a hole at the frame so the art canvases
+          below show through */}
+        {editMode ? (
+          <rect x={-4000} y={-4000} width={9500} height={9000} fill="#2e2419" />
+        ) : (
+          <path d="M-4000 -4000 h9500 v9000 h-9500 Z M30 0 h1500 v820 h-1500 Z" fillRule="evenodd" fill="#2e2419" />
+        )}
+        {/* pre-textured desk (grain/blotch baked over the flat color) */}
+        {!editMode && deskUrl && (
+          <image
+            x={-400}
+            y={-300}
+            width={2360}
+            height={1420}
+            href={deskUrl}
+            preserveAspectRatio="none"
+            clipPath="url(#desk-hole)"
+            pointerEvents="none"
+          />
+        )}
         <g clipPath="url(#map-frame)">
-          {/* the painted stack: a single pre-baked bitmap in play (SVG filters
-            never run during gestures); fully live in edit mode and while the
-            first bake is still cooking */}
-          {editMode ? (
-            <MapArt bySlug={bySlug} flagClusters={flagClusters} components={components} decor={false} />
-          ) : artUrl ? (
-            <>
-              {reveal && (
-                <image
-                  x={VB.x}
-                  y={VB.y}
-                  width={VB.w}
-                  height={VB.h}
-                  href={reveal.prevUrl}
-                  preserveAspectRatio="none"
-                  pointerEvents="none"
-                />
-              )}
-              <g mask={reveal ? 'url(#conquest-reveal)' : undefined}>
-                <image
-                  x={VB.x}
-                  y={VB.y}
-                  width={VB.w}
-                  height={VB.h}
-                  href={artUrl}
-                  preserveAspectRatio="none"
-                  pointerEvents="none"
-                />
-              </g>
-            </>
-          ) : null}
+          {/* edit mode keeps the fully live painted stack inside the svg */}
+          {editMode && <MapArt bySlug={bySlug} flagClusters={flagClusters} components={components} decor={false} />}
           <TerritoryHitLayer
             bySlug={bySlug}
             selected={selected}
@@ -155,7 +148,7 @@ const MapView = ({
             />
           )}
         </g>
-        <MapTextureLayer editMode={editMode} grainUrl={grainUrl} blotchUrl={blotchUrl} />
+        <MapTextureLayer editMode={editMode} />
       </svg>
       <LabelEditContainer bySlug={bySlug} editor={editor} />
     </>

@@ -1,6 +1,29 @@
 /* Victoria-3-style painted map treatment. Overrides base map styles from
    game.css via more specific selectors — game.css itself is untouched. */
 
+/* The baked map bitmap lives on canvases UNDER the svg; the svg's desk
+   surround leaves a hole at the map frame so they show through. The stack is
+   moved with one CSS transform kept in sync with the viewBox (useMapCamera). */
+.map-underlay {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #2e2419;
+  pointer-events: none;
+}
+.map-art-stack {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+}
+.map-art-stack canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+}
+
 /* map text (labels, troop counts) is not selectable — double-clicking a
    territory otherwise highlights the nearest army count */
 .map {

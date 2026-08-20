@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { VB, ZOOM_MAX, baseDims, clampView, minZoomFor, dotScaleFor, flickVelocity, glideStep } from '../../viewport'
+import { ART_SCALE } from '../../map-art'
 
 // screen-pixel height of the HUD chrome hugging the top and bottom edges —
 // measured live so desktop cards and the phone bars both work
@@ -29,6 +30,9 @@ export const useMapCamera = () => {
   // trackpad zoom/pan: pinch (ctrl+wheel) zooms toward the cursor, two-finger
   // scroll pans; the view is a zoom level + center, clamped to the base frame
   const svgRef = useRef<SVGSVGElement | null>(null)
+  // the baked-art canvases live in a div UNDER the svg; it mirrors the
+  // viewBox as a CSS transform so the compositor moves the bitmap for free
+  const artStackRef = useRef<HTMLDivElement | null>(null)
   const [view, setView] = useState({ z: 1, cx: VB.x + VB.w / 2, cy: VB.y + VB.h / 2 })
   // viewRef is the live gesture value; state trails it (committed after the
   // gesture settles) so React never re-renders per pointer frame. Synced from
@@ -41,6 +45,23 @@ export const useMapCamera = () => {
   const commitTimer = useRef<number | undefined>(undefined)
   // write the viewBox straight to the DOM during gestures; commit to React
   // state (for the dot counter-scaling etc.) once the gesture goes quiet
+  // mirror the view onto the art underlay: user point (VB.x, VB.y) is bitmap
+  // pixel (0,0); the svg renders with preserveAspectRatio slice, so the scale
+  // is the covering one and the crop is centred
+  const syncArtStack = (v: { z: number; cx: number; cy: number }) => {
+    const el = artStackRef.current
+    const svg = svgRef.current
+    if (!el || !svg) return
+    const rect = svg.getBoundingClientRect()
+    if (rect.width === 0 || rect.height === 0) return
+    const base = baseDims(aspectRef.current)
+    const w = base.w / v.z
+    const h = base.h / v.z
+    const s = Math.max(rect.width / w, rect.height / h)
+    const tx = (rect.width - w * s) / 2 + (VB.x - (v.cx - w / 2)) * s
+    const ty = (rect.height - h * s) / 2 + (VB.y - (v.cy - h / 2)) * s
+    el.style.transform = `translate(${tx}px, ${ty}px) scale(${s / ART_SCALE})`
+  }
   const applyView = (v: { z: number; cx: number; cy: number }) => {
     viewRef.current = v
     const svg = svgRef.current
@@ -50,6 +71,7 @@ export const useMapCamera = () => {
       const h = b.h / v.z
       svg.setAttribute('viewBox', `${v.cx - w / 2} ${v.cy - h / 2} ${w} ${h}`)
     }
+    syncArtStack(v)
     window.clearTimeout(commitTimer.current)
     commitTimer.current = window.setTimeout(() => setView(viewRef.current), 150)
   }
@@ -254,6 +276,11 @@ export const useMapCamera = () => {
     }
   }, [])
 
+  // keep the underlay aligned after renders too (mount, resize, commits)
+  useEffect(() => {
+    syncArtStack(viewRef.current)
+  })
+
   const base = baseDims(aspect)
   // render from the live gesture value so an unrelated re-render mid-gesture
   // never writes a stale viewBox over the direct DOM updates
@@ -263,5 +290,5 @@ export const useMapCamera = () => {
   const viewBox = `${viewNow.cx - vw / 2} ${viewNow.cy - vh / 2} ${vw} ${vh}`
   const dotScale = dotScaleFor(viewNow.z)
 
-  return { svgRef, aspectRef, viewRef, viewBox, dotScale }
+  return { svgRef, artStackRef, aspectRef, viewRef, viewBox, dotScale }
 }
