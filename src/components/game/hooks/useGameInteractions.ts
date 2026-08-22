@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type Game from '../../../game/game'
 import type { BattleResult } from '../../../game/types'
 import { playSound } from '../../../sounds'
+import { fortifyTargets, resolveFortifyClick } from './fortify-selection'
 
 export const useGameInteractions = (game: Game, refresh: () => void, runAiTurns: () => void) => {
   const [selected, setSelected] = useState<string | null>(null)
@@ -42,18 +43,11 @@ export const useGameInteractions = (game: Game, refresh: () => void, runAiTurns:
   const humanFaction = game.humanPlayer.faction
   const targets: string[] = (() => {
     if (!selected || !game.turn.currentPlayer.isHuman) return []
-    const from = game.bySlug[selected]
     if (game.turn.phase === 'attack') return game.combat.targets(selected)
-    if (game.turn.phase === 'fortify' && !fortifyTarget)
-      return [
-        ...from.adjacent
-          .filter(
-            (territory) => territory.faction === humanFaction && game.movement.transferCapacity(from, territory) > 0,
-          )
-          .map((territory) => territory.slug),
-        ...game.movement.seaTargets(selected),
-      ]
-    return []
+    // The chosen destination wears a marker of its own, so it drops out of the
+    // target list: the rest stay lit and stay clickable, which is how the
+    // player redirects a transfer without giving up the source.
+    return fortifyTargets(game, selected).filter((slug) => slug !== fortifyTarget)
   })()
 
   const onTerritoryClick = (slug: string) => {
@@ -91,23 +85,12 @@ export const useGameInteractions = (game: Game, refresh: () => void, runAiTurns:
     }
 
     if (game.turn.phase !== 'fortify') return
-    if (game.turn.fortifiesUsed >= game.campaign.fortifyLimit || territory.faction !== humanFaction) return
-    if (!selected) {
-      if (territory.troops > 1) {
-        setSelected(slug)
-        playSound('select')
-      }
-      return
+    const next = resolveFortifyClick(game, { selected, fortifyTarget }, slug)
+    if (next.selected !== selected) {
+      setSelected(next.selected)
+      if (next.selected) playSound('select')
     }
-    if (slug === selected) {
-      clearSelection()
-      return
-    }
-    if (targets.includes(slug)) setFortifyTarget(slug)
-    else if (territory.troops > 1) {
-      setSelected(slug)
-      playSound('select')
-    }
+    if (next.fortifyTarget !== fortifyTarget) setFortifyTarget(next.fortifyTarget)
   }
 
   const onAttackPress = () => {
